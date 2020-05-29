@@ -7,7 +7,6 @@ import android.os.Handler
 import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.View
-import android.widget.LinearLayout
 import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
 
 /**
@@ -17,7 +16,6 @@ import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
 class FullscreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFullscreenBinding
     private lateinit var fullscreenContent: SurfaceView
-    private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler()
 
     @SuppressLint("InlinedApi")
@@ -38,7 +36,6 @@ class FullscreenActivity : AppCompatActivity() {
     private val showPart2Runnable = Runnable {
         // Delayed display of UI elements
         supportActionBar?.show()
-        fullscreenContentControls.visibility = View.VISIBLE
     }
     private var isFullscreen: Boolean = false
 
@@ -74,8 +71,6 @@ class FullscreenActivity : AppCompatActivity() {
         // Set up the user interaction to manually show or hide the system UI.
         fullscreenContent = binding.fullscreenContent
         fullscreenContent.setOnClickListener { toggle() }
-
-        fullscreenContentControls = binding.fullscreenContentControls
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -98,7 +93,6 @@ class FullscreenActivity : AppCompatActivity() {
     private fun hide() {
         // Hide UI first
         supportActionBar?.hide()
-        fullscreenContentControls.visibility = View.GONE
         isFullscreen = false
 
         // Schedule a runnable to remove the status and navigation bar after a delay
