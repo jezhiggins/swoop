@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
-import android.view.SurfaceView
 import android.view.View
 import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
 
@@ -15,7 +14,7 @@ import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
  */
 class FullscreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFullscreenBinding
-    private lateinit var fullscreenContent: SurfaceView
+    private lateinit var fullscreenContent: GameView
     private val hideHandler = Handler()
 
     @SuppressLint("InlinedApi")
