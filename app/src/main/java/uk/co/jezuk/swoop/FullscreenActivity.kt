@@ -8,12 +8,14 @@ import android.view.MotionEvent
 import android.view.SurfaceView
 import android.view.View
 import android.widget.LinearLayout
+import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class FullscreenActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityFullscreenBinding
     private lateinit var fullscreenContent: SurfaceView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler()
@@ -63,16 +65,17 @@ class FullscreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_fullscreen)
+        binding = ActivityFullscreenBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         isFullscreen = true
 
         // Set up the user interaction to manually show or hide the system UI.
-        fullscreenContent = findViewById(R.id.fullscreen_content)
+        fullscreenContent = binding.fullscreenContent
         fullscreenContent.setOnClickListener { toggle() }
 
-        fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
+        fullscreenContentControls = binding.fullscreenContentControls
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
