@@ -14,7 +14,7 @@ import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
  */
 class FullscreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFullscreenBinding
-    private lateinit var fullscreenContent: GameView
+    private lateinit var gameView: GameView
     private val hideHandler = Handler()
 
     @SuppressLint("InlinedApi")
@@ -24,7 +24,7 @@ class FullscreenActivity : AppCompatActivity() {
         // Note that some of these constants are new as of API 16 (Jelly Bean)
         // and API 19 (KitKat). It is safe to use them, as they are inlined
         // at compile-time and do nothing on earlier devices.
-        fullscreenContent.systemUiVisibility =
+        gameView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LOW_PROFILE or
                         View.SYSTEM_UI_FLAG_FULLSCREEN or
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
@@ -68,8 +68,8 @@ class FullscreenActivity : AppCompatActivity() {
         isFullscreen = true
 
         // Set up the user interaction to manually show or hide the system UI.
-        fullscreenContent = binding.fullscreenContent
-        fullscreenContent.setOnClickListener { toggle() }
+        gameView = binding.fullscreenContent
+        gameView.setOnClickListener { toggle() }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -79,6 +79,18 @@ class FullscreenActivity : AppCompatActivity() {
         // created, to briefly hint to the user that UI controls
         // are available.
         delayedHide(100)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        gameView.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        gameView.resume()
     }
 
     private fun toggle() {
@@ -101,7 +113,7 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun show() {
         // Show the system bar
-        fullscreenContent.systemUiVisibility =
+        gameView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                         View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         isFullscreen = true

@@ -1,28 +1,77 @@
 package uk.co.jezuk.swoop
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 
-class GameView(context: Context, attributes: AttributeSet) :
-    SurfaceView(context, attributes),
-    SurfaceHolder.Callback {
+class GameView(
+    context: Context,
+    attributes: AttributeSet
+) : SurfaceView(context, attributes), SurfaceHolder.Callback {
+    private var thread: GameThread? = null
+    private var grenade: Grenade? = null
 
-    override fun surfaceCreated(holder: SurfaceHolder?) {
-        TODO("Not yet implemented")
+    init {
+        // add callback
+        holder.addCallback(this)
     }
 
-    override fun surfaceChanged(holder: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
-        TODO("Not yet implemented")
+
+    override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
+        // game objects
+        grenade = Grenade(BitmapFactory.decodeResource(resources, R.drawable.grenade))
+
+        startThread()
     }
 
-    override fun surfaceDestroyed(holder: SurfaceHolder?) {
-        TODO("Not yet implemented")
+    override fun surfaceChanged(surfaceHolder: SurfaceHolder, i: Int, i1: Int, i2: Int) {
     }
 
-    override fun draw(canvas: Canvas?) {
+    override fun surfaceDestroyed(surfaceHolder: SurfaceHolder) {
+        stopThread()
+    }
+
+    /**
+     * Function to update the positions of sprites
+     */
+    fun update(fps: Long) {
+        grenade?.update()
+    } // update
+
+    /**
+     * Everything that has to be drawn on Canvas
+     */
+    override fun draw(canvas: Canvas) {
         super.draw(canvas)
-    }
+
+        grenade?.draw(canvas)
+    } // draw
+
+    fun pause() {
+        stopThread()
+    } // pause
+
+    fun resume() {
+        startThread()
+    } // resume
+
+    private fun startThread() {
+        if (thread != null) return
+        thread = GameThread(holder, this)
+        thread?.running()
+        thread?.start()
+    } // startThread
+
+    private fun stopThread() {
+        if (thread == null) return
+        try {
+            thread?.stopped()
+            thread?.join()
+            thread = null
+        } catch (e: InterruptedException) {
+        }
+    } // stopThread
 } // GameView
