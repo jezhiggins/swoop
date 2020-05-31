@@ -12,7 +12,7 @@ class GameView(
     attributes: AttributeSet
 ) : SurfaceView(context, attributes), SurfaceHolder.Callback {
     private var thread: GameThread? = null
-    private var grenade: Grenade? = null
+    private var ship = Ship()
 
     init {
         // add callback
@@ -21,9 +21,6 @@ class GameView(
 
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
-        // game objects
-        grenade = Grenade(BitmapFactory.decodeResource(resources, R.drawable.grenade))
-
         startThread()
     }
 
@@ -38,7 +35,7 @@ class GameView(
      * Function to update the positions of sprites
      */
     fun update(fps: Long) {
-        grenade?.update()
+        ship.update(fps)
     } // update
 
     /**
@@ -47,7 +44,7 @@ class GameView(
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
-        grenade?.draw(canvas)
+        ship.draw(canvas)
     } // draw
 
     fun pause() {
