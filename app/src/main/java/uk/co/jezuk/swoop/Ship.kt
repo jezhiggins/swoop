@@ -22,7 +22,7 @@ class Ship {
     private val shipBrush = Paint()
     private val thrustBrush = Paint()
 
-    private var rotation = -90f
+    private var rotation = -90.0
     private var targetRotation = rotation
     private var thrustFrames = 0
 
@@ -40,14 +40,12 @@ class Ship {
     } // init
 
     fun thrust() {
-        var thrustAngle = vectorAngle + 180
-        if (thrustAngle > 180) thrustAngle -= 360
+        var thrustAngle = invertAngle(vectorAngle)
         val vectorRads = Math.toRadians(thrustAngle)
         val x1 = vectorMagnitude * cos(vectorRads)
         val y1 = vectorMagnitude * sin(vectorRads)
 
-        var invertRotation = rotation + 180
-        if (invertRotation > 180) invertRotation -= 360
+        var invertRotation = invertAngle(rotation)
 
         val thrustRads = Math.toRadians(invertRotation.toDouble())
         val x2 = 2 * cos(thrustRads)
@@ -62,7 +60,7 @@ class Ship {
         thrustFrames = 10
     } // thrust
 
-    fun rotateTowards(angle: Float) {
+    fun rotateTowards(angle: Double) {
         targetRotation = angle
     } // rotateTowards
 
@@ -72,7 +70,7 @@ class Ship {
         if (angleOffset > 180) angleOffset -= 360
         if (angleOffset < -180) angleOffset += 360
 
-        val direction = if (angleOffset >= 0) 1f else -1f
+        val direction = if (angleOffset >= 0) 1.0 else -1.0
         val magnitude = Math.abs(angleOffset)
         val rotationDelta = if (magnitude > 30) {
             direction * 5
@@ -116,7 +114,7 @@ class Ship {
 
         canvas.translate(x, y)
         canvas.translate(canvas.width/2f, canvas.height/2f)
-        canvas.rotate(rotation)
+        canvas.rotate(rotation.toFloat())
 
         canvas.drawLines(shape, shipBrush)
         if (thrustFrames != 0)

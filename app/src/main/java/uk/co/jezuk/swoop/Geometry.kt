@@ -1,13 +1,13 @@
 package uk.co.jezuk.swoop
 
-fun angleFromOffsets(offsetX: Float, offsetY: Float): Float {
+fun angleFromOffsets(offsetX: Float, offsetY: Float): Double {
     return angleFromOffsets(offsetX.toDouble(), offsetY.toDouble())
-}
+} // angleFromOffsets
 
-fun angleFromOffsets(offsetX: Double, offsetY: Double): Float {
+fun angleFromOffsets(offsetX: Double, offsetY: Double): Double {
     var desiredAngle = Math.toDegrees(
         Math.atan(Math.abs(offsetY)/Math.abs(offsetX))
-    ).toFloat()
+    )
 
     if (offsetX <= 0 && offsetY <= 0) {
     }
@@ -21,7 +21,7 @@ fun angleFromOffsets(offsetX: Double, offsetY: Double): Float {
         desiredAngle = -180 + desiredAngle
     }
     return desiredAngle
-}
+} // angleFromOffsets
 
 fun magnitudeFromOffsets(offsetX: Float, offsetY: Float): Float {
     return magnitudeFromOffsets(offsetX.toDouble(), offsetY.toDouble())
@@ -30,4 +30,9 @@ fun magnitudeFromOffsets(offsetX: Double, offsetY: Double): Float {
     return Math.sqrt(
        Math.pow(offsetX, 2.0) + Math.pow(offsetY, 2.0)
    ).toFloat()
-}
+} // magnitudeFromOffsets
+
+fun invertAngle(angle: Double): Double {
+    val thrustAngle = angle + 180
+    return if (thrustAngle > 180) thrustAngle - 360 else thrustAngle
+} // invertAngle

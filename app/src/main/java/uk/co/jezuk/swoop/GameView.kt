@@ -19,24 +19,22 @@ class GameView(
     private var thread: GameThread? = null
     private var ship = Ship()
     private var fps: Long = 0
-    private lateinit var gestureDetector: GestureDetector
+    private var gestureDetector: GestureDetector
 
     init {
-        // add callback
         holder.addCallback(this)
-    }
+        gestureDetector = GestureDetector(this.context, this)
+    } // init
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
         startThread()
-        gestureDetector = GestureDetector(this.context, this)
-    }
+    } // surfaceCreated
 
-    override fun surfaceChanged(surfaceHolder: SurfaceHolder, i: Int, i1: Int, i2: Int) {
-    }
+    override fun surfaceChanged(surfaceHolder: SurfaceHolder, i: Int, i1: Int, i2: Int) = Unit
 
     override fun surfaceDestroyed(surfaceHolder: SurfaceHolder) {
         stopThread()
-    }
+    } // surfaceDestroyed
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return if (gestureDetector.onTouchEvent(event)) {
@@ -52,28 +50,21 @@ class GameView(
     override fun onSingleTapUp(ev: MotionEvent): Boolean {
         ship.thrust()
         return true
-    }
+    } // onSingleTapUp
     override fun onScroll(ev1: MotionEvent, ev2: MotionEvent, offsetX: Float, offsetY: Float): Boolean {
         ship.rotateTowards(angleFromOffsets(offsetX, offsetY))
         return true
-    }
+    } // onScroll
     override fun onLongPress(ev: MotionEvent) = ship.thrust()
 
-
-    /**
-     * Function to update the positions of sprites
-     */
     fun update(fps: Long) {
         this.fps = fps
+
+        ship.update(fps, width, height)
     } // update
 
-    /**
-     * Everything that has to be drawn on Canvas
-     */
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
-
-        ship.update(fps, canvas.width, canvas.height)
 
         ship.draw(canvas)
     } // draw
