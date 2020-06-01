@@ -6,26 +6,37 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class Ship {
-    val shape = floatArrayOf(
+    private val shape = floatArrayOf(
         50f, 0f, -50f, 25f,
         -50f, 25f, -30f, 0f,
         -30f, 0f, -50f, -25f,
         -50f, -25f, 50f, 0f
     )
+    private val thruster = floatArrayOf(
+        -40f, 15f, -70f, 0f,
+        -70f, 0f, -40f, -15f,
+        -45f, 12f, -75f, 0f,
+        -75f, 0f, -45f, -12f
+    )
 
-    val colour = Paint()
+    private val shipBrush = Paint()
+    private val thrustBrush = Paint()
 
-    var rotation = -90f
-    var targetRotation = rotation
+    private var rotation = -90f
+    private var targetRotation = rotation
+    private var thrustFrames = 0
 
-    var vectorMagnitude = 0f
-    var vectorAngle = 0.0
-    var x = 0f
-    var y = 0f
+    private var vectorMagnitude = 0f
+    private var vectorAngle = 0.0
+    private var x = 0f
+    private var y = 0f
 
     init {
-        colour.setARGB(100, 0, 255, 0)
-        colour.strokeWidth = 10f
+        shipBrush.setARGB(100, 0, 255, 0)
+        shipBrush.strokeWidth = 10f
+
+        thrustBrush.setARGB(100, 255, 215, 0)
+        thrustBrush.strokeWidth = 5f
     } // init
 
     fun thrust() {
@@ -33,15 +44,20 @@ class Ship {
         val x1 = vectorMagnitude * sin(vectorRads)
         val y1 = vectorMagnitude * cos(vectorRads)
 
-        val thrustRads = Math.toRadians(rotation.toDouble())
-        val x2 = -1 * sin(thrustRads)
-        val y2 = -1 * cos(thrustRads)
+        var invertRotation = rotation + 180
+        if (invertRotation > 180) invertRotation -= 360
+
+        val thrustRads = Math.toRadians(invertRotation.toDouble())
+        val x2 = 2 * sin(thrustRads)
+        val y2 = 2 * cos(thrustRads)
 
         val x = x1 + x2
         val y = y1 + y2
 
         vectorMagnitude = magnitudeFromOffsets(x, y)
         vectorAngle = angleFromOffsets(x, y).toDouble()
+
+        thrustFrames = 10
     } // thrust
 
     fun rotateTowards(angle: Float) {
@@ -83,6 +99,8 @@ class Ship {
         val halfHeight = height / 2f
         if (y < -halfHeight) y = halfHeight
         if (y > halfHeight) y = -halfHeight
+
+        if (thrustFrames > 0) thrustFrames -= 1
     }
 
     fun update(fps: Long, width: Int, height: Int) {
@@ -98,7 +116,9 @@ class Ship {
         canvas.translate(canvas.width/2f, canvas.height/2f)
         canvas.rotate(rotation)
 
-        canvas.drawLines(shape, colour)
+        canvas.drawLines(shape, shipBrush)
+        if (thrustFrames != 0)
+            canvas.drawLines(thruster, thrustBrush)
 
         canvas.restore()
     } // draw
