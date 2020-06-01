@@ -12,6 +12,7 @@ class Ship {
         -30f, 0f, -50f, -25f,
         -50f, -25f, 50f, 0f
     )
+
     val colour = Paint()
 
     var rotation = -90f
@@ -33,8 +34,8 @@ class Ship {
         val y1 = vectorMagnitude * cos(vectorRads)
 
         val thrustRads = Math.toRadians(rotation.toDouble())
-        val x2 = 10 * sin(thrustRads)
-        val y2 = 10 * cos(thrustRads)
+        val x2 = -1 * sin(thrustRads)
+        val y2 = -1 * cos(thrustRads)
 
         val x = x1 + x2
         val y = y1 + y2
@@ -47,7 +48,7 @@ class Ship {
         targetRotation = angle
     } // rotateTowards
 
-    fun rotateShip() {
+    private fun rotateShip() {
         var angleOffset = targetRotation - rotation
 
         if (angleOffset > 180) angleOffset -= 360
@@ -68,8 +69,7 @@ class Ship {
         if (rotation < -180) rotation += 360
     } // rotateShip
 
-    fun applyThrust() {
-        /*
+    private fun applyThrust(width: Int, height: Int) {
         val vectorRads = Math.toRadians(vectorAngle)
         val deltaX = vectorMagnitude * Math.sin(vectorRads)
         val deltaY = vectorMagnitude * Math.cos(vectorRads)
@@ -83,13 +83,12 @@ class Ship {
         val halfHeight = height / 2f
         if (y < -halfHeight) y = halfHeight
         if (y > halfHeight) y = -halfHeight
-        */
     }
 
     fun update(fps: Long, width: Int, height: Int) {
         rotateShip()
 
-        applyThrust()
+        applyThrust(width, height)
     } // update
 
     fun draw(canvas: Canvas) {

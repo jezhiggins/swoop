@@ -47,7 +47,7 @@ class GameView(
     } // onTouchEvent
 
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-        //ship.move(e1.x - e2.x)
+        ship.thrust()
         return true
     }
 
