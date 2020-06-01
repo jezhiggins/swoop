@@ -13,6 +13,7 @@ class GameView(
 ) : SurfaceView(context, attributes), SurfaceHolder.Callback {
     private var thread: GameThread? = null
     private var ship = Ship()
+    private var fps: Long = 0
 
     init {
         // add callback
@@ -35,7 +36,7 @@ class GameView(
      * Function to update the positions of sprites
      */
     fun update(fps: Long) {
-        ship.update(fps)
+        this.fps = fps
     } // update
 
     /**
@@ -43,6 +44,8 @@ class GameView(
      */
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
+
+        ship.update(fps, canvas.width, canvas.height)
 
         ship.draw(canvas)
     } // draw
