@@ -57,20 +57,7 @@ class GameView(
     override fun onShowPress(ev: MotionEvent?) = Unit
     override fun onSingleTapUp(ev: MotionEvent?): Boolean = false
     override fun onScroll(ev1: MotionEvent, ev2: MotionEvent, offsetX: Float, offsetY: Float): Boolean {
-        println ("${offsetX}, ${offsetY}")
-        var desiredAngle = Math.toDegrees(Math.atan(Math.abs(offsetY)/Math.abs(offsetX).toDouble())).toFloat()
-        if (offsetX <= 0 && offsetY <= 0) {
-        }
-        if (offsetX <= 0 && offsetY > 0) {
-            desiredAngle = -desiredAngle
-        }
-        if (offsetX > 0 && offsetY <= 0) {
-            desiredAngle = 180 - desiredAngle
-        }
-        if (offsetX > 0 && offsetY > 0) {
-            desiredAngle = -180 + desiredAngle
-        }
-        ship.rotateTowards(desiredAngle)
+        ship.rotateTowards(angleFromOffsets(offsetX, offsetY))
         return true
     }
     override fun onLongPress(ev: MotionEvent?) = Unit

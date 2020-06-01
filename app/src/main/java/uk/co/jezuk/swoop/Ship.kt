@@ -2,6 +2,8 @@ package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import kotlin.math.cos
+import kotlin.math.sin
 
 class Ship {
     val shape = floatArrayOf(
@@ -11,12 +13,12 @@ class Ship {
         -50f, -25f, 50f, 0f
     )
     val colour = Paint()
+
     var rotation = -90f
     var targetRotation = rotation
 
-    var rotationDelta = 0f
-    var vectorMagnitude = (Math.random() * 10).toFloat()
-    var vectorAngle = Math.random() * 360
+    var vectorMagnitude = 0f
+    var vectorAngle = 0.0
     var x = 0f
     var y = 0f
 
@@ -24,6 +26,22 @@ class Ship {
         colour.setARGB(100, 0, 255, 0)
         colour.strokeWidth = 10f
     } // init
+
+    fun thrust() {
+        val vectorRads = Math.toRadians(vectorAngle)
+        val x1 = vectorMagnitude * sin(vectorRads)
+        val y1 = vectorMagnitude * cos(vectorRads)
+
+        val thrustRads = Math.toRadians(rotation.toDouble())
+        val x2 = 10 * sin(thrustRads)
+        val y2 = 10 * cos(thrustRads)
+
+        val x = x1 + x2
+        val y = y1 + y2
+
+        vectorMagnitude = magnitudeFromOffsets(x, y)
+        vectorAngle = angleFromOffsets(x, y).toDouble()
+    } // thrust
 
     fun rotateTowards(angle: Float) {
         targetRotation = angle
@@ -50,9 +68,7 @@ class Ship {
         if (rotation < -180) rotation += 360
     } // rotateShip
 
-    fun update(fps: Long, width: Int, height: Int) {
-        rotateShip()
-
+    fun applyThrust() {
         /*
         val vectorRads = Math.toRadians(vectorAngle)
         val deltaX = vectorMagnitude * Math.sin(vectorRads)
@@ -68,6 +84,12 @@ class Ship {
         if (y < -halfHeight) y = halfHeight
         if (y > halfHeight) y = -halfHeight
         */
+    }
+
+    fun update(fps: Long, width: Int, height: Int) {
+        rotateShip()
+
+        applyThrust()
     } // update
 
     fun draw(canvas: Canvas) {
