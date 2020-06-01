@@ -12,6 +12,7 @@ class Ship {
     )
     val colour = Paint()
     var rotation = 45f
+    var rotationDelta = 0f
     var vectorMagnitude = (Math.random() * 10).toFloat()
     var vectorAngle = Math.random() * 360
     var x = 0f
@@ -22,8 +23,13 @@ class Ship {
         colour.strokeWidth = 10f
     }
 
+    fun move(velocityX: Float) {
+        rotationDelta = velocityX*3
+    }
+
     fun update(fps: Long, width: Int, height: Int) {
-        rotation += 180f/fps
+        rotation += rotationDelta/fps
+        rotationDelta = 0f
 
         val vectorRads = Math.toRadians(vectorAngle)
         val deltaX = vectorMagnitude * Math.sin(vectorRads)
