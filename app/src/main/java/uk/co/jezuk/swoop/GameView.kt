@@ -46,21 +46,18 @@ class GameView(
         }
     } // onTouchEvent
 
-    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean = false
+    override fun onDown(ev: MotionEvent): Boolean = true
+    override fun onShowPress(ev: MotionEvent) = Unit
+    override fun onSingleTapUp(ev: MotionEvent): Boolean {
         ship.thrust()
         return true
     }
-
-    override fun onDown(ev: MotionEvent?): Boolean {
-        return true
-    }
-    override fun onShowPress(ev: MotionEvent?) = Unit
-    override fun onSingleTapUp(ev: MotionEvent?): Boolean = false
     override fun onScroll(ev1: MotionEvent, ev2: MotionEvent, offsetX: Float, offsetY: Float): Boolean {
         ship.rotateTowards(angleFromOffsets(offsetX, offsetY))
         return true
     }
-    override fun onLongPress(ev: MotionEvent?) = Unit
+    override fun onLongPress(ev: MotionEvent) = ship.thrust()
 
 
     /**

@@ -40,16 +40,18 @@ class Ship {
     } // init
 
     fun thrust() {
-        val vectorRads = Math.toRadians(vectorAngle)
-        val x1 = vectorMagnitude * sin(vectorRads)
-        val y1 = vectorMagnitude * cos(vectorRads)
+        var thrustAngle = vectorAngle + 180
+        if (thrustAngle > 180) thrustAngle -= 360
+        val vectorRads = Math.toRadians(thrustAngle)
+        val x1 = vectorMagnitude * cos(vectorRads)
+        val y1 = vectorMagnitude * sin(vectorRads)
 
         var invertRotation = rotation + 180
         if (invertRotation > 180) invertRotation -= 360
 
         val thrustRads = Math.toRadians(invertRotation.toDouble())
-        val x2 = 2 * sin(thrustRads)
-        val y2 = 2 * cos(thrustRads)
+        val x2 = 2 * cos(thrustRads)
+        val y2 = 2 * sin(thrustRads)
 
         val x = x1 + x2
         val y = y1 + y2
@@ -87,8 +89,8 @@ class Ship {
 
     private fun applyThrust(width: Int, height: Int) {
         val vectorRads = Math.toRadians(vectorAngle)
-        val deltaX = vectorMagnitude * Math.sin(vectorRads)
-        val deltaY = vectorMagnitude * Math.cos(vectorRads)
+        val deltaX = vectorMagnitude * Math.cos(vectorRads)
+        val deltaY = vectorMagnitude * Math.sin(vectorRads)
 
         x += deltaX.toFloat()
         y += deltaY.toFloat()
