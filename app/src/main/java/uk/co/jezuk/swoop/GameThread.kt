@@ -18,12 +18,11 @@ class GameThread(
         while (running) {
             val startTime = System.currentTimeMillis()
 
+            this.gameView.update(fps)
+
             if (surfaceHolder.surface.isValid) {
-                val canvas = this.surfaceHolder.lockCanvas()
-
-                this.gameView.update(fps)
+                val canvas = this.surfaceHolder.lockHardwareCanvas()
                 this.gameView.draw(canvas!!)
-
                 surfaceHolder.unlockCanvasAndPost(canvas)
 
                 val timeThisFrame = System.currentTimeMillis() - startTime

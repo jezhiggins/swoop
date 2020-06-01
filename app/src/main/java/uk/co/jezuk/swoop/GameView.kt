@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -17,12 +18,15 @@ class GameView(
     GestureDetector.OnGestureListener
 {
     private var thread: GameThread? = null
+    private var pen = Paint()
     private var ship = Ship()
     private var fps: Long = 0
     private var gestureDetector: GestureDetector
 
     init {
         holder.addCallback(this)
+        pen.setARGB(127, 255, 255, 255)
+        pen.textSize = 32f
         gestureDetector = GestureDetector(this.context, this)
     } // init
 
@@ -67,6 +71,9 @@ class GameView(
         super.draw(canvas)
 
         ship.draw(canvas)
+
+        canvas.drawText("FPS: ${this.fps}", 100f, 100f, pen)
+        canvas.drawText("Accel: ${canvas.isHardwareAccelerated}", 100f, 130f, pen)
     } // draw
 
     fun pause() {
