@@ -24,10 +24,13 @@ class Ship {
     }
 
     fun rotateTowards(targetAngle: Float) {
-        val angleOffset = targetAngle - rotation
+        var angleOffset = targetAngle - rotation
 
-        val direction = if (rotationDelta >= 0) 1f else -1f
-        val magnitude = Math.abs(rotationDelta)
+        if (angleOffset > 180) angleOffset -= 360
+        if (angleOffset < -180) angleOffset += 360
+
+        val direction = if (angleOffset >= 0) 1f else -1f
+        val magnitude = Math.abs(angleOffset)
         if (magnitude > 30) {
             rotationDelta = direction * 5
         } else if (magnitude > 3) {

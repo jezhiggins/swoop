@@ -65,7 +65,7 @@ class GameView(
             desiredAngle = -desiredAngle
         }
         if (offsetX > 0 && offsetY <= 0) {
-            desiredAngle = -180 - desiredAngle
+            desiredAngle = 180 - desiredAngle
         }
         if (offsetX > 0 && offsetY > 0) {
             desiredAngle = -180 + desiredAngle
