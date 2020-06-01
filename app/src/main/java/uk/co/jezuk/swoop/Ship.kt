@@ -12,6 +12,8 @@ class Ship {
     )
     val colour = Paint()
     var rotation = -90f
+    var targetRotation = rotation
+
     var rotationDelta = 0f
     var vectorMagnitude = (Math.random() * 10).toFloat()
     var vectorAngle = Math.random() * 360
@@ -21,30 +23,35 @@ class Ship {
     init {
         colour.setARGB(100, 0, 255, 0)
         colour.strokeWidth = 10f
-    }
+    } // init
 
-    fun rotateTowards(targetAngle: Float) {
-        var angleOffset = targetAngle - rotation
+    fun rotateTowards(angle: Float) {
+        targetRotation = angle
+    } // rotateTowards
+
+    fun rotateShip() {
+        var angleOffset = targetRotation - rotation
 
         if (angleOffset > 180) angleOffset -= 360
         if (angleOffset < -180) angleOffset += 360
 
         val direction = if (angleOffset >= 0) 1f else -1f
         val magnitude = Math.abs(angleOffset)
-        if (magnitude > 30) {
-            rotationDelta = direction * 5
+        val rotationDelta = if (magnitude > 30) {
+            direction * 5
         } else if (magnitude > 3) {
-            rotationDelta = direction * 2
+            direction * 2
         } else {
-            rotationDelta = angleOffset
+            angleOffset
         }
-    }
 
-    fun update(fps: Long, width: Int, height: Int) {
         rotation += rotationDelta
         if (rotation > 180) rotation -= 360
         if (rotation < -180) rotation += 360
-        rotationDelta = 0f
+    } // rotateShip
+
+    fun update(fps: Long, width: Int, height: Int) {
+        rotateShip()
 
         /*
         val vectorRads = Math.toRadians(vectorAngle)
@@ -61,7 +68,7 @@ class Ship {
         if (y < -halfHeight) y = halfHeight
         if (y > halfHeight) y = -halfHeight
         */
-    }
+    } // update
 
     fun draw(canvas: Canvas) {
         canvas.save()
@@ -73,5 +80,5 @@ class Ship {
         canvas.drawLines(shape, colour)
 
         canvas.restore()
-    }
-}
+    } // draw
+} // Ship
