@@ -23,13 +23,10 @@ fun angleFromOffsets(offsetX: Double, offsetY: Double): Double {
     return desiredAngle
 } // angleFromOffsets
 
-fun magnitudeFromOffsets(offsetX: Float, offsetY: Float): Float {
-    return magnitudeFromOffsets(offsetX.toDouble(), offsetY.toDouble())
-}
-fun magnitudeFromOffsets(offsetX: Double, offsetY: Double): Float {
+fun magnitudeFromOffsets(offsetX: Double, offsetY: Double): Double {
     return Math.sqrt(
        Math.pow(offsetX, 2.0) + Math.pow(offsetY, 2.0)
-   ).toFloat()
+   )
 } // magnitudeFromOffsets
 
 fun invertAngle(angle: Double): Double {

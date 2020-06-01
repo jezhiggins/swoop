@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.min
 
 class Ship {
     private val shape = floatArrayOf(
@@ -26,7 +27,7 @@ class Ship {
     private var targetRotation = rotation
     private var thrustFrames = 0
 
-    private var vectorMagnitude = 0f
+    private var vectorMagnitude = 0.0
     private var vectorAngle = 0.0
     private var x = 0f
     private var y = 0f
@@ -40,22 +41,19 @@ class Ship {
     } // init
 
     fun thrust() {
-        var thrustAngle = invertAngle(vectorAngle)
-        val vectorRads = Math.toRadians(thrustAngle)
+        val vectorRads = Math.toRadians(vectorAngle)
         val x1 = vectorMagnitude * cos(vectorRads)
         val y1 = vectorMagnitude * sin(vectorRads)
 
-        var invertRotation = invertAngle(rotation)
-
-        val thrustRads = Math.toRadians(invertRotation.toDouble())
-        val x2 = 2 * cos(thrustRads)
-        val y2 = 2 * sin(thrustRads)
+        val rotationRads = Math.toRadians(rotation)
+        val x2 = 2 * cos(rotationRads)
+        val y2 = 2 * sin(rotationRads)
 
         val x = x1 + x2
         val y = y1 + y2
 
-        vectorMagnitude = magnitudeFromOffsets(x, y)
-        vectorAngle = angleFromOffsets(x, y).toDouble()
+        vectorMagnitude = min(magnitudeFromOffsets(x, y), 20.0)
+        vectorAngle = invertAngle(angleFromOffsets(x, y))
 
         thrustFrames = 10
     } // thrust
