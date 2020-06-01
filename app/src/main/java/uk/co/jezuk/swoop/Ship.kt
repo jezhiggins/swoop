@@ -11,7 +11,7 @@ class Ship {
         -50f, -25f, 50f, 0f
     )
     val colour = Paint()
-    var rotation = 45f
+    var rotation = -90f
     var rotationDelta = 0f
     var vectorMagnitude = (Math.random() * 10).toFloat()
     var vectorAngle = Math.random() * 360
@@ -23,14 +23,27 @@ class Ship {
         colour.strokeWidth = 10f
     }
 
-    fun move(velocityX: Float) {
-        rotationDelta = velocityX*3
+    fun rotateTowards(targetAngle: Float) {
+        val angleOffset = targetAngle - rotation
+
+        val direction = if (rotationDelta >= 0) 1f else -1f
+        val magnitude = Math.abs(rotationDelta)
+        if (magnitude > 30) {
+            rotationDelta = direction * 5
+        } else if (magnitude > 3) {
+            rotationDelta = direction * 2
+        } else {
+            rotationDelta = angleOffset
+        }
     }
 
     fun update(fps: Long, width: Int, height: Int) {
-        rotation += rotationDelta/fps
+        rotation += rotationDelta
+        if (rotation > 180) rotation -= 360
+        if (rotation < -180) rotation += 360
         rotationDelta = 0f
 
+        /*
         val vectorRads = Math.toRadians(vectorAngle)
         val deltaX = vectorMagnitude * Math.sin(vectorRads)
         val deltaY = vectorMagnitude * Math.cos(vectorRads)
@@ -44,6 +57,7 @@ class Ship {
         val halfHeight = height / 2f
         if (y < -halfHeight) y = halfHeight
         if (y > halfHeight) y = -halfHeight
+        */
     }
 
     fun draw(canvas: Canvas) {
