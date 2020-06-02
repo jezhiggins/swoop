@@ -2,11 +2,13 @@ package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Path
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.min
 
 class Ship(private val sounds: Sounds) {
+    private val shipPath = Path()
     private val shape = floatArrayOf(
         50f, 0f, -50f, 25f,
         -50f, 25f, -30f, 0f,
@@ -21,6 +23,7 @@ class Ship(private val sounds: Sounds) {
     )
 
     private val shipBrush = Paint()
+    private val shipFillBrush = Paint()
     private val thrustBrush = Paint()
 
     private var rotation = -90.0
@@ -35,8 +38,18 @@ class Ship(private val sounds: Sounds) {
     private var y = 0f
 
     init {
-        shipBrush.setARGB(100, 0, 255, 0)
+        shipPath.moveTo(shape[0], shape[1])
+        for (i in 0 until shape.size step 2)
+            shipPath.lineTo(shape[i], shape[i+1])
+        shipPath.close()
+
+        shipBrush.setARGB(150, 0, 255, 0)
         shipBrush.strokeWidth = 10f
+        shipBrush.style = Paint.Style.STROKE
+
+        shipFillBrush.setARGB(255, 0, 0, 0)
+        shipBrush.strokeWidth = 10f
+        shipFillBrush.style = Paint.Style.FILL_AND_STROKE
 
         thrustBrush.setARGB(100, 255, 215, 0)
         thrustBrush.strokeWidth = 5f
@@ -117,7 +130,9 @@ class Ship(private val sounds: Sounds) {
         canvas.translate(canvas.width/2f, canvas.height/2f)
         canvas.rotate(rotation.toFloat())
 
-        canvas.drawLines(shape, shipBrush)
+        canvas.drawPath(shipPath, shipFillBrush)
+        canvas.drawPath(shipPath, shipBrush)
+
         if (thrustFrames != 0)
             canvas.drawLines(thruster, thrustBrush)
 
