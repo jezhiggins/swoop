@@ -23,6 +23,7 @@ class GameView(
 
     private var ship = Ship(sounds)
     private var starField = StarField()
+    private var asteroids = Asteroids()
     private var debug = Debug()
 
     init {
@@ -33,6 +34,7 @@ class GameView(
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
         starField.size(width, height)
+        asteroids.wave(5, width, height)
 
         startThread()
     } // surfaceCreated
@@ -65,6 +67,7 @@ class GameView(
     override fun onLongPress(ev: MotionEvent) = ship.thrust()
 
     fun update(fps: Long) {
+        asteroids.update(fps, width, height)
         ship.update(fps, width, height)
         debug.update(fps)
     } // update
@@ -73,6 +76,7 @@ class GameView(
         super.draw(canvas)
 
         starField.draw(canvas)
+        asteroids.draw(canvas)
         ship.draw(canvas)
 
         debug.draw(canvas)

@@ -122,6 +122,7 @@ class Ship(private val sounds: Sounds) {
 
         if (thrustFrames != 0)
             canvas.drawLines(thruster, thrustBrush)
+
         canvas.restore()
     } // draw
 } // Ship
