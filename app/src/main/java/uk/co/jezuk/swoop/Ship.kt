@@ -79,7 +79,7 @@ class Ship(private val sounds: Sounds) {
         } else if (magnitude > 3) {
             direction * 2
         } else {
-            angleOffset
+            direction
         }
 
         rotation += rotationDelta

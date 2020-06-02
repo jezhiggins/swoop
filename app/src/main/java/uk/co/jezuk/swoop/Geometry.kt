@@ -9,17 +9,18 @@ fun angleFromOffsets(offsetX: Double, offsetY: Double): Double {
         Math.atan(Math.abs(offsetY)/Math.abs(offsetX))
     )
 
-    if (offsetX <= 0 && offsetY <= 0) {
-    }
-    if (offsetX <= 0 && offsetY > 0) {
-        desiredAngle = -desiredAngle
-    }
-    if (offsetX > 0 && offsetY <= 0) {
-        desiredAngle = 180 - desiredAngle
-    }
-    if (offsetX > 0 && offsetY > 0) {
-        desiredAngle = -180 + desiredAngle
-    }
+    //if (offsetX <= 0 && offsetY <= 0)
+    //    return desiredAngle
+
+    if (offsetX <= 0 && offsetY > 0)
+        return -desiredAngle
+
+    if (offsetX > 0 && offsetY <= 0)
+        return 180 - desiredAngle
+
+    if (offsetX > 0 && offsetY > 0)
+        return -180 + desiredAngle
+
     return desiredAngle
 } // angleFromOffsets
 
