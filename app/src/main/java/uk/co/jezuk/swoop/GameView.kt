@@ -18,19 +18,32 @@ class GameView(
     GestureDetector.OnGestureListener
 {
     private var thread: GameThread? = null
-    private var pen = Paint()
+    private var textPen = Paint()
     private var ship = Ship()
     private var fps: Long = 0
     private var gestureDetector: GestureDetector
+    private val stars = FloatArray(400)
+    private val starBrush = Paint()
 
     init {
         holder.addCallback(this)
-        pen.setARGB(127, 255, 255, 255)
-        pen.textSize = 32f
+
+        textPen.setARGB(127, 255, 255, 255)
+        textPen.textSize = 32f
+
+        starBrush.setARGB(255, 255, 255, 255)
+
         gestureDetector = GestureDetector(this.context, this)
     } // init
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
+        for (i in 0 until stars.size step 2) {
+            val x = Math.random() * width
+            val y = Math.random() * height
+            stars[i] = x.toFloat()
+            stars[i+1] = y.toFloat()
+        }
+
         startThread()
     } // surfaceCreated
 
@@ -72,8 +85,10 @@ class GameView(
 
         ship.draw(canvas)
 
-        canvas.drawText("FPS: ${this.fps}", 100f, 100f, pen)
-        canvas.drawText("Accel: ${canvas.isHardwareAccelerated}", 100f, 130f, pen)
+        canvas.drawPoints(stars, starBrush)
+
+        canvas.drawText("FPS: ${this.fps}", 100f, 100f, textPen)
+        canvas.drawText("Accel: ${canvas.isHardwareAccelerated}", 100f, 130f, textPen)
     } // draw
 
     fun pause() {
