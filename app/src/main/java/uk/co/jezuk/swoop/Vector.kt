@@ -16,15 +16,20 @@ data class Point(var x: Double, var y: Double) {
         val halfHeight = height / 2.0
         if (y < -halfHeight) y = halfHeight
         if (y > halfHeight) y = -halfHeight
-    }
+    } // move
 
     fun distance(pos: Point): Float {
         val offsetX = distanceBetween(x, pos.x)
         val offsetY = distanceBetween(y, pos.y)
 
         return magnitudeFromOffsets(offsetX, offsetY).toFloat()
+    } // distance
+
+    fun reset() {
+        x = 0.0
+        y = 0.0
     }
-}
+} // Point
 
 class Vector(
     private var magnitude: Double,
@@ -54,5 +59,10 @@ class Vector(
 
         magnitude = min(magnitudeFromOffsets(x, y), 20.0)
         angle = invertAngle(angleFromOffsets(x, y))
+    }
+
+    fun reset() {
+        angle = 0.0
+        magnitude = 0.0
     }
 } // class Vector
