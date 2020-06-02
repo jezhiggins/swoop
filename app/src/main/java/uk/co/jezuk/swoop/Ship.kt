@@ -228,21 +228,27 @@ class Ship(private val sounds: Sounds) {
     } // Exploding
 
     private class RezIn(private val ship: Ship): ShipState {
+        private var pause = 60
         private var radius = 600f
-
-        init {
-            ship.sounds.play(ship.rezInSound)
-        }
 
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) = Unit
         override fun update(fps: Long, width: Int, height: Int) {
-            radius -= (radius / 10)
+            if (pause != 0) {
+                --pause
+                if (pause == 0)
+                    ship.sounds.play(ship.rezInSound)
+                return
+            }
+            radius -= (radius / 20)
             if (radius < 5)
                 ship.state = Flying(ship)
         } // update
 
         override fun draw(canvas: Canvas) {
+            if (pause != 0) {
+                return
+            }
             val r = (radius / 100).toInt()
             val brush = if ((r/2f) == (r/2).toFloat()) ship.shipBrush else ship.redBrush
 
