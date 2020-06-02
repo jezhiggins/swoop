@@ -32,7 +32,7 @@ class Ship(private val sounds: Sounds) {
     private val velocity = Vector(0.0, 0.0)
     val position = Point(0.0, 0.0)
 
-    private lateinit var state: ShipState
+    private var state: ShipState = Flying(this)
 
     val killDist: Float
         get() = 30f;
@@ -68,8 +68,6 @@ class Ship(private val sounds: Sounds) {
         targetRotation = rotation
         velocity.reset()
         position.reset()
-
-        state = Flying(this)
     } // reset
 
     fun thrust() {
@@ -205,8 +203,10 @@ class Ship(private val sounds: Sounds) {
             }
 
             --explodeFrames
-            if (explodeFrames == 0)
+            if (explodeFrames == 0) {
                 ship.reset()
+                ship.state = RezIn(ship)
+            }
         } // blowUpShip
 
         private fun blowUpShift(p: Float): Float {
@@ -215,5 +215,28 @@ class Ship(private val sounds: Sounds) {
             return 0f
         } // blowUpShift
     } // Exploding
+
+    private class RezIn(private val ship: Ship): ShipState {
+        private var radius = 300f
+
+        override fun thrust() = Unit
+        override fun rotateTowards(angle: Double) = Unit
+        override fun update(fps: Long, width: Int, height: Int) {
+            radius -= (radius / 10)
+            if (radius < 5)
+                ship.state = Flying(ship)
+        } // update
+
+        override fun draw(canvas: Canvas) {
+            val r = (radius / 100).toInt()
+            val brush = if ((r/2f) == (r/2).toFloat()) ship.shipBrush else ship.explodeBrush
+
+            canvas.drawCircle(0f, 0f, radius, brush)
+        } // draw
+
+        override fun explode(): ShipState {
+            return this
+        } // explode
+    } // RezIn
 } // Ship
 
