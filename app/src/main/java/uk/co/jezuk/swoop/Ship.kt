@@ -18,7 +18,6 @@ class Ship(private val sounds: Sounds) {
         -45f, 12f, -75f, 0f,
         -75f, 0f, -45f, -12f
     )
-    private var explodeShape = shape.copyOf()
 
     private val shipBrush = Paint()
     private val shipFillBrush = Paint()
@@ -31,10 +30,13 @@ class Ship(private val sounds: Sounds) {
     private var thrustFrames = 0
     private val thrustSound = sounds.load(R.raw.thrust)
 
-    private var explodeFrames = 0
-
     private val velocity = Vector(0.0, 0.0)
     val position = Point(0.0, 0.0)
+
+    private lateinit var state: ShipState
+
+    val killDist: Float
+        get() = 25f;
 
     init {
         shipPath.moveTo(shape[0], shape[1])
@@ -67,23 +69,43 @@ class Ship(private val sounds: Sounds) {
         targetRotation = rotation
         velocity.reset()
         position.reset()
+
+        state = Flying(this)
     } // reset
 
     fun thrust() {
-        if (explodeFrames != 0) return
-
-        val thrust = Vector(2.0, rotation)
-        velocity += thrust
-
-        thrustFrames = 10
-        sounds.play(thrustSound)
+        state.thrust()
     } // thrust
 
     fun rotateTowards(angle: Double) {
-        if (explodeFrames != 0) return
-
-        targetRotation = angle
+        state.rotateTowards(angle)
     } // rotateTowards
+
+    fun update(fps: Long, width: Int, height: Int) {
+        rotateShip()
+        applyThrust(width, height)
+
+        state.update(fps, width, height)
+    } // update
+
+    fun draw(canvas: Canvas) {
+        canvas.save()
+
+        canvas.translate(
+            position.x.toFloat(),
+            position.y.toFloat()
+        )
+        canvas.translate(canvas.width/2f, canvas.height/2f)
+        canvas.rotate(rotation.toFloat())
+
+        state.draw(canvas)
+
+        canvas.restore()
+    } // draw
+
+    fun explode() {
+        state = state.explode()
+    } // explode
 
     private fun rotateShip() {
         var angleOffset = targetRotation - rotation
@@ -108,75 +130,92 @@ class Ship(private val sounds: Sounds) {
 
     private fun applyThrust(width: Int, height: Int) {
         position.move(velocity, width, height)
-        if (thrustFrames > 0) --thrustFrames
     } // applyThrust
 
-    private fun blowUpShip() {
-        for (l in 0 until explodeShape.size step 4) {
-            val x = blowUpShift(explodeShape[l])
-            val y = blowUpShift(explodeShape[l + 3])
+    //////////////////////////
+    private interface ShipState {
+        fun thrust()
+        fun rotateTowards(angle: Double)
 
-            for (p in 0 until 4 step 2) {
-                explodeShape[l + p] += x
-                explodeShape[l + 1 + p] += y
-            }
+        fun update(fps: Long, width: Int, height: Int)
+        fun draw(canvas: Canvas)
+
+        fun explode(): ShipState
+    } // ShipState
+
+    private class Flying(private val ship: Ship): ShipState {
+        private var thrustFrames = 0
+
+        override fun thrust() {
+            val thrust = Vector(2.0, ship.rotation)
+            ship.velocity += thrust
+
+            ship.thrustFrames = 10
+            ship.sounds.play(ship.thrustSound)
+        } // thrust
+
+        override fun rotateTowards(angle: Double) {
+            ship.targetRotation = angle
+        } // rotateTowards
+
+        override fun update(fps: Long, width: Int, height: Int) {
+            if (thrustFrames > 0) --thrustFrames
         }
 
-        --explodeFrames
-        if (explodeFrames == 0) {
-            reset()
-        }
-    } // blowUpShip
+        override fun draw(canvas: Canvas) {
+            canvas.drawPath(ship.shipPath, ship.shipFillBrush)
+            canvas.drawLines(ship.shape, ship.shipBrush)
 
-    private fun blowUpShift(p: Float): Float {
-        if (p < 0) return -5f
-        if (p > 0) return 5f
-        return 0f
-    } // blowUpShift
+            if (thrustFrames != 0)
+                canvas.drawLines(ship.thruster, ship.thrustBrush)
+        } // draw
 
-    fun update(fps: Long, width: Int, height: Int) {
-        rotateShip()
+        override fun explode(): ShipState {
+            return Exploding(ship)
+        } // explode
+    } // Flying
 
-        if (explodeFrames != 0) {
+    private class Exploding(private val ship: Ship): ShipState {
+        private var explodeShape = ship.shape.copyOf()
+        private var explodeFrames = 50
+
+        override fun thrust() = Unit
+        override fun rotateTowards(angle: Double) = Unit
+
+        override fun update(fps: Long, width: Int, height: Int) {
             blowUpShip()
-        }
+        } // update
 
-        applyThrust(width, height)
-    } // update
+        override fun draw(canvas: Canvas) {
+            canvas.drawLines(explodeShape, ship.explodeBrush)
+        } // draw
 
-    fun draw(canvas: Canvas) {
-        canvas.save()
+        override fun explode(): ShipState {
+            return this
+        } // explode
 
-        canvas.translate(
-            position.x.toFloat(),
-            position.y.toFloat()
-        )
-        canvas.translate(canvas.width/2f, canvas.height/2f)
-        canvas.rotate(rotation.toFloat())
+        private fun blowUpShip() {
+            for (l in 0 until explodeShape.size step 4) {
+                val x = blowUpShift(explodeShape[l])
+                val y = blowUpShift(explodeShape[l + 3])
 
-        if (explodeFrames == 0) {
-            canvas.drawPath(shipPath, shipFillBrush)
-            canvas.drawLines(shape, shipBrush)
-        } else {
-            canvas.drawLines(explodeShape, explodeBrush)
-        }
+                for (p in 0 until 4 step 2) {
+                    explodeShape[l + p] += x
+                    explodeShape[l + 1 + p] += y
+                }
+            }
 
-        if (thrustFrames != 0)
-            canvas.drawLines(thruster, thrustBrush)
+            --explodeFrames
+            if (explodeFrames == 0) {
+                ship.reset()
+            }
+        } // blowUpShip
 
-        canvas.restore()
-    } // draw
-
-    fun explode() {
-        if (explodeFrames != 0) return
-
-        explodeFrames = 50
-        thrustFrames = 0
-
-        for (l in 0 until shape.size)
-            explodeShape[l] = shape[l]
-    } // explode
-
-    val killDist: Float
-        get() = 25f;
+        private fun blowUpShift(p: Float): Float {
+            if (p < 0) return -5f
+            if (p > 0) return 5f
+            return 0f
+        } // blowUpShift
+    } // Exploding
 } // Ship
+
