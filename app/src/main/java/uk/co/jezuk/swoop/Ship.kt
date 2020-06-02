@@ -6,7 +6,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.min
 
-class Ship {
+class Ship(private val sounds: Sounds) {
     private val shape = floatArrayOf(
         50f, 0f, -50f, 25f,
         -50f, 25f, -30f, 0f,
@@ -26,6 +26,8 @@ class Ship {
     private var rotation = -90.0
     private var targetRotation = rotation
     private var thrustFrames = 0
+
+    private val thrustSound = sounds.load(R.raw.thrust)
 
     private var vectorMagnitude = 0.0
     private var vectorAngle = 0.0
@@ -56,6 +58,7 @@ class Ship {
         vectorAngle = invertAngle(angleFromOffsets(x, y))
 
         thrustFrames = 10
+        sounds.play(thrustSound)
     } // thrust
 
     fun rotateTowards(angle: Double) {

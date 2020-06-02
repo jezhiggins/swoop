@@ -2,6 +2,7 @@ package uk.co.jezuk.swoop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.media.AudioManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
@@ -23,6 +24,8 @@ class FullscreenActivity : AppCompatActivity() {
         binding = ActivityFullscreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        volumeControlStream = AudioManager.STREAM_MUSIC
 
         gameView = binding.fullscreenContent
 

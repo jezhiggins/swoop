@@ -19,7 +19,9 @@ class GameView(
     private var thread: GameThread? = null
     private var gestureDetector: GestureDetector
 
-    private var ship = Ship()
+    private val sounds = Sounds(context)
+
+    private var ship = Ship(sounds)
     private var starField = StarField()
     private var debug = Debug()
 
