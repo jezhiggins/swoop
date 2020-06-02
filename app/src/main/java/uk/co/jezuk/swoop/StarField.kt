@@ -2,7 +2,6 @@ package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.text.style.LineHeightSpan
 
 class StarField (count: Int = 400) {
     private val stars = FloatArray(count)
@@ -10,6 +9,7 @@ class StarField (count: Int = 400) {
 
     init {
         starBrush.setARGB(255, 255, 255, 255)
+        starBrush.strokeWidth = 4f
     }
 
     fun size(width: Int, height: Int) {
