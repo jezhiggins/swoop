@@ -33,7 +33,7 @@ class Ship(private val sounds: Sounds) {
     private val thrustSound = sounds.load(R.raw.thrust)
 
     private val velocity = Vector(0.0, 0.0)
-    private val position = Point(0.0, 0.0)
+    val position = Point(0.0, 0.0)
 
     init {
         shipPath.moveTo(shape[0], shape[1])
@@ -116,4 +116,8 @@ class Ship(private val sounds: Sounds) {
 
         canvas.restore()
     } // draw
+
+    fun explode() {
+        shipBrush.setARGB(255, 255, 0, 0)
+    }
 } // Ship

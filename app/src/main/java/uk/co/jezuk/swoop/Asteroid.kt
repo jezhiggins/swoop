@@ -28,6 +28,12 @@ class Asteroids {
     fun draw(canvas: Canvas) {
         asteroids.forEach { a -> a.draw(canvas) }
     }
+
+    fun findCollisions(ship: Ship) {
+        asteroids.forEach {
+            a -> a.checkShipCollision(ship)
+        }
+    }
 }
 
 class Asteroid(
@@ -35,6 +41,7 @@ class Asteroid(
     private var velocity: Vector
 ) {
     private val brush = Paint()
+    private val killDist = 100f
 
     init {
         brush.setARGB(127, 255, 255, 255)
@@ -56,9 +63,14 @@ class Asteroid(
         )
         canvas.translate(canvas.width/2f, canvas.height/2f)
 
-        canvas.drawCircle(0f, 0f, 100f, brush)
+        canvas.drawCircle(0f, 0f, killDist, brush)
 
         canvas.restore()
     } // draw
 
-}
+    fun checkShipCollision(ship: Ship) {
+        if (ship.position.distance(position) < killDist) {
+            ship.explode()
+        }
+    } // checkShipCollision
+} // Asteroid

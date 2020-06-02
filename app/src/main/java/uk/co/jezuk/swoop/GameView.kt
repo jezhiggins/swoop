@@ -69,6 +69,9 @@ class GameView(
     fun update(fps: Long) {
         asteroids.update(fps, width, height)
         ship.update(fps, width, height)
+
+        asteroids.findCollisions(ship)
+
         debug.update(fps)
     } // update
 

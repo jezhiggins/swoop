@@ -17,6 +17,13 @@ data class Point(var x: Double, var y: Double) {
         if (y < -halfHeight) y = halfHeight
         if (y > halfHeight) y = -halfHeight
     }
+
+    fun distance(pos: Point): Float {
+        val offsetX = Math.max(x, pos.x) - Math.min(x, pos.x)
+        val offsetY = Math.max(y, pos.y) - Math.min(y, pos.y)
+
+        return magnitudeFromOffsets(offsetX, offsetY).toFloat()
+    }
 }
 
 class Vector(
