@@ -27,7 +27,6 @@ class Ship(private val sounds: Sounds) {
     private var rotation = -90.0
     private var targetRotation = rotation
 
-    private var thrustFrames = 0
     private val thrustSound = sounds.load(R.raw.thrust)
 
     private val velocity = Vector(0.0, 0.0)
@@ -36,7 +35,7 @@ class Ship(private val sounds: Sounds) {
     private lateinit var state: ShipState
 
     val killDist: Float
-        get() = 25f;
+        get() = 30f;
 
     init {
         shipPath.moveTo(shape[0], shape[1])
@@ -150,7 +149,7 @@ class Ship(private val sounds: Sounds) {
             val thrust = Vector(2.0, ship.rotation)
             ship.velocity += thrust
 
-            ship.thrustFrames = 10
+            thrustFrames = 10
             ship.sounds.play(ship.thrustSound)
         } // thrust
 
@@ -160,7 +159,7 @@ class Ship(private val sounds: Sounds) {
 
         override fun update(fps: Long, width: Int, height: Int) {
             if (thrustFrames > 0) --thrustFrames
-        }
+        } // update
 
         override fun draw(canvas: Canvas) {
             canvas.drawPath(ship.shipPath, ship.shipFillBrush)
@@ -206,9 +205,8 @@ class Ship(private val sounds: Sounds) {
             }
 
             --explodeFrames
-            if (explodeFrames == 0) {
+            if (explodeFrames == 0)
                 ship.reset()
-            }
         } // blowUpShip
 
         private fun blowUpShift(p: Float): Float {
