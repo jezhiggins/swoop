@@ -34,3 +34,10 @@ fun invertAngle(angle: Double): Double {
     val thrustAngle = angle + 180
     return if (thrustAngle > 180) thrustAngle - 360 else thrustAngle
 } // invertAngle
+
+fun distanceBetween(a: Float, b: Float): Float {
+    return Math.max(a, b) - Math.min(a, b)
+}
+fun distanceBetween(a: Double, b: Double): Double {
+    return Math.max(a, b) - Math.min(a, b)
+}

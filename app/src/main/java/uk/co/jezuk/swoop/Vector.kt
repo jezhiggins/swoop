@@ -19,8 +19,8 @@ data class Point(var x: Double, var y: Double) {
     }
 
     fun distance(pos: Point): Float {
-        val offsetX = Math.max(x, pos.x) - Math.min(x, pos.x)
-        val offsetY = Math.max(y, pos.y) - Math.min(y, pos.y)
+        val offsetX = distanceBetween(x, pos.x)
+        val offsetY = distanceBetween(y, pos.y)
 
         return magnitudeFromOffsets(offsetX, offsetY).toFloat()
     }

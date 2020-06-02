@@ -120,4 +120,7 @@ class Ship(private val sounds: Sounds) {
     fun explode() {
         shipBrush.setARGB(255, 255, 0, 0)
     }
+
+    val killDist: Float
+        get() = 25f;
 } // Ship
