@@ -32,9 +32,8 @@ class Ship(private val sounds: Sounds) {
 
     private val thrustSound = sounds.load(R.raw.thrust)
 
-    private var velocity = Vector(0.0, 0.0)
-    private var x = 0f
-    private var y = 0f
+    private val velocity = Vector(0.0, 0.0)
+    private val position = Point(0.0, 0.0)
 
     init {
         shipPath.moveTo(shape[0], shape[1])
@@ -89,18 +88,7 @@ class Ship(private val sounds: Sounds) {
     } // rotateShip
 
     private fun applyThrust(width: Int, height: Int) {
-        val (deltaX, deltaY) = velocity.offset
-
-        x += deltaX.toFloat()
-        y += deltaY.toFloat()
-
-        val halfWidth = width / 2f
-        if (x < -halfWidth) x = halfWidth
-        if (x > halfWidth) x = -halfWidth
-        val halfHeight = height / 2f
-        if (y < -halfHeight) y = halfHeight
-        if (y > halfHeight) y = -halfHeight
-
+        position.move(velocity, width, height)
         if (thrustFrames > 0) thrustFrames -= 1
     } // applyThrust
 
@@ -113,7 +101,10 @@ class Ship(private val sounds: Sounds) {
     fun draw(canvas: Canvas) {
         canvas.save()
 
-        canvas.translate(x, y)
+        canvas.translate(
+            position.x.toFloat(),
+            position.y.toFloat()
+        )
         canvas.translate(canvas.width/2f, canvas.height/2f)
         canvas.rotate(rotation.toFloat())
 
