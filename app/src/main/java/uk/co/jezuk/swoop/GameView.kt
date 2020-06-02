@@ -1,7 +1,6 @@
 package uk.co.jezuk.swoop
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet

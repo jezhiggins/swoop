@@ -1,7 +1,12 @@
 package uk.co.jezuk.swoop
 
+import android.graphics.Bitmap
+import android.graphics.BlendMode
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.os.Build
 import android.view.SurfaceHolder
+import androidx.annotation.RequiresApi
 
 class GameThread(
     private val surfaceHolder: SurfaceHolder,
@@ -12,24 +17,27 @@ class GameThread(
     fun running() { this.running = true }
     fun stopped() { this.running = false; println("STOPPED")}
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun run() {
         var fps: Long = 60
 
+        while(!surfaceHolder.surface.isValid) {
+            sleep(100)
+        }
+
         while (running) {
-            val startTime = System.currentTimeMillis()
+            val startTime = System.nanoTime() / 1000000
 
             this.gameView.update(fps)
 
-            if (surfaceHolder.surface.isValid) {
-                val canvas = this.surfaceHolder.lockHardwareCanvas()
-                this.gameView.draw(canvas!!)
-                surfaceHolder.unlockCanvasAndPost(canvas)
+            val canvas = this.surfaceHolder.lockHardwareCanvas()
+            this.gameView.draw(canvas)
+            surfaceHolder.unlockCanvasAndPost(canvas)
 
-                val timeThisFrame = System.currentTimeMillis() - startTime
-                if (timeThisFrame >= 1) {
-                    fps = 1000 / timeThisFrame
-                }
-            } // if ...
+            val timeThisFrame = (System.nanoTime() / 1000000) - startTime
+            if (timeThisFrame > 1) {
+                fps = 1000 / timeThisFrame
+            }
         } // while ...
     } // run
 } // GameThread
