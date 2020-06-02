@@ -17,17 +17,14 @@ class GameView(
     GestureDetector.OnGestureListener
 {
     private var thread: GameThread? = null
-    private var textPen = Paint()
+    private var gestureDetector: GestureDetector
+
     private var ship = Ship()
     private var starField = StarField()
-    private var fps: Long = 0
-    private var gestureDetector: GestureDetector
+    private var debug = Debug()
 
     init {
         holder.addCallback(this)
-
-        textPen.setARGB(127, 255, 255, 255)
-        textPen.textSize = 32f
 
         gestureDetector = GestureDetector(this.context, this)
     } // init
@@ -66,9 +63,8 @@ class GameView(
     override fun onLongPress(ev: MotionEvent) = ship.thrust()
 
     fun update(fps: Long) {
-        this.fps = fps
-
         ship.update(fps, width, height)
+        debug.update(fps)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -77,8 +73,7 @@ class GameView(
         starField.draw(canvas)
         ship.draw(canvas)
 
-        canvas.drawText("FPS: ${this.fps}", 100f, 100f, textPen)
-        canvas.drawText("Accel: ${canvas.isHardwareAccelerated}", 100f, 130f, textPen)
+        debug.draw(canvas)
     } // draw
 
     fun pause() {
