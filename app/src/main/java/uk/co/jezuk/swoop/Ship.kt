@@ -43,8 +43,9 @@ class Ship(private val sounds: Sounds) {
             shipPath.lineTo(shape[i], shape[i+1])
         shipPath.close()
 
-        shipBrush.setARGB(150, 0, 255, 0)
+        shipBrush.setARGB(175, 0, 255, 0)
         shipBrush.strokeWidth = 10f
+        shipBrush.strokeCap = Paint.Cap.ROUND
         shipBrush.style = Paint.Style.STROKE
 
         shipFillBrush.setARGB(255, 0, 0, 0)
@@ -131,11 +132,10 @@ class Ship(private val sounds: Sounds) {
         canvas.rotate(rotation.toFloat())
 
         canvas.drawPath(shipPath, shipFillBrush)
-        canvas.drawPath(shipPath, shipBrush)
+        canvas.drawLines(shape, shipBrush)
 
         if (thrustFrames != 0)
             canvas.drawLines(thruster, thrustBrush)
-
         canvas.restore()
     } // draw
 } // Ship
