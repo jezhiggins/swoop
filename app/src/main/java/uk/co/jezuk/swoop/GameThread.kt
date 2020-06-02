@@ -1,9 +1,5 @@
 package uk.co.jezuk.swoop
 
-import android.graphics.Bitmap
-import android.graphics.BlendMode
-import android.graphics.Canvas
-import android.graphics.Paint
 import android.os.Build
 import android.view.SurfaceHolder
 import androidx.annotation.RequiresApi
@@ -15,7 +11,7 @@ class GameThread(
     private var running: Boolean = false
 
     fun running() { this.running = true }
-    fun stopped() { this.running = false; println("STOPPED")}
+    fun stopped() { this.running = false }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun run() {

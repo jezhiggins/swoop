@@ -13,7 +13,7 @@ import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class FullscreenActivity : AppCompatActivity() {
+class Swoop : AppCompatActivity() {
     private lateinit var binding: ActivityFullscreenBinding
     private lateinit var gameView: GameView
 
