@@ -32,8 +32,7 @@ class Ship(private val sounds: Sounds) {
 
     private val thrustSound = sounds.load(R.raw.thrust)
 
-    private var vectorMagnitude = 0.0
-    private var vectorAngle = 0.0
+    private var velocity = Vector(0.0, 0.0)
     private var x = 0f
     private var y = 0f
 
@@ -57,19 +56,8 @@ class Ship(private val sounds: Sounds) {
     } // init
 
     fun thrust() {
-        val vectorRads = Math.toRadians(vectorAngle)
-        val x1 = vectorMagnitude * cos(vectorRads)
-        val y1 = vectorMagnitude * sin(vectorRads)
-
-        val rotationRads = Math.toRadians(rotation)
-        val x2 = 2 * cos(rotationRads)
-        val y2 = 2 * sin(rotationRads)
-
-        val x = x1 + x2
-        val y = y1 + y2
-
-        vectorMagnitude = min(magnitudeFromOffsets(x, y), 20.0)
-        vectorAngle = invertAngle(angleFromOffsets(x, y))
+        val thrust = Vector(2.0, rotation)
+        velocity += thrust
 
         thrustFrames = 10
         sounds.play(thrustSound)
@@ -101,9 +89,7 @@ class Ship(private val sounds: Sounds) {
     } // rotateShip
 
     private fun applyThrust(width: Int, height: Int) {
-        val vectorRads = Math.toRadians(vectorAngle)
-        val deltaX = vectorMagnitude * Math.cos(vectorRads)
-        val deltaY = vectorMagnitude * Math.sin(vectorRads)
+        val (deltaX, deltaY) = velocity.offset
 
         x += deltaX.toFloat()
         y += deltaY.toFloat()
@@ -116,7 +102,7 @@ class Ship(private val sounds: Sounds) {
         if (y > halfHeight) y = -halfHeight
 
         if (thrustFrames > 0) thrustFrames -= 1
-    }
+    } // applyThrust
 
     fun update(fps: Long, width: Int, height: Int) {
         rotateShip()
