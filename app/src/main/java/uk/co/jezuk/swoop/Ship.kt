@@ -23,11 +23,14 @@ class Ship(private val sounds: Sounds) {
     private val shipFillBrush = Paint()
     private val thrustBrush = Paint()
     private val explodeBrush = Paint()
+    private val redBrush = Paint()
 
     private var rotation = -90.0
     private var targetRotation = rotation
 
     private val thrustSound = sounds.load(R.raw.thrust)
+    private val explosionSound = sounds.load(R.raw.shipexplosion)
+    private val rezInSound = sounds.load(R.raw.rezin)
 
     private val velocity = Vector(0.0, 0.0)
     val position = Point(0.0, 0.0)
@@ -59,6 +62,10 @@ class Ship(private val sounds: Sounds) {
 
         thrustBrush.setARGB(100, 255, 215, 0)
         thrustBrush.strokeWidth = 5f
+
+        redBrush.setARGB(255, 255, 0, 0)
+        redBrush.strokeWidth = 10f
+        redBrush.style = Paint.Style.STROKE
 
         reset()
     } // init
@@ -176,6 +183,10 @@ class Ship(private val sounds: Sounds) {
         private var explodeShape = ship.shape.copyOf()
         private var explodeFrames = 50
 
+        init {
+            ship.sounds.play(ship.explosionSound)
+        }
+
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) = Unit
 
@@ -217,7 +228,11 @@ class Ship(private val sounds: Sounds) {
     } // Exploding
 
     private class RezIn(private val ship: Ship): ShipState {
-        private var radius = 300f
+        private var radius = 600f
+
+        init {
+            ship.sounds.play(ship.rezInSound)
+        }
 
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) = Unit
@@ -229,7 +244,7 @@ class Ship(private val sounds: Sounds) {
 
         override fun draw(canvas: Canvas) {
             val r = (radius / 100).toInt()
-            val brush = if ((r/2f) == (r/2).toFloat()) ship.shipBrush else ship.explodeBrush
+            val brush = if ((r/2f) == (r/2).toFloat()) ship.shipBrush else ship.redBrush
 
             canvas.drawCircle(0f, 0f, radius, brush)
         } // draw
