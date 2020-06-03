@@ -8,9 +8,10 @@ import uk.co.jezuk.swoop.wave.Wave
 
 class Game(private val context: Context) {
     private var wave: Wave = Emptiness()
+    private val sounds = Sounds(context)
 
     fun start(width: Int, height: Int) {
-        wave = FlyAround(context, width, height)
+        wave = FlyAround(sounds, width, height)
     } // start
 
     /////

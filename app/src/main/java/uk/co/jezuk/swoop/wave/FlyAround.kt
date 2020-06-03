@@ -8,18 +8,15 @@ import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 
 class FlyAround(
-    context: Context,
+    sounds: Sounds,
     private val width: Int,
     private val height: Int
 ) : Wave {
-    private val sounds = Sounds(context)
-
     private var ship = Ship(sounds)
-    private var starField = StarField()
+    private var starField = StarField(width, height)
     private var asteroids = Asteroids()
 
     init {
-        starField.size(width, height)
         asteroids.wave(5, width, height)
     }
 
