@@ -10,9 +10,7 @@ class FlyAround(
     game: Game,
     private val starField: StarField
 ) : Wave {
-    private val width = game.width
-    private val height = game.height
-    private var ship = Ship(game.sounds)
+    private var ship = Ship(game)
     private var asteroids = Asteroids(game, 5)
 
     /////
@@ -26,8 +24,8 @@ class FlyAround(
 
     /////
     override fun update(fps: Long) {
-        asteroids.update(fps, width, height)
-        ship.update(fps, width, height)
+        asteroids.update(fps)
+        ship.update(fps)
 
         asteroids.findCollisions(ship)
     } // update

@@ -8,7 +8,7 @@ import uk.co.jezuk.swoop.craft.Asteroids
 class Attract(
     private val game: Game
 ) : Wave {
-    private var starField = StarField(game.width, game.height)
+    private var starField = StarField(game.extent)
     private var asteroids = Asteroids(
         game,
         randInt(3)+1,
@@ -24,16 +24,16 @@ class Attract(
 
     /////
     override fun update(fps: Long) {
-        asteroids.update(fps, game.width, game.height)
+        asteroids.update(fps)
     } // update
 
     override fun draw(canvas: Canvas) {
         starField.draw(canvas)
         asteroids.draw(canvas)
 
-        canvas.drawText("SWOOP", game.width/2f, game.height/2f, pen)
+        canvas.drawText("SWOOP", 0f, 0f, pen)
 
-        canvas.drawText("Forest Road Game Krew", game.width/2f, game.height - 40f, smallPen)
+        canvas.drawText("Forest Road Game Krew",  0f, game.extent.bottom.toFloat() - 40f, smallPen)
     } // draw
 
     companion object {

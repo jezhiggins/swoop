@@ -18,8 +18,8 @@ class Asteroid(
 
     private val killDist: Float get() = scale * killRadius
 
-    fun update(fps: Long, width: Int, height: Int) {
-        position.move(velocity, width, height)
+    fun update(fps: Long) {
+        position.move(velocity, all.extent)
         orientation += rotation
         if (orientation < 0) orientation += 360
         if (orientation > 360) orientation -= 360
@@ -32,7 +32,6 @@ class Asteroid(
             position.x.toFloat(),
             position.y.toFloat()
         )
-        canvas.translate(canvas.width/2f, canvas.height/2f)
         canvas.scale(scale, scale)
 
         // canvas.drawCircle(0f, 0f, killRadius, brush)

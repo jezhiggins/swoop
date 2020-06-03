@@ -2,6 +2,7 @@ package uk.co.jezuk.swoop
 
 import android.content.Context
 import android.graphics.Canvas
+import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.wave.Attract
 import uk.co.jezuk.swoop.wave.Emptiness
 import uk.co.jezuk.swoop.wave.FlyAround
@@ -9,18 +10,15 @@ import uk.co.jezuk.swoop.wave.Wave
 
 class Game(context: Context) {
     private var wave: Wave = Emptiness()
-    private var w: Int = 0
-    private var h: Int = 0
+    private lateinit var ext: Extent
     val sounds = Sounds(context)
 
     fun start(width: Int, height: Int) {
-        w = width
-        h = height
+        ext = Extent(width, height)
         wave = Attract(this)
     } // start
 
-    val width: Int get() = w
-    val height: Int get() = h
+    val extent get() = ext
 
     fun nextWave(w: Wave) { wave = w }
 
@@ -31,5 +29,11 @@ class Game(context: Context) {
 
     /////
     fun update(fps: Long) = wave.update(fps)
-    fun draw(canvas: Canvas) = wave.draw(canvas)
+    fun draw(canvas: Canvas) {
+        canvas.save()
+        canvas.translate(extent.canvasOffsetX, extent.canvasOffsetY)
+
+        wave.draw(canvas)
+        canvas.restore()
+    }
 } // Game

@@ -10,7 +10,7 @@ class Asteroids(
     medium: Int = 0,
     small: Int = 0
 ) {
-    private val asteroids: MutableList<Asteroid> = mutableListOf()
+    private val asteroids = mutableListOf<Asteroid>()
 
     init {
         val sizes = mapOf(
@@ -23,7 +23,7 @@ class Asteroids(
                 add(
                     Asteroid(
                         this,
-                        Point((Math.random() * game.width), (Math.random() * game.height)),
+                        game.extent.randomPoint(),
                         size
                     )
                 )
@@ -39,8 +39,8 @@ class Asteroids(
         pop()
     }
 
-    fun update(fps: Long, width: Int, height: Int) {
-        asteroids.forEach { a -> a.update(fps, width, height) }
+    fun update(fps: Long) {
+        asteroids.forEach { a -> a.update(fps) }
     } // update
 
     fun draw(canvas: Canvas) {
@@ -56,4 +56,5 @@ class Asteroids(
     } // findCollisions
 
     fun pop() = game.sounds.pop()
+    val extent = game.extent
 } // Asteroids

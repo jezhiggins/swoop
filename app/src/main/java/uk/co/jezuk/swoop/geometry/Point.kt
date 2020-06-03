@@ -1,17 +1,15 @@
 package uk.co.jezuk.swoop.geometry
 
 data class Point(var x: Double, var y: Double) {
-    fun move(vec: Vector, width: Int, height: Int) {
+    fun move(vec: Vector, bounds: Extent) {
         val (deltaX, deltaY) = vec.offset
         x += deltaX.toFloat()
         y += deltaY.toFloat()
 
-        val halfWidth = width / 2.0
-        if (x < -halfWidth) x = halfWidth
-        if (x > halfWidth) x = -halfWidth
-        val halfHeight = height / 2.0
-        if (y < -halfHeight) y = halfHeight
-        if (y > halfHeight) y = -halfHeight
+        if (x < bounds.left) x = bounds.right
+        if (x > bounds.right) x = bounds.left
+        if (y < bounds.top) y = bounds.bottom
+        if (y > bounds.bottom) y = bounds.top
     } // move
 
     fun distance(pos: Point): Float {

@@ -2,16 +2,16 @@ package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import uk.co.jezuk.swoop.geometry.Extent
 
-class StarField (width: Int, height: Int, count: Int = 400) {
+class StarField (extent: Extent, count: Int = 400) {
     private val stars = FloatArray(count)
 
     init {
         for (i in 0 until stars.size step 2) {
-            val x = Math.random() * width
-            val y = Math.random() * height
-            stars[i] = x.toFloat()
-            stars[i+1] = y.toFloat()
+            val p = extent.randomPoint()
+            stars[i] = p.x.toFloat()
+            stars[i+1] = p.y.toFloat()
         }
     } // init
 

@@ -3,18 +3,18 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
-import uk.co.jezuk.swoop.Sounds
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
 
-class Ship(private val sounds: Sounds) {
+class Ship(private val game: Game) {
     private var rotation = -90.0
     private var targetRotation = rotation
 
-    private val thrustSound = sounds.load(R.raw.thrust)
-    private val explosionSound = sounds.load(R.raw.shipexplosion)
-    private val rezInSound = sounds.load(R.raw.rezin)
+    private val thrustSound = game.sounds.load(R.raw.thrust)
+    private val explosionSound = game.sounds.load(R.raw.shipexplosion)
+    private val rezInSound = game.sounds.load(R.raw.rezin)
 
     private val velocity = Vector(0.0, 0.0)
     private val pos = Point(0.0, 0.0)
@@ -39,18 +39,17 @@ class Ship(private val sounds: Sounds) {
     fun thrust() = state.thrust()
     fun rotateTowards(angle: Double) = state.rotateTowards(angle)
 
-    fun update(fps: Long, width: Int, height: Int) {
+    fun update(fps: Long) {
         rotateShip()
-        applyThrust(width, height)
+        applyThrust()
 
-        state.update(fps, width, height)
+        state.update(fps)
     } // update
 
     fun draw(canvas: Canvas) {
         canvas.save()
 
         canvas.translate(pos.x.toFloat(), pos.y.toFloat())
-        canvas.translate(canvas.width/2f, canvas.height/2f)
         canvas.rotate(rotation.toFloat())
 
         state.draw(canvas)
@@ -82,8 +81,8 @@ class Ship(private val sounds: Sounds) {
         if (rotation < -180) rotation += 360
     } // rotateShip
 
-    private fun applyThrust(width: Int, height: Int) {
-        pos.move(velocity, width, height)
+    private fun applyThrust() {
+        pos.move(velocity, game.extent)
     } // applyThrust
 
     //////////////////////////
@@ -148,7 +147,7 @@ class Ship(private val sounds: Sounds) {
         fun thrust()
         fun rotateTowards(angle: Double)
 
-        fun update(fps: Long, width: Int, height: Int)
+        fun update(fps: Long)
         fun draw(canvas: Canvas)
 
         fun explode()
@@ -166,14 +165,14 @@ class Ship(private val sounds: Sounds) {
             ship.velocity += thrust
 
             thrustFrames = 10
-            ship.sounds.play(ship.thrustSound)
+            ship.game.sounds.play(ship.thrustSound)
         } // thrust
 
         override fun rotateTowards(angle: Double) {
             ship.targetRotation = angle
         } // rotateTowards
 
-        override fun update(fps: Long, width: Int, height: Int) {
+        override fun update(fps: Long) {
             if (thrustFrames > 0) --thrustFrames
         } // update
 
@@ -196,14 +195,14 @@ class Ship(private val sounds: Sounds) {
         private var explodeFrames = 50
 
         init {
-            ship.sounds.play(ship.explosionSound)
+            ship.game.sounds.play(ship.explosionSound)
         }
 
         override val position: Point get() = Hyperspace
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) = Unit
 
-        override fun update(fps: Long, width: Int, height: Int) {
+        override fun update(fps: Long) {
             blowUpShip()
         } // update
 
@@ -246,12 +245,12 @@ class Ship(private val sounds: Sounds) {
         override val position: Point get() = Hyperspace
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) {
-            ship.pos.move(Vector(15.0, angle), 1000, 1000)
+            ship.pos.move(Vector(15.0, angle), ship.game.extent)
         }
-        override fun update(fps: Long, width: Int, height: Int) {
+        override fun update(fps: Long) {
             if (pause != 0) {
                 if (--pause == 0)
-                    ship.sounds.play(ship.rezInSound)
+                    ship.game.sounds.play(ship.rezInSound)
                 return
             }
             radius -= (radius / 20)

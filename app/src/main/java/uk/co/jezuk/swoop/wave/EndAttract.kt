@@ -20,7 +20,7 @@ class EndAttract(
 
     /////
     override fun update(fps: Long) {
-        asteroids.update(fps, game.width, game.height)
+        asteroids.update(fps)
 
         if (++tick == steps) {
             asteroids.explodeLast()
