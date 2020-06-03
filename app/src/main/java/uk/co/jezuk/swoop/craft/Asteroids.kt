@@ -3,11 +3,10 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.geometry.Point
 
-class Asteroids {
+class Asteroids(count: Int, width: Int, height: Int) {
     private val asteroids: MutableList<Asteroid> = mutableListOf()
 
-    fun wave(count: Int, width: Int, height: Int) {
-        asteroids.clear()
+    init {
         for(a in 0 until count) {
             add(
                 Asteroid(
@@ -19,8 +18,9 @@ class Asteroids {
                 )
             )
         }
-    } // wave
+    } // init
 
+    val size: Int get() = asteroids.size
     fun add(asteroid: Asteroid) = asteroids.add(asteroid)
     fun remove(asteroid: Asteroid) = asteroids.remove(asteroid)
 

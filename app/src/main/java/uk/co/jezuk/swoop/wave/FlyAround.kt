@@ -14,11 +14,7 @@ class FlyAround(
 ) : Wave {
     private var ship = Ship(sounds)
     private var starField = StarField(width, height)
-    private var asteroids = Asteroids()
-
-    init {
-        asteroids.wave(5, width, height)
-    }
+    private var asteroids = Asteroids(5, width, height)
 
     /////
     override fun onSingleTapUp() = ship.thrust()
