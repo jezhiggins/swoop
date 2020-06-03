@@ -2,12 +2,12 @@ package uk.co.jezuk.swoop
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import uk.co.jezuk.swoop.geometry.angleFromOffsets
 
 class GameView(
     context: Context,
@@ -61,7 +61,12 @@ class GameView(
         return true
     } // onSingleTapUp
     override fun onScroll(ev1: MotionEvent, ev2: MotionEvent, offsetX: Float, offsetY: Float): Boolean {
-        ship.rotateTowards(angleFromOffsets(offsetX, offsetY))
+        ship.rotateTowards(
+            angleFromOffsets(
+                offsetX,
+                offsetY
+            )
+        )
         return true
     } // onScroll
     override fun onLongPress(ev: MotionEvent) = ship.thrust()

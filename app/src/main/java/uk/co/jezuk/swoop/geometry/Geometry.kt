@@ -1,7 +1,10 @@
-package uk.co.jezuk.swoop
+package uk.co.jezuk.swoop.geometry
 
 fun angleFromOffsets(offsetX: Float, offsetY: Float): Double {
-    return angleFromOffsets(offsetX.toDouble(), offsetY.toDouble())
+    return angleFromOffsets(
+        offsetX.toDouble(),
+        offsetY.toDouble()
+    )
 } // angleFromOffsets
 
 fun angleFromOffsets(offsetX: Double, offsetY: Double): Double {

@@ -3,6 +3,8 @@ package uk.co.jezuk.swoop
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import uk.co.jezuk.swoop.geometry.Point
+import uk.co.jezuk.swoop.geometry.Vector
 
 class Ship(private val sounds: Sounds) {
     private val shipPath = Path()

@@ -2,6 +2,8 @@ package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import uk.co.jezuk.swoop.geometry.Point
+import uk.co.jezuk.swoop.geometry.Vector
 
 class Asteroids {
     private val asteroids: MutableList<Asteroid> = mutableListOf()
@@ -41,7 +43,8 @@ class Asteroids {
     } // findCollisions
 } // Asteroids
 
-fun AsteroidVector(scale: Float) = Vector(6.0 - scale, Math.random() * 360)
+fun AsteroidVector(scale: Float) =
+    Vector(6.0 - scale, Math.random() * 360)
 
 class Asteroid(
     private val all: Asteroids,
