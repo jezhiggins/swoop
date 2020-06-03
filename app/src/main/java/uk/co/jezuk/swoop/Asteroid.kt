@@ -9,46 +9,49 @@ class Asteroids {
     fun wave(count: Int, width: Int, height: Int) {
         asteroids.clear()
         for(a in 0 until count) {
-            asteroids.add(
+            add(
                 Asteroid(
+                    this,
                     Point(
                         (Math.random() * width),
                         (Math.random() * height)
-                    ),
-                    Vector(2.0, Math.random() * 360)
+                    )
                 )
             )
         }
     } // wave
 
+    fun add(asteroid: Asteroid) = asteroids.add(asteroid)
+    fun remove(asteroid: Asteroid) = asteroids.remove(asteroid)
+
     fun update(fps: Long, width: Int, height: Int) {
         asteroids.forEach { a -> a.update(fps, width, height) }
-    }
+    } // update
 
     fun draw(canvas: Canvas) {
         asteroids.forEach { a -> a.draw(canvas) }
-    }
+    } // draw
 
     fun findCollisions(ship: Ship) {
-        asteroids.forEach {
+        val working = mutableListOf<Asteroid>()
+        working.addAll(asteroids)
+        working.forEach {
             a -> a.checkShipCollision(ship)
         }
-    }
-}
+    } // findCollisions
+} // Asteroids
+
+fun AsteroidVector(scale: Float) = Vector(6.0 - scale, Math.random() * 360)
 
 class Asteroid(
+    private val all: Asteroids,
     private val position: Point,
-    private var velocity: Vector
+    private var scale: Float = 4f
 ) {
-    private val brush = Paint()
-    private val killDist = 100f
+    private var velocity = AsteroidVector(scale)
+    private val killRadius = 25f
 
-    init {
-        brush.setARGB(127, 255, 255, 255)
-        brush.strokeWidth = 3f
-        brush.strokeJoin = Paint.Join.BEVEL
-        brush.style = Paint.Style.STROKE
-    }
+    private val killDist: Float get() = scale * killRadius
 
     fun update(fps: Long, width: Int, height: Int) {
         position.move(velocity, width, height)
@@ -62,15 +65,40 @@ class Asteroid(
             position.y.toFloat()
         )
         canvas.translate(canvas.width/2f, canvas.height/2f)
+        canvas.scale(scale, scale)
 
-        canvas.drawCircle(0f, 0f, killDist, brush)
+        canvas.drawCircle(0f, 0f, killRadius, brush)
 
         canvas.restore()
     } // draw
 
+    fun split() {
+        if (scale != 1f) {
+            scale /= 2
+            velocity = AsteroidVector(scale)
+            all.add(Asteroid(all, position.copy(), scale))
+        } else {
+            all.remove(this)
+        }
+    } // split
+
     fun checkShipCollision(ship: Ship) {
         if (ship.position.distance(position) < (killDist + ship.killDist)) {
+            split()
             ship.explode()
         }
     } // checkShipCollision
+
+    companion object {
+        val brush = makeAsteroidBrush()
+
+        private fun makeAsteroidBrush(): Paint {
+            val brush = Paint()
+            brush.setARGB(127, 255, 255, 255)
+            brush.strokeWidth = 3f
+            brush.strokeJoin = Paint.Join.BEVEL
+            brush.style = Paint.Style.STROKE
+            return brush
+        }
+    } // companion object
 } // Asteroid
