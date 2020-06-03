@@ -49,7 +49,7 @@ class Asteroid(
         } else {
             all.remove(this)
         }
-        all.pop()
+        all.pop(1)
     } // split
 
     fun checkShipCollision(ship: Ship) {

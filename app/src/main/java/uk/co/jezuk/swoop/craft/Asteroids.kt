@@ -2,6 +2,7 @@ package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 
 class Asteroids(
@@ -36,8 +37,7 @@ class Asteroids(
     fun add(asteroid: Asteroid) = asteroids.add(asteroid)
     fun remove(asteroid: Asteroid) = asteroids.remove(asteroid)
     fun explodeLast() {
-        asteroids.remove(asteroids.last())
-        pop()
+        asteroids.last().explode()
     }
 
     fun update(fps: Long) {
@@ -55,6 +55,6 @@ class Asteroids(
         }
     } // findCollisions
 
-    fun pop() = game.sounds.pop()
+    val pop = game.sounds.load(R.raw.pop)
     val extent = game.extent
 } // Asteroids

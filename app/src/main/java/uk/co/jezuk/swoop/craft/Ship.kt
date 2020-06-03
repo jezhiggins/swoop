@@ -172,7 +172,7 @@ class Ship(private val game: Game) {
             ship.velocity += thrust
 
             thrustFrames = 10
-            ship.game.sounds.play(ship.thrustSound)
+            ship.thrustSound(1)
         } // thrust
 
         override fun rotateTowards(angle: Double) {
@@ -201,7 +201,7 @@ class Ship(private val game: Game) {
         private var explodeFrames = 50
 
         init {
-            ship.game.sounds.play(ship.explosionSound)
+            ship.explosionSound(1)
         }
 
         override fun update(fps: Long) {
@@ -247,7 +247,7 @@ class Ship(private val game: Game) {
         override fun update(fps: Long) {
             if (pause != 0) {
                 if (--pause == 0)
-                    ship.game.sounds.play(ship.rezInSound)
+                    ship.rezInSound(1)
                 return
             }
             radius -= (radius / 20)
