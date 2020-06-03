@@ -33,7 +33,7 @@ class Ship(private val sounds: Sounds) {
     private val rezInSound = sounds.load(R.raw.rezin)
 
     private val velocity = Vector(0.0, 0.0)
-    val position = Point(0.0, 0.0)
+    private val pos = Point(0.0, 0.0)
 
     private var state: ShipState = Flying(this)
 
@@ -74,8 +74,11 @@ class Ship(private val sounds: Sounds) {
         rotation = -90.0
         targetRotation = rotation
         velocity.reset()
-        position.reset()
+        pos.reset()
     } // reset
+
+    /////////////////////////////////////
+    val position: Point get() = state.position
 
     fun thrust() {
         state.thrust()
@@ -96,8 +99,8 @@ class Ship(private val sounds: Sounds) {
         canvas.save()
 
         canvas.translate(
-            position.x.toFloat(),
-            position.y.toFloat()
+            pos.x.toFloat(),
+            pos.y.toFloat()
         )
         canvas.translate(canvas.width/2f, canvas.height/2f)
         canvas.rotate(rotation.toFloat())
@@ -133,11 +136,18 @@ class Ship(private val sounds: Sounds) {
     } // rotateShip
 
     private fun applyThrust(width: Int, height: Int) {
-        position.move(velocity, width, height)
+        pos.move(velocity, width, height)
     } // applyThrust
 
     //////////////////////////
+    companion object {
+        val Hyperspace = Point(-100000.0, -100000.0)
+    }
+
+    //////////////////////////
     private interface ShipState {
+        val position: Point
+
         fun thrust()
         fun rotateTowards(angle: Double)
 
@@ -149,6 +159,9 @@ class Ship(private val sounds: Sounds) {
 
     private class Flying(private val ship: Ship): ShipState {
         private var thrustFrames = 0
+
+        override val position: Point
+            get() = ship.pos
 
         override fun thrust() {
             val thrust = Vector(2.0, ship.rotation)
@@ -187,6 +200,7 @@ class Ship(private val sounds: Sounds) {
             ship.sounds.play(ship.explosionSound)
         }
 
+        override val position: Point get() = Hyperspace
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) = Unit
 
@@ -231,9 +245,10 @@ class Ship(private val sounds: Sounds) {
         private var pause = 60
         private var radius = 600f
 
+        override val position: Point get() = Hyperspace
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) {
-            ship.position.move(Vector(15.0, angle), 1000, 1000)
+            ship.pos.move(Vector(15.0, angle), 1000, 1000)
         }
         override fun update(fps: Long, width: Int, height: Int) {
             if (pause != 0) {
