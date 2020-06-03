@@ -6,7 +6,11 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
 
-class Gun(private val game: Game, private val ship: Ship) {
+class Gun(
+    private val game: Game,
+    private val ship: Ship,
+    private val asteroids: Asteroids
+) {
     private val bullets = mutableListOf<Bullet>()
     private var rate = 20
     private var tick = 0
@@ -23,12 +27,12 @@ class Gun(private val game: Game, private val ship: Ship) {
 
     fun update(fps: Long) {
         bullets.forEach { b -> b.update(fps) }
+        checkForHits()
         bullets.removeIf { b -> b.age >= 60 }
 
         if (++tick != rate) return
-        if (!ship.armed) return
-
         tick = 0
+        if (!ship.armed) return
         fire()
     } // update
 
@@ -36,13 +40,26 @@ class Gun(private val game: Game, private val ship: Ship) {
         bullets.forEach { b -> b.draw(canvas)}
     } // draw
 
+    //////////////////////
+    private fun checkForHits() {
+        for (a in asteroids) {
+            for (b in bullets) {
+                if (b.position.distance(a.position) < a.killDist) {
+                    a.explode()
+                    b.age += 20
+                }
+            }
+        }
+    } // checkForHits
+
+    //////////////////////
     private class Bullet(
         private val game: Game,
         pos: Point,
         orientation: Double,
         initVel: Vector
     ) {
-        private var position = pos.copy()
+        val position = pos.copy()
         private var velocity = initVel.copy()
         var age = 0
 

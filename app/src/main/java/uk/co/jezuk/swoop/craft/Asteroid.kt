@@ -10,13 +10,13 @@ class Asteroid(
     pos: Point,
     private var scale: Float = 4f
 ) {
-    private val position = pos.copy()
+    val position = pos.copy()
     private var velocity = AsteroidVector(scale)
     private var orientation = (Math.random() * 360).toFloat()
     private val rotation = (Math.random() * 3).toFloat() - 2f
     private val killRadius = 25f
 
-    private val killDist: Float get() = scale * killRadius
+    val killDist get() = scale * killRadius
 
     fun update(fps: Long) {
         position.move(velocity, all.extent)
@@ -41,7 +41,7 @@ class Asteroid(
         canvas.restore()
     } // draw
 
-    fun split() {
+    fun explode() {
         if (scale != 1f) {
             scale /= 2
             velocity = AsteroidVector(scale)
@@ -54,7 +54,7 @@ class Asteroid(
 
     fun checkShipCollision(ship: Ship) {
         if (ship.position.distance(position) < (killDist + ship.killDist)) {
-            split()
+            explode()
             ship.explode()
         }
     } // checkShipCollision

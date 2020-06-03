@@ -31,6 +31,7 @@ class Asteroids(
         }
     } // init
 
+    operator fun iterator() = ArrayList(asteroids).iterator()
     val size: Int get() = asteroids.size
     fun add(asteroid: Asteroid) = asteroids.add(asteroid)
     fun remove(asteroid: Asteroid) = asteroids.remove(asteroid)
@@ -48,8 +49,7 @@ class Asteroids(
     } // draw
 
     fun findCollisions(ship: Ship) {
-        val working = mutableListOf<Asteroid>()
-        working.addAll(asteroids)
+        val working = ArrayList(asteroids)
         working.forEach {
             a -> a.checkShipCollision(ship)
         }
