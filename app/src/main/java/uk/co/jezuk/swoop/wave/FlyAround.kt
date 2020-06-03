@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.wave
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Asteroids
+import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 
@@ -11,6 +12,7 @@ class FlyAround(
     private val starField: StarField
 ) : Wave {
     private var ship = Ship(game)
+    private var gun = Gun(game, ship)
     private var asteroids = Asteroids(game, 5)
 
     /////
@@ -26,6 +28,7 @@ class FlyAround(
     override fun update(fps: Long) {
         asteroids.update(fps)
         ship.update(fps)
+        gun.update(fps)
 
         asteroids.findCollisions(ship)
     } // update
@@ -34,5 +37,6 @@ class FlyAround(
         starField.draw(canvas)
         asteroids.draw(canvas)
         ship.draw(canvas)
+        gun.draw(canvas)
     } // draw
 } // FlyAround

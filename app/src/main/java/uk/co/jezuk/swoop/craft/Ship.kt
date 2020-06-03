@@ -16,10 +16,16 @@ class Ship(private val game: Game) {
     private val explosionSound = game.sounds.load(R.raw.shipexplosion)
     private val rezInSound = game.sounds.load(R.raw.rezin)
 
-    private val velocity = Vector(0.0, 0.0)
     private val pos = Point(0.0, 0.0)
-
     private var state: ShipState = RezIn(this)
+
+    /////////////////////////////////////
+    val position get() = state.position
+    val orientation get() = rotation
+    val velocity = Vector(0.0, 0.0)
+    val killDist get() = shipRadius
+
+    val armed get() = state.armed
 
     init {
         reset()
@@ -33,9 +39,6 @@ class Ship(private val game: Game) {
     } // reset
 
     /////////////////////////////////////
-    val position: Point get() = state.position
-    val killDist: Float get() = shipRadius
-
     fun thrust() = state.thrust()
     fun rotateTowards(angle: Double) = state.rotateTowards(angle)
 
@@ -142,7 +145,8 @@ class Ship(private val game: Game) {
 
     //////////////////////////
     private interface ShipState {
-        val position: Point
+        val position: Point get() = Hyperspace
+        val armed: Boolean get() = false
 
         fun thrust()
         fun rotateTowards(angle: Double)
@@ -157,8 +161,8 @@ class Ship(private val game: Game) {
         ShipState {
         private var thrustFrames = 0
 
-        override val position: Point
-            get() = ship.pos
+        override val position get() = ship.pos
+        override val armed get() = true
 
         override fun thrust() {
             val thrust = Vector(2.0, ship.rotation)
@@ -198,7 +202,6 @@ class Ship(private val game: Game) {
             ship.game.sounds.play(ship.explosionSound)
         }
 
-        override val position: Point get() = Hyperspace
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) = Unit
 
@@ -242,7 +245,6 @@ class Ship(private val game: Game) {
         private var pause = 60
         private var radius = 600f
 
-        override val position: Point get() = Hyperspace
         override fun thrust() = Unit
         override fun rotateTowards(angle: Double) {
             ship.pos.move(Vector(15.0, angle), ship.game.extent)

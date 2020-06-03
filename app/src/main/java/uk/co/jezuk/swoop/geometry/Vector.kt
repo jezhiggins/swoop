@@ -10,6 +10,8 @@ class Vector(
 ) {
     private var directionRad = Math.toRadians(direction)
 
+    fun copy() = Vector(magnitude, direction)
+
     var angle: Double
         get() = this.direction
         set(value) {
