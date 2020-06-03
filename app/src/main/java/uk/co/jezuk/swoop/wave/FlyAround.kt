@@ -1,20 +1,19 @@
 package uk.co.jezuk.swoop.wave
 
-import android.content.Context
 import android.graphics.Canvas
-import uk.co.jezuk.swoop.Sounds
+import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Asteroids
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 
 class FlyAround(
-    sounds: Sounds,
-    private val width: Int,
-    private val height: Int
+    game: Game,
+    private val starField: StarField
 ) : Wave {
-    private var ship = Ship(sounds)
-    private var starField = StarField(width, height)
-    private var asteroids = Asteroids(5, width, height)
+    private val width = game.width
+    private val height = game.height
+    private var ship = Ship(game.sounds)
+    private var asteroids = Asteroids(width, height, 5)
 
     /////
     override fun onSingleTapUp() = ship.thrust()

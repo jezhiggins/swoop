@@ -55,6 +55,10 @@ class Asteroid(
     } // checkShipCollision
 
     companion object {
+        val Big: Float = 4f
+        val Medium: Float = 2f
+        val Small: Float = 1f
+
         fun AsteroidVector(scale: Float) =
             Vector(6.0 - scale, Math.random() * 360)
 

@@ -3,20 +3,31 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.geometry.Point
 
-class Asteroids(count: Int, width: Int, height: Int) {
+class Asteroids(
+    width: Int,
+    height: Int,
+    big: Int,
+    medium: Int = 0,
+    small: Int = 0
+) {
     private val asteroids: MutableList<Asteroid> = mutableListOf()
 
     init {
-        for(a in 0 until count) {
-            add(
-                Asteroid(
-                    this,
-                    Point(
-                        (Math.random() * width),
-                        (Math.random() * height)
+        val sizes = mapOf(
+            Pair(big, Asteroid.Big),
+            Pair(medium, Asteroid.Medium),
+            Pair(small, Asteroid.Small)
+        )
+        for ((count, size) in sizes) {
+            for(a in 0 until count) {
+                add(
+                    Asteroid(
+                        this,
+                        Point((Math.random() * width), (Math.random() * height)),
+                        size
                     )
                 )
-            )
+            }
         }
     } // init
 
