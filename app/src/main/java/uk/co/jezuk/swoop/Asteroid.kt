@@ -45,9 +45,10 @@ fun AsteroidVector(scale: Float) = Vector(6.0 - scale, Math.random() * 360)
 
 class Asteroid(
     private val all: Asteroids,
-    private val position: Point,
+    pos: Point,
     private var scale: Float = 4f
 ) {
+    private val position = pos.copy()
     private var velocity = AsteroidVector(scale)
     private val killRadius = 25f
 
@@ -76,7 +77,7 @@ class Asteroid(
         if (scale != 1f) {
             scale /= 2
             velocity = AsteroidVector(scale)
-            all.add(Asteroid(all, position.copy(), scale))
+            all.add(Asteroid(all, position, scale))
         } else {
             all.remove(this)
         }
