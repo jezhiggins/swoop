@@ -55,7 +55,7 @@ class Asteroid(
     fun checkShipCollision(ship: Ship) {
         if (ship.position.distance(position) < (killDist + ship.killDist)) {
             explode()
-            ship.explode()
+            ship.hit()
         }
     } // checkShipCollision
 

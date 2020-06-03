@@ -8,12 +8,13 @@ import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 
 class FlyAround(
-    game: Game,
-    private val starField: StarField
+    private val game: Game,
+    private val starField: StarField,
+    private val initialAsteroids: Int = 1
 ) : Wave {
     private var ship = Ship(game)
-    private var gun = Gun(game, ship)
-    private var asteroids = Asteroids(game, 5)
+    private var asteroids = Asteroids(game, initialAsteroids)
+    private var gun = Gun(game, ship, asteroids)
 
     /////
     override fun onSingleTapUp() = ship.thrust()
@@ -31,6 +32,8 @@ class FlyAround(
         gun.update(fps)
 
         asteroids.findCollisions(ship)
+        if (asteroids.size == 0)
+            game.nextWave(LevelTransition(game, starField, ship, initialAsteroids))
     } // update
 
     override fun draw(canvas: Canvas) {

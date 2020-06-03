@@ -60,7 +60,10 @@ class Ship(private val game: Game) {
         canvas.restore()
     } // draw
 
-    fun explode() = state.explode()
+    fun hit() = state.hit()
+    fun rezOut() {
+        state = RezOut(this)
+    }
 
     ////////////////
     private fun rotateShip() {
@@ -148,13 +151,13 @@ class Ship(private val game: Game) {
         val position: Point get() = Hyperspace
         val armed: Boolean get() = false
 
-        fun thrust()
-        fun rotateTowards(angle: Double)
+        fun thrust() = Unit
+        fun rotateTowards(angle: Double) = Unit
 
         fun update(fps: Long)
         fun draw(canvas: Canvas)
 
-        fun explode()
+        fun hit() = Unit
     } // ShipState
 
     private class Flying(private val ship: Ship):
@@ -188,22 +191,18 @@ class Ship(private val game: Game) {
                 canvas.drawLines(thruster, thrustBrush)
         } // draw
 
-        override fun explode() {
+        override fun hit() {
             ship.state = Exploding(ship)
         } // explode
     } // Flying
 
-    private class Exploding(private val ship: Ship):
-        ShipState {
-        private var explodeShape = shape.copyOf()
+    private class Exploding(private val ship: Ship): ShipState {
+        private val explodeShape = shape.copyOf()
         private var explodeFrames = 50
 
         init {
             ship.game.sounds.play(ship.explosionSound)
         }
-
-        override fun thrust() = Unit
-        override fun rotateTowards(angle: Double) = Unit
 
         override fun update(fps: Long) {
             blowUpShip()
@@ -212,8 +211,6 @@ class Ship(private val game: Game) {
         override fun draw(canvas: Canvas) {
             canvas.drawLines(explodeShape, explodeBrush)
         } // draw
-
-        override fun explode() = Unit
 
         private fun blowUpShip() {
             for (l in 0 until explodeShape.size step 4) {
@@ -240,12 +237,10 @@ class Ship(private val game: Game) {
         } // blowUpShift
     } // Exploding
 
-    private class RezIn(private val ship: Ship):
-        ShipState {
+    private class RezIn(private val ship: Ship): ShipState {
         private var pause = 60
         private var radius = 600f
 
-        override fun thrust() = Unit
         override fun rotateTowards(angle: Double) {
             ship.pos.move(Vector(15.0, angle), ship.game.extent)
         }
@@ -269,8 +264,28 @@ class Ship(private val game: Game) {
 
             canvas.drawCircle(0f, 0f, radius, brush)
         } // draw
+    } // RezIn
 
-        override fun explode() = Unit
+    private class RezOut(private val ship: Ship): ShipState {
+        private val rezOutShape = shape.copyOf()
+        private var r = 0
+
+        override fun update(fps: Long) {
+            ++r
+
+            for (i in 0 until rezOutShape.size) {
+                var v = rezOutShape[i]
+                if (v < 0) v -= r
+                if (v > 0) v += r
+                rezOutShape[i] = v
+            }
+
+        } // update
+
+        override fun draw(canvas: Canvas) {
+            val brush = if ((r/2f) == (r/2).toFloat()) shipBrush else redBrush
+            canvas.drawLines(rezOutShape, brush)
+        } // draw
     } // RezIn
 } // Ship
 
