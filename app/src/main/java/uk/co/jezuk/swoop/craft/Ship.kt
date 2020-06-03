@@ -23,6 +23,7 @@ class Ship(private val game: Game) {
     val position get() = state.position
     val orientation get() = rotation
     val velocity = Vector(0.0, 0.0)
+    val pan get() = position.pan(game.extent)
     val killDist get() = shipRadius
 
     val armed get() = state.armed
@@ -172,7 +173,7 @@ class Ship(private val game: Game) {
             ship.velocity += thrust
 
             thrustFrames = 10
-            ship.thrustSound(1)
+            ship.thrustSound(ship.pan)
         } // thrust
 
         override fun rotateTowards(angle: Double) {
@@ -201,7 +202,7 @@ class Ship(private val game: Game) {
         private var explodeFrames = 50
 
         init {
-            ship.explosionSound(1)
+            ship.explosionSound(ship.pan)
         }
 
         override fun update(fps: Long) {
@@ -247,7 +248,7 @@ class Ship(private val game: Game) {
         override fun update(fps: Long) {
             if (pause != 0) {
                 if (--pause == 0)
-                    ship.rezInSound(1)
+                    ship.rezInSound(0f)
                 return
             }
             radius -= (radius / 20)

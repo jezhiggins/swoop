@@ -37,8 +37,10 @@ class Asteroids(
     fun add(asteroid: Asteroid) = asteroids.add(asteroid)
     fun remove(asteroid: Asteroid) = asteroids.remove(asteroid)
     fun explodeLast() {
-        asteroids.last().explode()
-    }
+        val last = asteroids.last()
+        asteroids.remove(last)
+        pop(last.position.pan(extent))
+    } // explodeLast
 
     fun update(fps: Long) {
         asteroids.forEach { a -> a.update(fps) }
