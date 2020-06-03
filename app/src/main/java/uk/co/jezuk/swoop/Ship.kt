@@ -235,8 +235,7 @@ class Ship(private val sounds: Sounds) {
         override fun rotateTowards(angle: Double) = Unit
         override fun update(fps: Long, width: Int, height: Int) {
             if (pause != 0) {
-                --pause
-                if (pause == 0)
+                if (--pause == 0)
                     ship.sounds.play(ship.rezInSound)
                 return
             }
