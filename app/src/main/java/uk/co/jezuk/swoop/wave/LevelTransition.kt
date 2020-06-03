@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.wave
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Ship
+import kotlin.math.min
 
 class LevelTransition(
     private val game: Game,
@@ -26,7 +27,7 @@ class LevelTransition(
         ship.update(fps)
 
         if (--transition == 0)
-            game.nextWave(FlyAround(game, newStarField, initialAsteroids+1))
+            game.nextWave(FlyAround(game, newStarField, min(initialAsteroids+1, 11)))
 
         when (transition) {
             60, 100 -> currentStarField = starField

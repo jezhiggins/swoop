@@ -10,7 +10,7 @@ import uk.co.jezuk.swoop.geometry.angleFromOffsets
 class FlyAround(
     private val game: Game,
     private val starField: StarField,
-    private val initialAsteroids: Int = 1
+    private val initialAsteroids: Int = 5
 ) : Wave {
     private var ship = Ship(game)
     private var asteroids = Asteroids(game, initialAsteroids)
