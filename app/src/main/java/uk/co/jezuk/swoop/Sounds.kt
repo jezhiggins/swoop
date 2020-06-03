@@ -9,12 +9,18 @@ class Sounds(private val context: Context) {
         .setMaxStreams(10)
         .setAudioAttributes(soundAttrs())
         .build()
+    private val loadedSounds = mutableMapOf<Int, Int>()
+
     private val pop = load(R.raw.pop)
 
     fun pop() { play(pop) }
 
     fun load(soundResId: Int): Int {
-        return pool.load(context, soundResId, 1)
+        if (loadedSounds.containsKey(soundResId))
+            return loadedSounds[soundResId]!!
+        val loadedId = pool.load(context, soundResId, 1)
+        loadedSounds.put(soundResId, loadedId)
+        return loadedId
     } // load
 
     fun play(soundId: Int) {
