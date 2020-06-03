@@ -65,7 +65,8 @@ class Gun(
         var age = 0
 
         init {
-            velocity += Vector(10.0, orientation)
+            velocity.maximum = 30.0
+            velocity += Vector(10.0, orientation, 30.0)
         }
 
         fun update(fps: Long) {
