@@ -12,7 +12,8 @@ class Gun(
     private val asteroids: Asteroids
 ) {
     private val bullets = mutableListOf<Bullet>()
-    private var rate = 20
+    private var rate = 15
+    private var ageOut = 75
     private var tick = 0
 
     private fun fire() {
@@ -28,7 +29,7 @@ class Gun(
     fun update(fps: Long) {
         bullets.forEach { b -> b.update(fps) }
         checkForHits()
-        bullets.removeIf { b -> b.age >= 60 }
+        bullets.removeIf { b -> b.age >= ageOut }
 
         if (++tick != rate) return
         tick = 0
