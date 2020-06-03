@@ -1,4 +1,4 @@
-package uk.co.jezuk.swoop
+package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
 import android.graphics.Paint

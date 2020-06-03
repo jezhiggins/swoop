@@ -10,6 +10,7 @@ import android.view.SurfaceView
 import uk.co.jezuk.swoop.craft.Asteroids
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
+import uk.co.jezuk.swoop.wave.StarField
 
 class GameView(
     context: Context,
