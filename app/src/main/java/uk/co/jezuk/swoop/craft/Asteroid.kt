@@ -12,12 +12,17 @@ class Asteroid(
 ) {
     private val position = pos.copy()
     private var velocity = AsteroidVector(scale)
+    private var orientation = (Math.random() * 360).toFloat()
+    private val rotation = (Math.random() * 3).toFloat() - 2f
     private val killRadius = 25f
 
     private val killDist: Float get() = scale * killRadius
 
     fun update(fps: Long, width: Int, height: Int) {
         position.move(velocity, width, height)
+        orientation += rotation
+        if (orientation < 0) orientation += 360
+        if (orientation > 360) orientation -= 360
     } // update
 
     fun draw(canvas: Canvas) {
@@ -30,9 +35,9 @@ class Asteroid(
         canvas.translate(canvas.width/2f, canvas.height/2f)
         canvas.scale(scale, scale)
 
-        canvas.drawCircle(0f, 0f, killRadius,
-            brush
-        )
+        // canvas.drawCircle(0f, 0f, killRadius, brush)
+        canvas.rotate(orientation)
+        canvas.drawLines(shape, brush)
 
         canvas.restore()
     } // draw
@@ -63,16 +68,26 @@ class Asteroid(
         fun AsteroidVector(scale: Float) =
             Vector(6.0 - scale, Math.random() * 360)
 
-        val brush =
-            makeAsteroidBrush()
+        val brush = Paint()
+        val shape = floatArrayOf(
+            0f, 12.5f, 12.5f, 25f,
+            12.5f, 25f, 25f, 12.5f,
+            25f, 12.5f, 18.75f, 0f,
+            18.75f, 0f, 25f, -12.5f,
+            25f, -12.5f, 6.25f, -25f,
+            6.25f, -25f, -12.5f, -25f,
+            -12.5f, -25f, -25f, -12.5f,
+            -25f, -12.5f, -25f, 12.5f,
+            -25f, 12.5f, -12.5f, 25f,
+            -12.5f, 25f, 0f, 12.5f
+        )
 
-        private fun makeAsteroidBrush(): Paint {
-            val brush = Paint()
-            brush.setARGB(127, 255, 255, 255)
+        init {
+            brush.setARGB(255, 160, 160, 160)
             brush.strokeWidth = 3f
-            brush.strokeJoin = Paint.Join.BEVEL
+            brush.strokeCap = Paint.Cap.ROUND
+            brush.strokeJoin = Paint.Join.ROUND
             brush.style = Paint.Style.STROKE
-            return brush
         }
     } // companion object
 } // Asteroid
