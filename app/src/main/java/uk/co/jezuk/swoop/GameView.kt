@@ -40,7 +40,10 @@ class GameView(
         stopThread()
     } // surfaceDestroyed
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.actionMasked == MotionEvent.ACTION_POINTER_DOWN)
+            game.onSingleTapUp()
+
         return if (gestureDetector.onTouchEvent(event)) {
             true
         } else {
