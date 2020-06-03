@@ -232,7 +232,9 @@ class Ship(private val sounds: Sounds) {
         private var radius = 600f
 
         override fun thrust() = Unit
-        override fun rotateTowards(angle: Double) = Unit
+        override fun rotateTowards(angle: Double) {
+            ship.position.move(Vector(15.0, angle), 1000, 1000)
+        }
         override fun update(fps: Long, width: Int, height: Int) {
             if (pause != 0) {
                 if (--pause == 0)
