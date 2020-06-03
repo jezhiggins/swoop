@@ -19,7 +19,7 @@ class Ship(private val sounds: Sounds) {
     private val velocity = Vector(0.0, 0.0)
     private val pos = Point(0.0, 0.0)
 
-    private var state: ShipState = Flying(this)
+    private var state: ShipState = RezIn(this)
 
     init {
         reset()
