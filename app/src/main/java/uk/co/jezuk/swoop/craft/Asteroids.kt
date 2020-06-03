@@ -1,11 +1,11 @@
 package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
+import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.geometry.Point
 
 class Asteroids(
-    width: Int,
-    height: Int,
+    private val game: Game,
     big: Int,
     medium: Int = 0,
     small: Int = 0
@@ -23,7 +23,7 @@ class Asteroids(
                 add(
                     Asteroid(
                         this,
-                        Point((Math.random() * width), (Math.random() * height)),
+                        Point((Math.random() * game.width), (Math.random() * game.height)),
                         size
                     )
                 )
@@ -34,6 +34,10 @@ class Asteroids(
     val size: Int get() = asteroids.size
     fun add(asteroid: Asteroid) = asteroids.add(asteroid)
     fun remove(asteroid: Asteroid) = asteroids.remove(asteroid)
+    fun explodeLast() {
+        asteroids.remove(asteroids.last())
+        pop()
+    }
 
     fun update(fps: Long, width: Int, height: Int) {
         asteroids.forEach { a -> a.update(fps, width, height) }
@@ -50,4 +54,6 @@ class Asteroids(
             a -> a.checkShipCollision(ship)
         }
     } // findCollisions
+
+    fun pop() = game.sounds.pop()
 } // Asteroids

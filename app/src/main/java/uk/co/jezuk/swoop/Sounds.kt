@@ -9,6 +9,9 @@ class Sounds(private val context: Context) {
         .setMaxStreams(10)
         .setAudioAttributes(soundAttrs())
         .build()
+    private val pop = load(R.raw.pop)
+
+    fun pop() { play(pop) }
 
     fun load(soundResId: Int): Int {
         return pool.load(context, soundResId, 1)

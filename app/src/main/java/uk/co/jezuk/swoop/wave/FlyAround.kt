@@ -13,7 +13,7 @@ class FlyAround(
     private val width = game.width
     private val height = game.height
     private var ship = Ship(game.sounds)
-    private var asteroids = Asteroids(width, height, 5)
+    private var asteroids = Asteroids(game, 5)
 
     /////
     override fun onSingleTapUp() = ship.thrust()
