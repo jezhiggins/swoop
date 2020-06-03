@@ -7,6 +7,8 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import uk.co.jezuk.swoop.craft.Asteroids
+import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 
 class GameView(

@@ -1,8 +1,10 @@
-package uk.co.jezuk.swoop
+package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import uk.co.jezuk.swoop.R
+import uk.co.jezuk.swoop.Sounds
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
 
@@ -37,7 +39,8 @@ class Ship(private val sounds: Sounds) {
     private val velocity = Vector(0.0, 0.0)
     private val pos = Point(0.0, 0.0)
 
-    private var state: ShipState = Flying(this)
+    private var state: ShipState =
+        Flying(this)
 
     val killDist: Float
         get() = 30f;
@@ -159,7 +162,8 @@ class Ship(private val sounds: Sounds) {
         fun explode(): ShipState
     } // ShipState
 
-    private class Flying(private val ship: Ship): ShipState {
+    private class Flying(private val ship: Ship):
+        ShipState {
         private var thrustFrames = 0
 
         override val position: Point
@@ -194,7 +198,8 @@ class Ship(private val sounds: Sounds) {
         } // explode
     } // Flying
 
-    private class Exploding(private val ship: Ship): ShipState {
+    private class Exploding(private val ship: Ship):
+        ShipState {
         private var explodeShape = ship.shape.copyOf()
         private var explodeFrames = 50
 
@@ -243,7 +248,8 @@ class Ship(private val sounds: Sounds) {
         } // blowUpShift
     } // Exploding
 
-    private class RezIn(private val ship: Ship): ShipState {
+    private class RezIn(private val ship: Ship):
+        ShipState {
         private var pause = 60
         private var radius = 600f
 

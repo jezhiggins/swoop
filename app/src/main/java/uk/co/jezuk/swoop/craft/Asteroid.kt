@@ -1,50 +1,9 @@
-package uk.co.jezuk.swoop
+package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
-
-class Asteroids {
-    private val asteroids: MutableList<Asteroid> = mutableListOf()
-
-    fun wave(count: Int, width: Int, height: Int) {
-        asteroids.clear()
-        for(a in 0 until count) {
-            add(
-                Asteroid(
-                    this,
-                    Point(
-                        (Math.random() * width),
-                        (Math.random() * height)
-                    )
-                )
-            )
-        }
-    } // wave
-
-    fun add(asteroid: Asteroid) = asteroids.add(asteroid)
-    fun remove(asteroid: Asteroid) = asteroids.remove(asteroid)
-
-    fun update(fps: Long, width: Int, height: Int) {
-        asteroids.forEach { a -> a.update(fps, width, height) }
-    } // update
-
-    fun draw(canvas: Canvas) {
-        asteroids.forEach { a -> a.draw(canvas) }
-    } // draw
-
-    fun findCollisions(ship: Ship) {
-        val working = mutableListOf<Asteroid>()
-        working.addAll(asteroids)
-        working.forEach {
-            a -> a.checkShipCollision(ship)
-        }
-    } // findCollisions
-} // Asteroids
-
-fun AsteroidVector(scale: Float) =
-    Vector(6.0 - scale, Math.random() * 360)
 
 class Asteroid(
     private val all: Asteroids,
@@ -71,7 +30,9 @@ class Asteroid(
         canvas.translate(canvas.width/2f, canvas.height/2f)
         canvas.scale(scale, scale)
 
-        canvas.drawCircle(0f, 0f, killRadius, brush)
+        canvas.drawCircle(0f, 0f, killRadius,
+            brush
+        )
 
         canvas.restore()
     } // draw
@@ -94,7 +55,11 @@ class Asteroid(
     } // checkShipCollision
 
     companion object {
-        val brush = makeAsteroidBrush()
+        fun AsteroidVector(scale: Float) =
+            Vector(6.0 - scale, Math.random() * 360)
+
+        val brush =
+            makeAsteroidBrush()
 
         private fun makeAsteroidBrush(): Paint {
             val brush = Paint()
