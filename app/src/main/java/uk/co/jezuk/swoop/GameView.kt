@@ -7,10 +7,6 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import uk.co.jezuk.swoop.craft.Asteroids
-import uk.co.jezuk.swoop.craft.Ship
-import uk.co.jezuk.swoop.geometry.angleFromOffsets
-import uk.co.jezuk.swoop.wave.StarField
 
 class GameView(
     context: Context,
@@ -22,11 +18,8 @@ class GameView(
     private var thread: GameThread? = null
     private var gestureDetector: GestureDetector
 
-    private val sounds = Sounds(context)
+    private val game = Game(context)
 
-    private var ship = Ship(sounds)
-    private var starField = StarField()
-    private var asteroids = Asteroids()
     private var debug = Debug()
 
     init {
@@ -36,8 +29,7 @@ class GameView(
     } // init
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
-        starField.size(width, height)
-        asteroids.wave(5, width, height)
+        game.start(width, height)
 
         startThread()
     } // surfaceCreated
@@ -60,25 +52,17 @@ class GameView(
     override fun onDown(ev: MotionEvent): Boolean = true
     override fun onShowPress(ev: MotionEvent) = Unit
     override fun onSingleTapUp(ev: MotionEvent): Boolean {
-        ship.thrust()
+        game.onSingleTapUp()
         return true
     } // onSingleTapUp
     override fun onScroll(ev1: MotionEvent, ev2: MotionEvent, offsetX: Float, offsetY: Float): Boolean {
-        ship.rotateTowards(
-            angleFromOffsets(
-                offsetX,
-                offsetY
-            )
-        )
+        game.onScroll(offsetX, offsetY)
         return true
     } // onScroll
-    override fun onLongPress(ev: MotionEvent) = ship.thrust()
+    override fun onLongPress(ev: MotionEvent) = game.onLongPress()
 
     fun update(fps: Long) {
-        asteroids.update(fps, width, height)
-        ship.update(fps, width, height)
-
-        asteroids.findCollisions(ship)
+        game.update(fps)
 
         debug.update(fps)
     } // update
@@ -86,9 +70,7 @@ class GameView(
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
-        starField.draw(canvas)
-        asteroids.draw(canvas)
-        ship.draw(canvas)
+        game.draw(canvas)
 
         debug.draw(canvas)
     } // draw
