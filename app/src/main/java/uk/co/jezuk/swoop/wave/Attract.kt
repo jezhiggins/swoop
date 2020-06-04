@@ -13,7 +13,8 @@ class Attract(
         game,
         randInt(3)+1,
         randInt(5)+1,
-        randInt(4)+1
+        randInt(4)+1,
+        { game.extent.randomPoint() }
     )
 
     /////

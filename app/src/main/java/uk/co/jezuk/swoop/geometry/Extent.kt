@@ -19,9 +19,18 @@ class Extent(
     val canvasOffsetX get() = halfWidth.toFloat()
     val canvasOffsetY get() = halfHeight.toFloat()
 
-    fun randomPoint() =
-        Point(
-            (Math.random() * width) - right,
-            (Math.random() * height) - bottom
-        )
+    fun randomPoint() = Point(randomX(), randomY())
+
+    fun randomPointOnEdge(): Point {
+        return when (rollD4()) {
+            0 -> Point(randomX(), top)
+            1 -> Point(left, randomY())
+            2 -> Point(right, randomY())
+            else -> Point(randomX(), bottom)
+        }
+    }
+
+    private fun randomX() = (Math.random() * width) - right
+    private fun randomY() = (Math.random() * height) - bottom
+    private fun rollD4() = (Math.random() * 4).toInt()
 }

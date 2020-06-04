@@ -9,7 +9,8 @@ class Asteroids(
     private val game: Game,
     big: Int,
     medium: Int = 0,
-    small: Int = 0
+    small: Int = 0,
+    originFn: () -> Point = { game.extent.randomPointOnEdge() }
 ) {
     private val asteroids = mutableListOf<Asteroid>()
 
@@ -24,7 +25,7 @@ class Asteroids(
                 add(
                     Asteroid(
                         this,
-                        game.extent.randomPoint(),
+                        originFn(),
                         size
                     )
                 )
