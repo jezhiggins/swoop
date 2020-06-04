@@ -17,6 +17,7 @@ class Asteroid(
     private val killRadius = 25f
 
     val killDist get() = scale * killRadius
+    val size get() = scale.toInt()
 
     fun update(fps: Long) {
         position.move(velocity, all.extent)
@@ -49,7 +50,7 @@ class Asteroid(
         } else {
             all.remove(this)
         }
-        all.pop(position.pan(all.extent))
+        all.bang(this)
     } // split
 
     fun checkShipCollision(ship: Ship) {

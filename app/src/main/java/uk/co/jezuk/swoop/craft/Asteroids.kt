@@ -13,6 +13,9 @@ class Asteroids(
     originFn: () -> Point = { game.extent.randomPointOnEdge() }
 ) {
     private val asteroids = mutableListOf<Asteroid>()
+    private val smallBang = game.sounds.load(R.raw.bangsmall)
+    private val midBang = game.sounds.load(R.raw.bangmedium)
+    private val bigBang = game.sounds.load(R.raw.banglarge)
 
     init {
         val sizes = mapOf(
@@ -40,7 +43,7 @@ class Asteroids(
     fun explodeLast() {
         val last = asteroids.last()
         asteroids.remove(last)
-        pop(last.position.pan(extent))
+        bang(last)
     } // explodeLast
 
     fun update(fps: Long) {
@@ -58,6 +61,14 @@ class Asteroids(
         }
     } // findCollisions
 
-    val pop = game.sounds.load(R.raw.pop)
+    fun bang(asteroid: Asteroid) {
+        val b = when(asteroid.size) {
+            1 -> smallBang
+            2 -> midBang
+            else -> bigBang
+        }
+        b(asteroid.position.pan(extent))
+    } // bang
+
     val extent = game.extent
 } // Asteroids
