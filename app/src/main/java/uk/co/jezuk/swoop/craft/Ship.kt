@@ -62,9 +62,7 @@ class Ship(private val game: Game) {
     } // draw
 
     fun hit() = state.hit()
-    fun rezOut() {
-        state = RezOut(this)
-    }
+    fun rezOut() { state = RezOut(this) }
 
     ////////////////
     private fun rotateShip() {
@@ -96,14 +94,14 @@ class Ship(private val game: Game) {
     companion object {
         val Hyperspace = Point(-100000.0, -100000.0)
 
-        private val shipBrush = Paint()
+        val shipBrush = Paint()
         private val shipFillBrush = Paint()
         private val thrustBrush = Paint()
         private val explodeBrush = Paint()
         private val redBrush = Paint()
 
         private val shipPath = Path()
-        private val shape = floatArrayOf(
+        val shape = floatArrayOf(
             50f, 0f, -50f, 25f,
             -30f, 0f, -50f, 25f,
             -30f, 0f, -50f, -25f,
@@ -161,8 +159,7 @@ class Ship(private val game: Game) {
         fun hit() = Unit
     } // ShipState
 
-    private class Flying(private val ship: Ship):
-        ShipState {
+    private class Flying(private val ship: Ship): ShipState {
         private var thrustFrames = 0
 
         override val position get() = ship.pos
