@@ -13,6 +13,9 @@ class EndAttract(
     private var tick = 0
     private val steps = 120 / asteroids.size
 
+    init {
+        game.start()
+    }
     /////
     override fun onSingleTapUp() = Unit
     override fun onScroll(offsetX: Float, offsetY: Float) = Unit
@@ -26,10 +29,8 @@ class EndAttract(
             asteroids.explodeLast()
             tick = 0
         }
-        if (asteroids.size == 0) {
+        if (asteroids.size == 0)
             game.nextWave(FlyAround(game, starField))
-            game.start()
-        }
     } // update
 
     override fun draw(canvas: Canvas) {
