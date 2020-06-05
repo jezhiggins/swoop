@@ -29,7 +29,7 @@ class GameView(
     } // init
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
-        game.start(width, height)
+        game.setExtent(width, height)
 
         startThread()
     } // surfaceCreated

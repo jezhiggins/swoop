@@ -26,8 +26,10 @@ class EndAttract(
             asteroids.explodeLast()
             tick = 0
         }
-        if (asteroids.size == 0)
+        if (asteroids.size == 0) {
             game.nextWave(FlyAround(game, starField))
+            game.start()
+        }
     } // update
 
     override fun draw(canvas: Canvas) {
