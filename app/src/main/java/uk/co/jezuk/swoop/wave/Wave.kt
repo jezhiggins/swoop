@@ -3,9 +3,9 @@ package uk.co.jezuk.swoop.wave
 import android.graphics.Canvas
 
 interface Wave {
-    fun onSingleTapUp()
-    fun onScroll(offsetX: Float, offsetY: Float)
-    fun onLongPress()
+    fun onSingleTapUp() = Unit
+    fun onScroll(offsetX: Float, offsetY: Float) = Unit
+    fun onLongPress() = Unit
 
     /////
     fun update(fps: Long)

@@ -16,10 +16,6 @@ class EndAttract(
     init {
         game.start()
     }
-    /////
-    override fun onSingleTapUp() = Unit
-    override fun onScroll(offsetX: Float, offsetY: Float) = Unit
-    override fun onLongPress() = Unit
 
     /////
     override fun update(fps: Long) {

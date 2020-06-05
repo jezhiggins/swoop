@@ -5,10 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.Extent
-import uk.co.jezuk.swoop.wave.Attract
-import uk.co.jezuk.swoop.wave.Emptiness
-import uk.co.jezuk.swoop.wave.FlyAround
-import uk.co.jezuk.swoop.wave.Wave
+import uk.co.jezuk.swoop.wave.*
 
 class Game(context: Context) {
     enum class NextShip { Continue, End }
@@ -20,13 +17,22 @@ class Game(context: Context) {
 
     fun setExtent(width: Int, height: Int) {
         ext = Extent(width, height)
-        wave = Attract(this)
+        attract()
     } // setExtent
+
+    fun attract() {
+        wave = Attract(this)
+    } // attract
 
     fun start() {
         lives = 3
         score = 0
     } // start
+
+    fun end() {
+        lives = 0
+        score = -1
+    } // end
 
     val extent get() = ext
 
@@ -35,7 +41,7 @@ class Game(context: Context) {
     fun lifeLost(): NextShip {
         if (--lives != 0) return NextShip.Continue
 
-        // game over goes here
+        nextWave(GameOver(this, wave))
 
         return NextShip.End
     } // lifeLost

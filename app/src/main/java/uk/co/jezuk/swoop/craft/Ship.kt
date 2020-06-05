@@ -32,6 +32,11 @@ class Ship(private val game: Game) {
         reset()
     } // init
 
+    private fun lifeLost(): Game.NextShip {
+        reset()
+        return game.lifeLost()
+    } // lifeLost
+
     private fun reset() {
         rotation = -90.0
         targetRotation = rotation
@@ -223,8 +228,11 @@ class Ship(private val game: Game) {
 
             --explodeFrames
             if (explodeFrames == 0) {
-                ship.reset()
-                ship.state = RezIn(ship)
+                ship.state = if (ship.lifeLost() == Game.NextShip.Continue) {
+                    RezIn(ship)
+                } else {
+                    SpinningInTheVoid()
+                }
             }
         } // blowUpShip
 
@@ -285,5 +293,10 @@ class Ship(private val game: Game) {
             canvas.drawLines(rezOutShape, brush)
         } // draw
     } // RezIn
+
+    private class SpinningInTheVoid : ShipState {
+        override fun update(fps: Long) = Unit
+        override fun draw(canvas: Canvas) = Unit
+    }
 } // Ship
 
