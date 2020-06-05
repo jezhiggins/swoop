@@ -28,8 +28,8 @@ class FlyAround(
     /////
     override fun update(fps: Long) {
         asteroids.update(fps)
-        ship.update(fps)
         gun.update(fps)
+        ship.update(fps)
 
         asteroids.findCollisions(ship)
         if (asteroids.size == 0)
