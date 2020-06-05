@@ -42,7 +42,7 @@ class Asteroid(
         canvas.restore()
     } // draw
 
-    fun explode() {
+    private fun explode() {
         if (scale != 1f) {
             scale /= 2
             velocity = AsteroidVector(scale)
@@ -52,6 +52,11 @@ class Asteroid(
         }
         all.bang(this)
     } // split
+
+    fun shot() {
+        all.scored(400/scale.toInt())
+        explode()
+    } // shot
 
     fun checkShipCollision(ship: Ship) {
         if (ship.position.distance(position) < (killDist + ship.killDist)) {

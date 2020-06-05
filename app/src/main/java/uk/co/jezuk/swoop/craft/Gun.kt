@@ -46,7 +46,7 @@ class Gun(
         for (a in asteroids) {
             for (b in bullets) {
                 if (b.position.distance(a.position) < a.killDist) {
-                    a.explode()
+                    a.shot()
                     b.age += 20
                 }
             }

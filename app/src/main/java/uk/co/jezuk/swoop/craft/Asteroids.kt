@@ -71,4 +71,5 @@ class Asteroids(
     } // bang
 
     val extent = game.extent
+    fun scored(add: Int) = game.scored(add)
 } // Asteroids
