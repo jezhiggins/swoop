@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.wave.Attract
 import uk.co.jezuk.swoop.wave.Emptiness
@@ -56,6 +57,7 @@ class Game(context: Context) {
         wave.draw(canvas)
 
         drawScore(canvas)
+        drawLives(canvas)
 
         canvas.restore()
     } // draw
@@ -69,7 +71,17 @@ class Game(context: Context) {
             extent.canvasOffsetY - 50,
             pen
         )
-    }
+    } // drawScore
+
+    private fun drawLives(canvas: Canvas) {
+        canvas.translate(extent.canvasOffsetX - 50, extent.canvasOffsetY - 50)
+        canvas.rotate(-90f)
+        canvas.scale(0.5f, 0.5f)
+        for (l in 0 until lives) {
+            canvas.drawLines(Ship.shape, Ship.shipBrush)
+            canvas.translate(0f, -100f)
+        } // for
+    } // drawLives
 
     companion object {
         private val pen = Paint()
