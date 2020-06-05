@@ -12,9 +12,9 @@ class FlyAround(
     private val starField: StarField,
     private val initialAsteroids: Int = 5
 ) : Wave {
-    private var ship = Ship(game)
-    private var asteroids = Asteroids(game, initialAsteroids)
-    private var gun = Gun(game, ship, asteroids)
+    private val ship = Ship(game)
+    private val asteroids = Asteroids(game, initialAsteroids)
+    private val gun = Gun(game, ship, asteroids)
 
     /////
     override fun onSingleTapUp() = ship.thrust()
