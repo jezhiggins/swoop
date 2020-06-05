@@ -39,7 +39,7 @@ class FlyAround(
     override fun draw(canvas: Canvas) {
         starField.draw(canvas)
         asteroids.draw(canvas)
-        ship.draw(canvas)
         gun.draw(canvas)
+        ship.draw(canvas)
     } // draw
 } // FlyAround
