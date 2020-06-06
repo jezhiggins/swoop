@@ -7,6 +7,7 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
+import uk.co.jezuk.swoop.utils.Latch
 
 class Ship(private val game: Game) {
     private var rotation = -90.0
@@ -201,7 +202,7 @@ class Ship(private val game: Game) {
 
     private class Exploding(private val ship: Ship): ShipState {
         private val explodeShape = shape.copyOf()
-        private var explodeFrames = 50
+        private var explosion = Latch(50, { whatsNext() })
 
         init {
             ship.explosionSound(ship.pan)
@@ -226,14 +227,7 @@ class Ship(private val game: Game) {
                 }
             }
 
-            --explodeFrames
-            if (explodeFrames == 0) {
-                ship.state = if (ship.lifeLost() == Game.NextShip.Continue) {
-                    RezIn(ship)
-                } else {
-                    SpinningInTheVoid()
-                }
-            }
+            explosion.tick()
         } // blowUpShip
 
         private fun blowUpShift(p: Float): Float {
@@ -241,30 +235,35 @@ class Ship(private val game: Game) {
             if (p > 0) return 5f
             return 0f
         } // blowUpShift
+
+        private fun whatsNext() {
+            ship.state = if (ship.lifeLost() == Game.NextShip.Continue) {
+                RezIn(ship)
+            } else {
+                SpinningInTheVoid()
+            }
+        } // whatsNext
     } // Exploding
 
     private class RezIn(private val ship: Ship): ShipState {
-        private var pause = 60
+        private val pause = Latch(60, { ship.rezInSound(0f) })
         private var radius = 600f
 
         override fun rotateTowards(angle: Double) {
             ship.pos.move(Vector(15.0, angle), ship.game.extent)
         }
         override fun update(fps: Long) {
-            if (pause != 0) {
-                if (--pause == 0)
-                    ship.rezInSound(0f)
-                return
-            }
+            pause.tick()
+            if (pause.running) return
+
             radius -= (radius / 20)
             if (radius < 5)
                 ship.state = Flying(ship)
         } // update
 
         override fun draw(canvas: Canvas) {
-            if (pause != 0) {
-                return
-            }
+            if (pause.running) return
+
             val r = (radius / 100).toInt()
             val brush = if ((r/2f) == (r/2).toFloat()) shipBrush else redBrush
 
@@ -292,7 +291,7 @@ class Ship(private val game: Game) {
             val brush = if ((r/2f) == (r/2).toFloat()) shipBrush else redBrush
             canvas.drawLines(rezOutShape, brush)
         } // draw
-    } // RezIn
+    } // RezOut
 
     private class SpinningInTheVoid : ShipState {
         override fun update(fps: Long) = Unit
