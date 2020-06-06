@@ -5,6 +5,7 @@ import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
+import uk.co.jezuk.swoop.utils.Repeat
 
 class Gun(
     private val game: Game,
@@ -12,11 +13,13 @@ class Gun(
     private val asteroids: Asteroids
 ) {
     private val bullets = mutableListOf<Bullet>()
-    private var rate = 15
+    private var trigger = Repeat(15, { fire() })
     private var ageOut = 75
     private var tick = 0
 
     private fun fire() {
+        if (!ship.armed) return
+
         val bullet = Bullet(
             game,
             ship.position,
@@ -31,10 +34,7 @@ class Gun(
         checkForHits()
         bullets.removeIf { b -> b.age >= ageOut }
 
-        if (++tick != rate) return
-        tick = 0
-        if (!ship.armed) return
-        fire()
+        trigger.tick()
     } // update
 
     fun draw(canvas: Canvas) {

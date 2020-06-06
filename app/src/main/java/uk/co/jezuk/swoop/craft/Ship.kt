@@ -8,6 +8,7 @@ import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.Latch
+import uk.co.jezuk.swoop.utils.RestartableLatch
 
 class Ship(private val game: Game) {
     private var rotation = -90.0
@@ -166,7 +167,7 @@ class Ship(private val game: Game) {
     } // ShipState
 
     private class Flying(private val ship: Ship): ShipState {
-        private var thrustFrames = 0
+        private val thrustFrames = RestartableLatch(10)
 
         override val position get() = ship.pos
         override val armed get() = true
@@ -175,7 +176,7 @@ class Ship(private val game: Game) {
             val thrust = Vector(2.0, ship.rotation)
             ship.velocity += thrust
 
-            thrustFrames = 10
+            thrustFrames.start()
             ship.thrustSound(ship.pan)
         } // thrust
 
@@ -184,14 +185,14 @@ class Ship(private val game: Game) {
         } // rotateTowards
 
         override fun update(fps: Long) {
-            if (thrustFrames > 0) --thrustFrames
+            thrustFrames.tick()
         } // update
 
         override fun draw(canvas: Canvas) {
             canvas.drawPath(shipPath, shipFillBrush)
             canvas.drawLines(shape, shipBrush)
 
-            if (thrustFrames != 0)
+            if (thrustFrames.running)
                 canvas.drawLines(thruster, thrustBrush)
         } // draw
 
