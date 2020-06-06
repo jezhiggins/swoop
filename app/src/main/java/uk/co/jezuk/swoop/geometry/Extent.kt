@@ -33,4 +33,9 @@ class Extent(
     private fun randomX() = (Math.random() * width) - right
     private fun randomY() = (Math.random() * height) - bottom
     private fun rollD4() = (Math.random() * 4).toInt()
+
+    fun inflated(dist: Float): Extent {
+        val doubleDist = (dist * 2).toInt()
+        return Extent(width + doubleDist, height + doubleDist)
+    }
 }

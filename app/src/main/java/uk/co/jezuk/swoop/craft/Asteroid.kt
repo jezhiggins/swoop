@@ -20,7 +20,7 @@ class Asteroid(
     val size get() = scale.toInt()
 
     fun update(fps: Long) {
-        position.move(velocity, all.extent)
+        position.move(velocity, all.extent, killDist)
         orientation += rotation
         if (orientation < 0) orientation += 360
         if (orientation > 360) orientation -= 360

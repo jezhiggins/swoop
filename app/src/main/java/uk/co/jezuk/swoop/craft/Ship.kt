@@ -92,7 +92,7 @@ class Ship(private val game: Game) {
     } // rotateShip
 
     private fun applyThrust() {
-        pos.move(velocity, game.extent)
+        pos.move(velocity, game.extent, killDist)
     } // applyThrust
 
     //////////////////////////
