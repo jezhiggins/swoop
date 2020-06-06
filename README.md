@@ -1,6 +1,8 @@
-# swoop
+# Swoop
 
 Retro game nonsense
+
+![Swoop screenshot](https://github.com/jezhiggins/swoop/blob/master/images/swoop.jpeg)
 
 ### Thanks
 
