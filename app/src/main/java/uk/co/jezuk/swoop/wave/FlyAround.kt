@@ -6,6 +6,7 @@ import uk.co.jezuk.swoop.craft.Asteroids
 import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
+import kotlin.math.min
 
 class FlyAround(
     private val game: Game,
@@ -32,8 +33,18 @@ class FlyAround(
         ship.update(fps)
 
         asteroids.findCollisions(ship)
-        if (asteroids.size == 0)
-            game.nextWave(LevelTransition(game, starField, ship, initialAsteroids))
+        if (asteroids.size == 0) {
+            val newStarField = StarField(game.extent)
+            val nextWave = FlyAround(game, newStarField, min(initialAsteroids+1, 11))
+
+            game.nextWave(LevelTransition(
+                game,
+                starField,
+                newStarField,
+                ship,
+                nextWave
+            ))
+        }
     } // update
 
     override fun draw(canvas: Canvas) {

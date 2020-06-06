@@ -8,11 +8,11 @@ import kotlin.math.min
 class LevelTransition(
     private val game: Game,
     private val starField: StarField,
+    private val newStarField: StarField,
     private val ship: Ship,
-    private val initialAsteroids: Int
+    private val nextWave: Wave
 ): Wave {
     private var transition = 120
-    private val newStarField = StarField(game.extent)
     private var currentStarField = newStarField
 
     init {
@@ -23,7 +23,7 @@ class LevelTransition(
         ship.update(fps)
 
         if (--transition == 0)
-            game.nextWave(FlyAround(game, newStarField, min(initialAsteroids+1, 11)))
+            game.nextWave(nextWave)
 
         when (transition) {
             60, 100 -> currentStarField = starField
