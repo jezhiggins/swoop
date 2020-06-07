@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import uk.co.jezuk.swoop.Game
@@ -124,16 +125,19 @@ class Ship(private val game: Game) {
         private val shipRadius: Float get() = 30f;
 
         init {
-            shipBrush.setARGB(175, 0, 255, 0)
+            shipBrush.color = Color.GREEN
+            shipBrush.alpha = 175
             shipBrush.strokeWidth = 10f
             shipBrush.strokeCap = Paint.Cap.ROUND
             shipBrush.style = Paint.Style.STROKE
 
-            shipFillBrush.setARGB(255, 0, 0, 0)
+            shipFillBrush.color = Color.BLACK
+            shipFillBrush.alpha = 255
             shipBrush.strokeWidth = 10f
             shipFillBrush.style = Paint.Style.FILL_AND_STROKE
 
-            explodeBrush.setARGB(175, 255, 255, 0)
+            explodeBrush.color = Color.YELLOW
+            explodeBrush.alpha = 175
             explodeBrush.strokeWidth = 10f
             explodeBrush.strokeCap = Paint.Cap.ROUND
             explodeBrush.style = Paint.Style.STROKE

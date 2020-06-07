@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Asteroids
@@ -42,7 +43,8 @@ class Attract(
         private val smallPen = Paint()
 
         init {
-            pen.setARGB(255, 255, 255, 255)
+            pen.color = Color.WHITE
+            pen.alpha = 255
             pen.textSize = 128f
             pen.textAlign = Paint.Align.CENTER
 

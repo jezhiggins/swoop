@@ -2,6 +2,7 @@ package uk.co.jezuk.swoop
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.Extent
@@ -93,7 +94,8 @@ class Game(context: Context) {
         private val pen = Paint()
 
         init {
-            pen.setARGB(255, 255, 255, 255)
+            pen.color = Color.WHITE
+            pen.alpha = 255
             pen.textSize = 48f
             pen.textAlign = Paint.Align.LEFT
         }

@@ -1,18 +1,21 @@
 package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.utils.Repeat
 
 class GameOver(
     private val game: Game,
     private val wave: Wave
 ) : Wave {
-    private var ticker = 0
+    private var brightener = Repeat(5, { brighten() })
     private val pen = Paint()
 
     init {
-        pen.setARGB(0, 255, 0, 0)
+        pen.color = Color.RED
+        pen.alpha = 0
         pen.textSize = 160f
         pen.textAlign = Paint.Align.CENTER
     } // init
@@ -28,15 +31,15 @@ class GameOver(
 
     override fun update(fps: Long) {
         wave.update(fps)
-
-        if (++ticker == 5) {
-            ticker = 0
-            if (pen.alpha != 255)
-                pen.alpha += 1
-            else
-                goToAttract()
-        }
+        brightener.tick()
     } // update
+
+    private fun brighten() {
+        if (pen.alpha != 255)
+            pen.alpha += 1
+        else
+            goToAttract()
+    } // brighten
 
     override fun draw(canvas: Canvas) {
         canvas.save()

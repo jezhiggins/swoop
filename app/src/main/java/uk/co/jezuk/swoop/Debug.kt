@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 
 class Debug {
@@ -8,7 +9,8 @@ class Debug {
     private var fps: Long = 0
 
     init {
-        textPen.setARGB(127, 255, 255, 255)
+        textPen.color = Color.WHITE
+        textPen.alpha =127
         textPen.textSize = 32f
     }
 

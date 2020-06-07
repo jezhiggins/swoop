@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.geometry.Point
@@ -86,7 +87,8 @@ class Gun(
             val brush = Paint()
 
             init {
-                brush.setARGB(255, 255, 0, 255)
+                brush.color = Color.MAGENTA
+                brush.alpha = 255
                 brush.strokeWidth = 10f
                 brush.strokeCap = Paint.Cap.ROUND
             }

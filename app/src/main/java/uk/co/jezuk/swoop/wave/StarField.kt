@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.geometry.Extent
 
@@ -23,7 +24,8 @@ class StarField (extent: Extent, count: Int = 400) {
         private val starBrush = Paint()
 
         init {
-            starBrush.setARGB(255, 255, 255, 255)
+            starBrush.color = Color.WHITE
+            starBrush.alpha = 255
             starBrush.strokeWidth = 4f
         }
     } // companion object
