@@ -13,7 +13,7 @@ class Comet(
     private val game: Game,
     private val wave: Wave
 ): Target {
-    val position = game.extent.randomPointOnEdge()
+    override val position = game.extent.randomPointOnEdge()
     private var velocity = CometVector(position)
     private var orientation = (Math.random() * 360).toFloat()
     private val rotation = (Math.random() * 11).toFloat() - 5f
@@ -28,7 +28,7 @@ class Comet(
         wave.addTarget(this)
     } // init
 
-    val killDist get() = 50f
+    override val killDist get() = 50f
 
     override fun update(fps: Long) {
         if (!position.moveNoWrap(velocity, game.extent, killDist))
@@ -53,8 +53,8 @@ class Comet(
         canvas.restore()
     } // draw
 
-    fun shot() {
-    } // shot
+    override fun shot() { }
+    override fun explode() { }
 
     fun checkShipCollision(ship: Ship) {
         if (ship.position.distance(position) < (killDist + ship.killDist)) {

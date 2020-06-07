@@ -11,7 +11,7 @@ import uk.co.jezuk.swoop.utils.Repeat
 class Gun(
     private val game: Game,
     private val ship: Ship,
-    private val asteroids: Asteroids
+    private val targets: Targets
 ) {
     private val bullets = mutableListOf<Bullet>()
     private var trigger = Repeat(15, { fire() })
@@ -44,7 +44,7 @@ class Gun(
 
     //////////////////////
     private fun checkForHits() {
-        for (a in asteroids) {
+        for (a in targets) {
             for (b in bullets) {
                 if (b.position.distance(a.position) < a.killDist) {
                     a.shot()

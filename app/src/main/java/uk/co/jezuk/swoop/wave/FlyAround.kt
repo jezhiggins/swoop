@@ -15,12 +15,14 @@ class FlyAround(
     private val game: Game,
     private val starField: StarField,
     private val initialAsteroids: Int = 5
-) : Wave {
+) : WaveWithTargets() {
     private val ship = Ship(game)
-    private val asteroids = Asteroids(game, initialAsteroids)
-    private val gun = Gun(game, ship, asteroids)
+    private val gun = Gun(game, ship, targets)
     private val cometCountdown = Latch(100, { Comet(game, this)})
-    private val targets = mutableListOf<Target>()
+
+    init {
+        Asteroids(game, this, initialAsteroids)
+    }
 
     /////
     override fun onSingleTapUp() = ship.thrust()
@@ -33,7 +35,6 @@ class FlyAround(
 
     /////
     override fun update(fps: Long) {
-        asteroids.update(fps)
         gun.update(fps)
         ship.update(fps)
 
@@ -41,37 +42,19 @@ class FlyAround(
 
         cometCountdown.tick()
 
-        asteroids.findCollisions(ship)
+        // asteroids.findCollisions(ship)
         // comet?.checkShipCollision(ship)
 
-        if (asteroids.size == 0)
+        if (targets.size == 0)
             endOfLevel()
     } // update
 
-    private fun updateTargets(fps: Long) {
-        val working = ArrayList(targets)
-        working.forEach {
-            t -> t.update(fps)
-        }
-    }
-
     override fun draw(canvas: Canvas) {
         starField.draw(canvas)
-        asteroids.draw(canvas)
-        targets.forEach {
-            t -> t.draw(canvas)
-        }
+        drawTargets(canvas)
         gun.draw(canvas)
         ship.draw(canvas)
     } // draw
-
-    /////
-    override fun addTarget(target: Target) {
-        targets.add(target)
-    }
-    override fun removeTarget(target: Target) {
-        targets.remove(target)
-    }
 
     /////
     private fun endOfLevel() {

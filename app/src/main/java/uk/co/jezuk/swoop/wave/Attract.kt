@@ -8,30 +8,34 @@ import uk.co.jezuk.swoop.craft.Asteroids
 
 class Attract(
     private val game: Game
-) : Wave {
+) : WaveWithTargets() {
     private var starField = StarField(game.extent)
-    private var asteroids = Asteroids(
-        game,
-        randInt(3)+1,
-        randInt(5)+1,
-        randInt(4)+1,
-        { game.extent.randomPoint() }
-    )
+
+    init {
+        Asteroids(
+            game,
+            this,
+            randInt(3) + 1,
+            randInt(5) + 1,
+            randInt(4) + 1,
+            { game.extent.randomPoint() }
+        )
+    }
 
     /////
     override fun onSingleTapUp() =
-        game.nextWave(EndAttract(game, starField, asteroids))
+        game.nextWave(EndAttract(game, starField, targets))
     override fun onScroll(offsetX: Float, offsetY: Float) = Unit
     override fun onLongPress() = Unit
 
     /////
     override fun update(fps: Long) {
-        asteroids.update(fps)
+        updateTargets(fps)
     } // update
 
     override fun draw(canvas: Canvas) {
         starField.draw(canvas)
-        asteroids.draw(canvas)
+        drawTargets(canvas)
 
         canvas.drawText("SWOOP", 0f, 0f, pen)
 

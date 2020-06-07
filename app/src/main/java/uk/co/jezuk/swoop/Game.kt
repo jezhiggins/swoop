@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.craft.Ship
+import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.wave.*
 

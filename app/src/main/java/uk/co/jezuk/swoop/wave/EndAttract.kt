@@ -4,14 +4,15 @@ import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.craft.Asteroids
+import uk.co.jezuk.swoop.craft.Targets
 
 class EndAttract(
     private val game: Game,
     private val starField: StarField,
-    private val asteroids: Asteroids
-): Wave {
+    targets: Targets
+): WaveWithTargets(targets) {
     private var tick = 0
-    private val steps = 120 / asteroids.size
+    private val steps = 120 / targets.size
 
     init {
         game.start()
@@ -19,18 +20,18 @@ class EndAttract(
 
     /////
     override fun update(fps: Long) {
-        asteroids.update(fps)
+        targets.update(fps)
 
         if (++tick == steps) {
-            asteroids.explodeLast()
+            targets.explodeOne()
             tick = 0
         }
-        if (asteroids.size == 0)
+        if (targets.size == 0)
             game.nextWave(FlyAround(game, starField))
     } // update
 
     override fun draw(canvas: Canvas) {
         starField.draw(canvas)
-        asteroids.draw(canvas)
+        targets.draw(canvas)
     } // draw
 }

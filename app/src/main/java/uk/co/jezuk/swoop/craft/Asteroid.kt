@@ -2,25 +2,36 @@ package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
+import uk.co.jezuk.swoop.wave.Wave
 
 class Asteroid(
-    private val all: Asteroids,
+    private val game: Game,
+    private val wave: Wave,
     pos: Point,
     private var scale: Float = 4f
 ): Target {
-    val position = pos.copy()
+    override val position = pos.copy()
     private var velocity = AsteroidVector(scale)
     private var orientation = (Math.random() * 360).toFloat()
     private val rotation = (Math.random() * 3).toFloat() - 2f
     private val killRadius = 25f
+    private val smallBang = game.sounds.load(R.raw.bangsmall)
+    private val midBang = game.sounds.load(R.raw.bangmedium)
+    private val bigBang = game.sounds.load(R.raw.banglarge)
 
-    val killDist get() = scale * killRadius
+    init {
+        wave.addTarget(this)
+    }
+
+    override val killDist get() = scale * killRadius
     val size get() = scale.toInt()
 
     override fun update(fps: Long) {
-        position.move(velocity, all.extent, killDist)
+        position.move(velocity, game.extent, killDist)
         orientation += rotation
         if (orientation < 0) orientation += 360
         if (orientation > 360) orientation -= 360
@@ -42,28 +53,37 @@ class Asteroid(
         canvas.restore()
     } // draw
 
-    private fun explode() {
+    private fun split() {
         if (scale != 1f) {
             scale /= 2
             velocity = AsteroidVector(scale)
-            all.add(Asteroid(all, position, scale))
+            wave.addTarget(Asteroid(game, wave, position, scale))
         } else {
-            all.remove(this)
+            wave.removeTarget(this)
         }
-        all.bang(this)
+        explode()
     } // split
 
-    fun shot() {
-        all.scored(400/scale.toInt())
-        explode()
+    override fun shot() {
+        game.scored(400/scale.toInt())
+        split()
     } // shot
 
     fun checkShipCollision(ship: Ship) {
         if (ship.position.distance(position) < (killDist + ship.killDist)) {
-            explode()
+            split()
             ship.hit()
         }
     } // checkShipCollision
+
+    override fun explode() {
+        val b = when(size) {
+            1 -> smallBang
+            2 -> midBang
+            else -> bigBang
+        }
+        b(position.pan(game.extent))
+    } // bang
 
     companion object {
         val Big: Float = 4f
