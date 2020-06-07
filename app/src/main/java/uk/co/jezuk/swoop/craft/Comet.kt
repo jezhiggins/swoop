@@ -7,14 +7,16 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
+import uk.co.jezuk.swoop.wave.Wave
 
 class Comet(
-    private val game: Game
-) {
+    private val game: Game,
+    private val wave: Wave
+): Target {
     val position = game.extent.randomPointOnEdge()
     private var velocity = CometVector(position)
     private var orientation = (Math.random() * 360).toFloat()
-    private val rotation = (Math.random() * 3).toFloat() - 2f
+    private val rotation = (Math.random() * 11).toFloat() - 5f
     private val cometPath = Path()
 
     init {
@@ -22,18 +24,21 @@ class Comet(
         for (i in 0 until shape.size step 2)
             cometPath.lineTo(shape[i], shape[i+1])
         cometPath.close()
-    }
+
+        wave.addTarget(this)
+    } // init
 
     val killDist get() = 50f
 
-    fun update(fps: Long) {
-        position.moveNoWrap(velocity, game.extent, killDist)
+    override fun update(fps: Long) {
+        if (!position.moveNoWrap(velocity, game.extent, killDist))
+            wave.removeTarget(this)
         orientation += rotation
         if (orientation < 0) orientation += 360
         if (orientation > 360) orientation -= 360
     } // update
 
-    fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas) {
         canvas.save()
 
         canvas.translate(
@@ -76,7 +81,7 @@ class Comet(
         )
 
         init {
-            brush.setARGB(255, 160, 160, 200)
+            brush.setARGB(255, 160, 160, 210)
             brush.strokeWidth = 3f
             brush.strokeCap = Paint.Cap.ROUND
             brush.strokeJoin = Paint.Join.ROUND

@@ -9,7 +9,7 @@ class Asteroid(
     private val all: Asteroids,
     pos: Point,
     private var scale: Float = 4f
-) {
+): Target {
     val position = pos.copy()
     private var velocity = AsteroidVector(scale)
     private var orientation = (Math.random() * 360).toFloat()
@@ -19,14 +19,14 @@ class Asteroid(
     val killDist get() = scale * killRadius
     val size get() = scale.toInt()
 
-    fun update(fps: Long) {
+    override fun update(fps: Long) {
         position.move(velocity, all.extent, killDist)
         orientation += rotation
         if (orientation < 0) orientation += 360
         if (orientation > 360) orientation -= 360
     } // update
 
-    fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas) {
         canvas.save()
 
         canvas.translate(
