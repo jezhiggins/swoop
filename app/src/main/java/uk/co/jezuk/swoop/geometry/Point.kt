@@ -13,6 +13,16 @@ data class Point(var x: Double, var y: Double) {
         if (y > bounds.bottom) y = bounds.top
     } // move
 
+    fun moveNoWrap(vec: Vector, fieldBounds: Extent, killDist: Float = 0f): Boolean {
+        val (deltaX, deltaY) = vec.offset
+        x += deltaX.toFloat()
+        y += deltaY.toFloat()
+
+        val bounds = fieldBounds.inflated(killDist)
+        return (x >= bounds.left) && (x <= bounds.right)
+                && (y >= bounds.top) && (y <= bounds.bottom)
+    } // moveNoWrap
+
     fun distance(pos: Point): Float {
         val offsetX = distanceBetween(x, pos.x)
         val offsetY = distanceBetween(y, pos.y)

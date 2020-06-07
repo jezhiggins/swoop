@@ -27,7 +27,7 @@ class Comet(
     val killDist get() = 50f
 
     fun update(fps: Long) {
-        position.move(velocity, game.extent, killDist)
+        position.moveNoWrap(velocity, game.extent, killDist)
         orientation += rotation
         if (orientation < 0) orientation += 360
         if (orientation > 360) orientation -= 360
