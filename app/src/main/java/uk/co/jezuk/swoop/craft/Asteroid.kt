@@ -69,12 +69,10 @@ class Asteroid(
         split()
     } // shot
 
-    override fun checkShipCollision(ship: Ship) {
-        if (Craft.collision(this, ship)) {
-            split()
-            ship.hit()
-        }
-    } // checkShipCollision
+    override fun shipCollision(ship: Ship) {
+        split()
+        ship.hit()
+    } // shipCollision
 
     override fun explode() {
         val b = when(size) {

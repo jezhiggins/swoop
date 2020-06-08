@@ -56,10 +56,7 @@ class Comet(
     override fun shot() { }
     override fun explode() { }
 
-    override fun checkShipCollision(ship: Ship) {
-        if (Craft.collision(this, ship))
-            ship.hit()
-    } // checkShipCollision
+    override fun shipCollision(ship: Ship) = ship.hit()
 
     companion object {
         fun CometVector(position: Point) =
