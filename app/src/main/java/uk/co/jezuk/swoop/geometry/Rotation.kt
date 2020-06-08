@@ -30,5 +30,9 @@ class Rotation(
         if (a > 180) return a-360
         if (a < -180) return a+360
         return a
-    }
+    } // wraparound
+
+    companion object {
+        fun random() = Rotation(Math.random() * 360)
+    } // companion object
 } // Rotation

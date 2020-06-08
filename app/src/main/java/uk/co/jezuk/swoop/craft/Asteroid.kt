@@ -5,6 +5,7 @@ import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
+import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
 
@@ -16,8 +17,8 @@ class Asteroid(
 ): Target {
     override val position = pos.copy()
     private var velocity = AsteroidVector(scale)
-    private var orientation = (Math.random() * 360).toFloat()
-    private val rotation = (Math.random() * 3).toFloat() - 2f
+    private var orientation = Rotation.random()
+    private val rotation = (Math.random() * 3) - 2
     private val killRadius = 25f
     private val smallBang = game.sounds.load(R.raw.bangsmall)
     private val midBang = game.sounds.load(R.raw.bangmedium)
@@ -33,8 +34,6 @@ class Asteroid(
     override fun update(frameRateScale: Float) {
         position.move(velocity, frameRateScale, game.extent, killDist)
         orientation += rotation
-        if (orientation < 0) orientation += 360
-        if (orientation > 360) orientation -= 360
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -44,7 +43,7 @@ class Asteroid(
         canvas.scale(scale, scale)
 
         // canvas.drawCircle(0f, 0f, killRadius, brush)
-        canvas.rotate(orientation)
+        orientation.rotate(canvas)
         canvas.drawLines(shape, brush)
 
         canvas.restore()

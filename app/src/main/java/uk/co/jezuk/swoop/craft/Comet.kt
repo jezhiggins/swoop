@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.geometry.Point
+import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.wave.Wave
@@ -15,8 +16,8 @@ class Comet(
 ): Target {
     override val position = game.extent.randomPointOnEdge()
     private var velocity = CometVector(position)
-    private var orientation = (Math.random() * 360).toFloat()
-    private val rotation = (Math.random() * 11).toFloat() - 5f
+    private var orientation = Rotation.random()
+    private val rotation = (Math.random() * 11) - 5
     private val cometPath = Path()
 
     init {
@@ -34,8 +35,6 @@ class Comet(
         if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
             wave.removeTarget(this)
         orientation += rotation
-        if (orientation < 0) orientation += 360
-        if (orientation > 360) orientation -= 360
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -44,7 +43,7 @@ class Comet(
         position.translate(canvas)
 
         // canvas.drawCircle(0f, 0f, killRadius, brush)
-        canvas.rotate(orientation)
+        orientation.rotate(canvas)
         canvas.drawPath(cometPath, brush)
 
         canvas.restore()
