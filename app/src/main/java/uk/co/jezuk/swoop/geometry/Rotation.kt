@@ -25,6 +25,8 @@ class Rotation(
 
     fun rotate(canvas: Canvas) =
         canvas.rotate(angle.toFloat())
+    fun unrotate(canvas: Canvas) =
+        canvas.rotate(-angle.toFloat())
 
     private fun wraparound(a: Double): Double {
         if (a > 180) return a-360

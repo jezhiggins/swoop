@@ -9,12 +9,14 @@ import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.random.Random
 
 class Comet(
     private val game: Game,
     private val wave: Wave
 ): Target {
     override val position = game.extent.randomPointOnEdge()
+    private val extentWithTail = game.extent.inflated(500f)
     private var velocity = CometVector(position)
     private var orientation = Rotation.random()
     private val rotation = (Math.random() * 11) - 5
@@ -32,7 +34,7 @@ class Comet(
     override val killDist get() = 50f
 
     override fun update(frameRateScale: Float) {
-        if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
+        if (!position.moveNoWrap(velocity, frameRateScale, extentWithTail, killDist))
             wave.removeTarget(this)
         orientation += rotation
     } // update
@@ -45,6 +47,16 @@ class Comet(
         // canvas.drawCircle(0f, 0f, killRadius, brush)
         orientation.rotate(canvas)
         canvas.drawPath(cometPath, brush)
+        orientation.unrotate(canvas)
+
+        // comet tail
+        canvas.rotate(velocity.angle.toFloat())
+        for (y in -60 until 60 step 10)
+            canvas.drawLine(
+                -65f + Random.nextInt(0, 20),
+                y.toFloat(),
+                -500f + Random.nextInt(-50, 50),
+                y.toFloat()*1.1f, brush)
 
         canvas.restore()
     } // draw
