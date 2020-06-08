@@ -57,7 +57,7 @@ class Asteroid(
         if (scale != 1f) {
             scale /= 2
             velocity = AsteroidVector(scale)
-            wave.addTarget(Asteroid(game, wave, position, scale))
+            Asteroid(game, wave, position, scale)
         } else {
             wave.removeTarget(this)
         }
