@@ -23,7 +23,7 @@ class LevelTransition(
     override fun update(frameRateScale: Float) {
         ship.update(frameRateScale)
 
-        when (transition.tick()) {
+        when (transition.tick(frameRateScale)) {
             60, 100 -> currentStarField = starField
             75, 50 -> currentStarField = newStarField
         }

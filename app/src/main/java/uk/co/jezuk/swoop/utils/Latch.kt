@@ -1,16 +1,20 @@
 package uk.co.jezuk.swoop.utils
 
+import kotlin.math.max
+
 class Latch(
-    private var count: Int,
+    startFrom: Int,
     private val action: () -> Unit
 ) {
-    val done get() = count == 0
+    var count: Float = startFrom.toFloat()
+    val done get() = count <= 0f
     val running get() = !done
 
-    fun tick(): Int {
+    fun tick(frameRateScale: Float): Int {
         if (done) return 0
 
-        if (--count == 0) action()
-        return count
+        count -= frameRateScale
+        if (done) action()
+        return max(count.toInt(), 0)
     } // tick
 } // class Latch

@@ -24,20 +24,6 @@ class Gun(
     } // fire
 
     fun update(frameRateScale: Float) {
-        trigger.tick()
+        trigger.tick(frameRateScale)
     } // update
-
-    //////////////////////
-    /*
-    private fun checkForHits() {
-        for (t in targets) {
-            for (b in bullets) {
-                if (Craft.collision(t, b)) {
-                    t.shot()
-                    b.hit()
-                }
-            }
-        }
-    } // checkForHits
-    */
 } // Gun

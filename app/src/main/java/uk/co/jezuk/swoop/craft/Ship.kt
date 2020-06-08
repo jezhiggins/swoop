@@ -190,7 +190,7 @@ class Ship(private val game: Game): Craft {
         } // rotateTowards
 
         override fun update(frameRateScale: Float) {
-            thrustFrames.tick()
+            thrustFrames.tick(frameRateScale)
         } // update
 
         override fun draw(canvas: Canvas) {
@@ -215,17 +215,17 @@ class Ship(private val game: Game): Craft {
         }
 
         override fun update(frameRateScale: Float) {
-            blowUpShip()
+            blowUpShip(frameRateScale)
         } // update
 
         override fun draw(canvas: Canvas) {
             canvas.drawLines(explodeShape, explodeBrush)
         } // draw
 
-        private fun blowUpShip() {
+        private fun blowUpShip(frameRateScale: Float) {
             for (l in 0 until explodeShape.size step 4) {
-                val x = blowUpShift(explodeShape[l])
-                val y = blowUpShift(explodeShape[l + 3])
+                val x = blowUpShift(explodeShape[l], frameRateScale)
+                val y = blowUpShift(explodeShape[l + 3], frameRateScale)
 
                 for (p in 0 until 4 step 2) {
                     explodeShape[l + p] += x
@@ -233,12 +233,12 @@ class Ship(private val game: Game): Craft {
                 }
             }
 
-            explosion.tick()
+            explosion.tick(frameRateScale)
         } // blowUpShip
 
-        private fun blowUpShift(p: Float): Float {
-            if (p < 0) return -5f
-            if (p > 0) return 5f
+        private fun blowUpShift(p: Float, frameRateScale: Float): Float {
+            if (p < 0) return -5f * frameRateScale
+            if (p > 0) return 5f * frameRateScale
             return 0f
         } // blowUpShift
 
@@ -259,7 +259,7 @@ class Ship(private val game: Game): Craft {
             ship.pos.move(Vector(15.0, angle), 1f, ship.game.extent)
         }
         override fun update(frameRateScale: Float) {
-            pause.tick()
+            pause.tick(frameRateScale)
             if (pause.running) return
 
             radius -= (radius / 20)

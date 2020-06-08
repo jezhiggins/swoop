@@ -20,7 +20,7 @@ class EndAttract(
     /////
     override fun update(frameRateScale: Float) {
         updateTargets(frameRateScale)
-        exploders.tick()
+        exploders.tick(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {

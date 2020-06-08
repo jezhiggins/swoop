@@ -31,7 +31,7 @@ class GameOver(
 
     override fun update(frameRateScale: Float) {
         wave.update(frameRateScale)
-        brightener.tick()
+        brightener.tick(frameRateScale)
     } // update
 
     private fun brighten() {
