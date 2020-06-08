@@ -82,12 +82,12 @@ class Game(context: Context) {
     } // drawScore
 
     private fun drawLives(canvas: Canvas) {
-        canvas.translate(extent.canvasOffsetX - 50, extent.canvasOffsetY - 50)
+        canvas.translate(extent.canvasOffsetX - 50, extent.canvasOffsetY - 90)
         canvas.rotate(-90f)
-        canvas.scale(0.5f, 0.5f)
+        canvas.scale(0.75f, 0.75f)
         for (l in 0 until lives) {
             canvas.drawLines(Ship.shape, Ship.shipBrush)
-            canvas.translate(0f, -100f)
+            canvas.translate(0f, -105f)
         } // for
     } // drawLives
 
@@ -95,9 +95,9 @@ class Game(context: Context) {
         private val pen = Paint()
 
         init {
-            pen.color = Color.WHITE
+            pen.color = Color.CYAN
             pen.alpha = 255
-            pen.textSize = 48f
+            pen.textSize = 128f
             pen.textAlign = Paint.Align.LEFT
         }
     }
