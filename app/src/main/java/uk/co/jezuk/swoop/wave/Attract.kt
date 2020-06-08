@@ -38,7 +38,6 @@ class Attract(
         drawTargets(canvas)
 
         canvas.drawText("SWOOP", 0f, 0f, pen)
-
         canvas.drawText("Forest Road Game Krew",  0f, game.extent.bottom.toFloat() - 40f, smallPen)
     } // draw
 

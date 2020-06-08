@@ -18,7 +18,7 @@ class LevelTransition(
 
     init {
         ship.rezOut()
-    }
+    } // init
 
     override fun update(fps: Long) {
         ship.update(fps)

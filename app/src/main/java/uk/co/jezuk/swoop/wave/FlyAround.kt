@@ -18,10 +18,10 @@ class FlyAround(
 ) : WaveWithProjectilesAndTargets() {
     private val ship = Ship(game)
     private val gun = Gun(game, this, ship)
-    private val cometCountdown = Latch(100, { Comet(game, this)})
 
     init {
         Asteroids(game, this, initialAsteroids)
+        targets.onEliminated { endOfLevel() }
     }
 
     /////
@@ -42,11 +42,6 @@ class FlyAround(
         updateProjectiles(fps)
 
         checkCollisions(ship)
-
-        cometCountdown.tick()
-
-        if (targets.size == 0)
-            endOfLevel()
     } // update
 
     override fun draw(canvas: Canvas) {

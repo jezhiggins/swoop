@@ -7,9 +7,13 @@ import uk.co.jezuk.swoop.geometry.Point
 
 class Targets {
     private val targets = ArrayList<Target>()
+    private val callbacks = ArrayList<() -> Unit>()
 
     operator fun iterator() = ArrayList(targets).iterator()
+    fun first() = targets.first()
     val size get() = targets.size
+
+    fun onEliminated(callback: () -> Unit) = callbacks.add(callback)
 
     /////
     fun update(fps: Long) {
@@ -28,12 +32,9 @@ class Targets {
 
     /////
     fun add(target: Target) = targets.add(target)
-    fun remove(target: Target) = targets.remove(target)
-
-    /////
-    fun explodeOne() {
-        val t = targets.last()
-        t.explode()
-        remove(t)
-    } // explodeOne
+    fun remove(target: Target) {
+        targets.remove(target)
+        if (targets.isEmpty())
+            callbacks.forEach { c -> c() }
+    } // remove
 } // Asteroids
