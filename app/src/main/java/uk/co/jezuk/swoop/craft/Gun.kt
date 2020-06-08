@@ -27,7 +27,7 @@ class Gun(
             ship.velocity
         )
         bullets.add(bullet)
-    }
+    } // fire
 
     fun update(fps: Long) {
         bullets.forEach { b -> b.update(fps) }
@@ -43,54 +43,13 @@ class Gun(
 
     //////////////////////
     private fun checkForHits() {
-        for (a in targets) {
+        for (t in targets) {
             for (b in bullets) {
-                if (b.position.distance(a.position) < a.killDist) {
-                    a.shot()
-                    b.age += 20
+                if (Craft.collision(t, b)) {
+                    t.shot()
+                    b.hit()
                 }
             }
         }
     } // checkForHits
-
-    //////////////////////
-    private class Bullet(
-        private val game: Game,
-        pos: Point,
-        orientation: Double,
-        initVel: Vector
-    ) {
-        val position = pos.copy()
-        private var velocity = initVel.copy()
-        var age = 0
-
-        init {
-            velocity.maximum = 30.0
-            velocity += Vector(10.0, orientation, 30.0)
-        }
-
-        fun update(fps: Long) {
-            position.move(velocity, game.extent)
-            ++age
-        }
-
-        fun draw(canvas: Canvas) {
-            canvas.drawPoint(
-                position.x.toFloat(),
-                position.y.toFloat(),
-                brush
-            )
-        } // draw
-
-        companion object {
-            val brush = Paint()
-
-            init {
-                brush.color = Color.MAGENTA
-                brush.alpha = 255
-                brush.strokeWidth = 10f
-                brush.strokeCap = Paint.Cap.ROUND
-            }
-        } // companion object
-    } // Bullet
 } // Gun
