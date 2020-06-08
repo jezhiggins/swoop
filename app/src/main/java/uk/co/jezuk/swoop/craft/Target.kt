@@ -12,4 +12,6 @@ interface Target {
 
     fun shot()
     fun explode()
+
+    fun checkShipCollision(ship: Ship)
 }

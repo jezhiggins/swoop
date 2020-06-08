@@ -39,11 +39,9 @@ class FlyAround(
         ship.update(fps)
 
         updateTargets(fps)
+        checkShipCollision(ship)
 
         cometCountdown.tick()
-
-        // asteroids.findCollisions(ship)
-        // comet?.checkShipCollision(ship)
 
         if (targets.size == 0)
             endOfLevel()

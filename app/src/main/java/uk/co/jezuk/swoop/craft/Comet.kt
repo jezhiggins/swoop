@@ -56,7 +56,7 @@ class Comet(
     override fun shot() { }
     override fun explode() { }
 
-    fun checkShipCollision(ship: Ship) {
+    override fun checkShipCollision(ship: Ship) {
         if (ship.position.distance(position) < (killDist + ship.killDist)) {
             ship.hit()
         }

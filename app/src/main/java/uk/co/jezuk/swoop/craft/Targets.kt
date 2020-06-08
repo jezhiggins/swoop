@@ -13,9 +13,14 @@ class Targets {
 
     /////
     fun update(fps: Long) {
-        val working = ArrayList(targets)
-        working.forEach { t -> t.update(fps) }
+        iterator().forEach { t -> t.update(fps) }
     } // updateTargets
+
+    fun checkShipCollision(ship: Ship) {
+        iterator().forEach {
+            t -> t.checkShipCollision(ship)
+        }
+    } // checkShipCollision
 
     fun draw(canvas: Canvas) {
         targets.forEach { t -> t.draw(canvas) }
