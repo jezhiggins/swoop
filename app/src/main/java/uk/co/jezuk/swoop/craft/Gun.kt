@@ -16,7 +16,6 @@ class Gun(
     private val bullets = mutableListOf<Bullet>()
     private var trigger = Repeat(15, { fire() })
     private var ageOut = 75
-    private var tick = 0
 
     private fun fire() {
         if (!ship.armed) return

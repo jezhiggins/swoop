@@ -35,12 +35,5 @@ class Targets {
         val t = targets.last()
         t.explode()
         remove(t)
-    }
-
-    //fun findCollisions(ship: Ship) {
-    //    val working = ArrayList(asteroids)
-    //    working.forEach {
-    //        a -> a.checkShipCollision(ship)
-    //    }
-    //} // findCollisions
+    } // explodeOne
 } // Asteroids

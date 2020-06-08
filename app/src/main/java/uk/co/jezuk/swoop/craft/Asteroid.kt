@@ -70,7 +70,7 @@ class Asteroid(
     } // shot
 
     override fun checkShipCollision(ship: Ship) {
-        if (ship.position.distance(position) < (killDist + ship.killDist)) {
+        if (Craft.collision(this, ship)) {
             split()
             ship.hit()
         }

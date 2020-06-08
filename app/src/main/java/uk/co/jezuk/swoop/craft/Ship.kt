@@ -11,7 +11,7 @@ import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.RestartableLatch
 
-class Ship(private val game: Game) {
+class Ship(private val game: Game): Craft {
     private var rotation = -90.0
     private var targetRotation = rotation
 
@@ -23,11 +23,12 @@ class Ship(private val game: Game) {
     private var state: ShipState = RezIn(this)
 
     /////////////////////////////////////
-    val position get() = state.position
+    override val position get() = state.position
+    override val killDist get() = shipRadius
+
     val orientation get() = rotation
     val velocity = Vector(0.0, 0.0)
     val pan get() = position.pan(game.extent)
-    val killDist get() = shipRadius
 
     val armed get() = state.armed
 
@@ -51,14 +52,14 @@ class Ship(private val game: Game) {
     fun thrust() = state.thrust()
     fun rotateTowards(angle: Double) = state.rotateTowards(angle)
 
-    fun update(fps: Long) {
+    override fun update(fps: Long) {
         rotateShip()
         applyThrust()
 
         state.update(fps)
     } // update
 
-    fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas) {
         canvas.save()
 
         canvas.translate(pos.x.toFloat(), pos.y.toFloat())

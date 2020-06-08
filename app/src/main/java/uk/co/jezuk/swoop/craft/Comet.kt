@@ -57,9 +57,8 @@ class Comet(
     override fun explode() { }
 
     override fun checkShipCollision(ship: Ship) {
-        if (ship.position.distance(position) < (killDist + ship.killDist)) {
+        if (Craft.collision(this, ship))
             ship.hit()
-        }
     } // checkShipCollision
 
     companion object {
