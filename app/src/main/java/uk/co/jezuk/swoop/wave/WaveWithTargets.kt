@@ -8,8 +8,8 @@ import uk.co.jezuk.swoop.craft.Targets
 abstract class WaveWithTargets(
     protected val targets: Targets = Targets()
 ): Wave {
-    protected fun updateTargets(fps: Long) {
-        targets.update(fps)
+    protected fun updateTargets(frameRateScale: Float) {
+        targets.update(frameRateScale)
     } // updateTargets
 
     protected fun checkShipCollision(ship: Ship) {

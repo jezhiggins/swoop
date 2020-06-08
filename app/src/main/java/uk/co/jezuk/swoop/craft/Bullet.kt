@@ -30,8 +30,8 @@ class Bullet(
         wave.addProjectile(this)
     } // init
 
-    override fun update(fps: Long) {
-        position.move(velocity, game.extent)
+    override fun update(frameRateScale: Float) {
+        position.move(velocity, frameRateScale, game.extent)
         if (++age > maxAge) wave.removeProjectile(this)
     } // update
 

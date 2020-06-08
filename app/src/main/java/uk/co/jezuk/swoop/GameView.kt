@@ -65,7 +65,7 @@ class GameView(
     override fun onLongPress(ev: MotionEvent) = game.onLongPress()
 
     fun update(frameRateScale: Float) {
-        game.update(frameRateScale.toLong())
+        game.update(frameRateScale)
 
         debug.update(frameRateScale)
     } // update

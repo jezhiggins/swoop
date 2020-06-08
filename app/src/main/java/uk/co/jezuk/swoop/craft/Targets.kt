@@ -16,8 +16,8 @@ class Targets {
     fun onEliminated(callback: () -> Unit) = callbacks.add(callback)
 
     /////
-    fun update(fps: Long) {
-        iterator().forEach { t -> t.update(fps) }
+    fun update(frameRateScale: Float) {
+        iterator().forEach { t -> t.update(frameRateScale) }
     } // updateTargets
 
     fun checkShipCollision(ship: Ship) {

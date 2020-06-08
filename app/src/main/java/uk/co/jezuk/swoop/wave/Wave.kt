@@ -10,7 +10,7 @@ interface Wave {
     fun onLongPress() = Unit
 
     /////
-    fun update(fps: Long)
+    fun update(frameRateScale: Float)
     fun draw(canvas: Canvas)
 
     /////

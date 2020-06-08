@@ -30,8 +30,8 @@ class Asteroid(
     override val killDist get() = scale * killRadius
     private val size get() = scale.toInt()
 
-    override fun update(fps: Long) {
-        position.move(velocity, game.extent, killDist)
+    override fun update(frameRateScale: Float) {
+        position.move(velocity, frameRateScale, game.extent, killDist)
         orientation += rotation
         if (orientation < 0) orientation += 360
         if (orientation > 360) orientation -= 360
@@ -112,5 +112,30 @@ class Asteroid(
             brush.strokeJoin = Paint.Join.ROUND
             brush.style = Paint.Style.STROKE
         }
+
+        fun field(
+            game: Game,
+            wave: Wave,
+            big: Int,
+            medium: Int = 0,
+            small: Int = 0,
+            originFn: () -> Point = { game.extent.randomPointOnEdge() }
+        ) {
+            val sizes = mapOf(
+                Pair(big, Big),
+                Pair(medium, Medium),
+                Pair(small, Small)
+            )
+            for ((count, size) in sizes) {
+                for(a in 0 until count) {
+                    Asteroid(
+                        game,
+                        wave,
+                        originFn(),
+                        size
+                    )
+                }
+            }
+        } // Asteroids
     } // companion object
 } // Asteroid

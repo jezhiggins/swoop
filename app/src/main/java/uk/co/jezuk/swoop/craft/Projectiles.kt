@@ -9,8 +9,8 @@ class Projectiles {
     val size get() = projectiles.size
 
     /////
-    fun update(fps: Long) {
-        iterator().forEach { p -> p.update(fps) }
+    fun update(frameRateScale: Float) {
+        iterator().forEach { p -> p.update(frameRateScale) }
     } // updateProjectiles
 
     fun draw(canvas: Canvas) {

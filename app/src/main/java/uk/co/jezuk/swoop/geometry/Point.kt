@@ -1,8 +1,13 @@
 package uk.co.jezuk.swoop.geometry
 
 data class Point(var x: Double, var y: Double) {
-    fun move(vec: Vector, fieldBounds: Extent, killDist: Float = 0f) {
-        val (deltaX, deltaY) = vec.offset
+    fun move(
+        vec: Vector,
+        frameScaleRate: Float,
+        fieldBounds: Extent,
+        killDist: Float = 0f
+    ) {
+        val (deltaX, deltaY) = vec.offset(frameScaleRate)
         x += deltaX.toFloat()
         y += deltaY.toFloat()
 
@@ -13,8 +18,13 @@ data class Point(var x: Double, var y: Double) {
         if (y > bounds.bottom) y = bounds.top
     } // move
 
-    fun moveNoWrap(vec: Vector, fieldBounds: Extent, killDist: Float = 0f): Boolean {
-        val (deltaX, deltaY) = vec.offset
+    fun moveNoWrap(
+        vec: Vector,
+        frameRateScale: Float,
+        fieldBounds: Extent,
+        killDist: Float = 0f
+    ): Boolean {
+        val (deltaX, deltaY) = vec.offset(frameRateScale)
         x += deltaX.toFloat()
         y += deltaY.toFloat()
 

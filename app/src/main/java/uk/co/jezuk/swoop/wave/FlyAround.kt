@@ -2,10 +2,7 @@ package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.Asteroids
-import uk.co.jezuk.swoop.craft.Comet
-import uk.co.jezuk.swoop.craft.Gun
-import uk.co.jezuk.swoop.craft.Ship
+import uk.co.jezuk.swoop.craft.*
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.utils.Latch
@@ -20,7 +17,7 @@ class FlyAround(
     private val gun = Gun(game, this, ship)
 
     init {
-        Asteroids(game, this, initialAsteroids)
+        Asteroid.field(game, this, initialAsteroids)
         targets.onEliminated { endOfLevel() }
     }
 
@@ -34,12 +31,12 @@ class FlyAround(
     override fun onLongPress() = ship.thrust()
 
     /////
-    override fun update(fps: Long) {
-        gun.update(fps)
-        ship.update(fps)
+    override fun update(frameRateScale: Float) {
+        gun.update(frameRateScale)
+        ship.update(frameRateScale)
 
-        updateTargets(fps)
-        updateProjectiles(fps)
+        updateTargets(frameRateScale)
+        updateProjectiles(frameRateScale)
 
         checkCollisions(ship)
     } // update

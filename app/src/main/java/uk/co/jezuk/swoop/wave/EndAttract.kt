@@ -2,8 +2,6 @@ package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.R
-import uk.co.jezuk.swoop.craft.Asteroids
 import uk.co.jezuk.swoop.craft.Targets
 import uk.co.jezuk.swoop.utils.Repeat
 
@@ -20,14 +18,14 @@ class EndAttract(
     }
 
     /////
-    override fun update(fps: Long) {
-        targets.update(fps)
+    override fun update(frameRateScale: Float) {
+        updateTargets(frameRateScale)
         exploders.tick()
     } // update
 
     override fun draw(canvas: Canvas) {
         starField.draw(canvas)
-        targets.draw(canvas)
+        drawTargets(canvas)
     } // draw
 
     /////

@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.Asteroids
+import uk.co.jezuk.swoop.craft.Asteroid
 
 class Attract(
     private val game: Game
@@ -12,7 +12,7 @@ class Attract(
     private var starField = StarField(game.extent)
 
     init {
-        Asteroids(
+        Asteroid.field(
             game,
             this,
             randInt(3) + 1,
@@ -29,8 +29,8 @@ class Attract(
     override fun onLongPress() = Unit
 
     /////
-    override fun update(fps: Long) {
-        updateTargets(fps)
+    override fun update(frameRateScale: Float) {
+        updateTargets(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {

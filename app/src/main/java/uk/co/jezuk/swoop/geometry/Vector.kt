@@ -21,15 +21,15 @@ class Vector(
             this.directionRad = Math.toRadians(value)
         }
 
-    val offset: Point
-        get() = Point(
-            magnitude * cos(directionRad),
-            magnitude * sin(directionRad)
+    fun offset(frameRateScale: Float) =
+        Point(
+            magnitude * cos(directionRad) * frameRateScale,
+            magnitude * sin(directionRad) * frameRateScale
         )
 
     operator fun plusAssign(vec2: Vector) {
-        val (x1, y1) = offset
-        val (x2, y2) = vec2.offset
+        val (x1, y1) = offset(1f)
+        val (x2, y2) = vec2.offset(1f)
 
         val x = x1 + x2
         val y = y1 + y2

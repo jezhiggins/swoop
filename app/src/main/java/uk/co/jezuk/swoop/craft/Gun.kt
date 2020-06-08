@@ -23,7 +23,7 @@ class Gun(
         )
     } // fire
 
-    fun update(fps: Long) {
+    fun update(frameRateScale: Float) {
         trigger.tick()
     } // update
 

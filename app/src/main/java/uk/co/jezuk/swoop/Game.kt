@@ -57,7 +57,7 @@ class Game(context: Context) {
     fun onLongPress() = wave.onLongPress()
 
     /////
-    fun update(fps: Long) = wave.update(fps)
+    fun update(frameRateScale: Float) = wave.update(frameRateScale)
     fun draw(canvas: Canvas) {
         canvas.save()
         canvas.translate(extent.canvasOffsetX, extent.canvasOffsetY)

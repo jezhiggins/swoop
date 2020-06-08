@@ -10,8 +10,8 @@ abstract class WaveWithProjectilesAndTargets(
     protected val projectiles: Projectiles = Projectiles(),
     targets: Targets = Targets()
 ): WaveWithTargets(targets) {
-    protected fun updateProjectiles(fps: Long) {
-        projectiles.update(fps)
+    protected fun updateProjectiles(frameRateScale: Float) {
+        projectiles.update(frameRateScale)
     } // updateProjectiles
 
     protected fun checkCollisions(ship: Ship) {

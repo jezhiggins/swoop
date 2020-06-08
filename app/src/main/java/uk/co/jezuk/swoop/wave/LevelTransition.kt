@@ -20,8 +20,8 @@ class LevelTransition(
         ship.rezOut()
     } // init
 
-    override fun update(fps: Long) {
-        ship.update(fps)
+    override fun update(frameRateScale: Float) {
+        ship.update(frameRateScale)
 
         when (transition.tick()) {
             60, 100 -> currentStarField = starField

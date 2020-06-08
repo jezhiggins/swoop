@@ -52,11 +52,11 @@ class Ship(private val game: Game): Craft {
     fun thrust() = state.thrust()
     fun rotateTowards(angle: Double) = state.rotateTowards(angle)
 
-    override fun update(fps: Long) {
-        rotateShip()
-        applyThrust()
+    override fun update(frameRateScale: Float) {
+        rotateShip(frameRateScale)
+        applyThrust(frameRateScale)
 
-        state.update(fps)
+        state.update(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -74,7 +74,7 @@ class Ship(private val game: Game): Craft {
     fun rezOut() { state = RezOut(this) }
 
     ////////////////
-    private fun rotateShip() {
+    private fun rotateShip(frameRateScale: Float) {
         var angleOffset = targetRotation - rotation
 
         if (angleOffset > 180) angleOffset -= 360
@@ -90,13 +90,13 @@ class Ship(private val game: Game): Craft {
             direction
         }
 
-        rotation += rotationDelta
+        rotation += (rotationDelta * frameRateScale)
         if (rotation > 180) rotation -= 360
         if (rotation < -180) rotation += 360
     } // rotateShip
 
-    private fun applyThrust() {
-        pos.move(velocity, game.extent, killDist)
+    private fun applyThrust(frameRateScale: Float) {
+        pos.move(velocity, frameRateScale, game.extent, killDist)
     } // applyThrust
 
     //////////////////////////
@@ -165,7 +165,7 @@ class Ship(private val game: Game): Craft {
         fun thrust() = Unit
         fun rotateTowards(angle: Double) = Unit
 
-        fun update(fps: Long)
+        fun update(frameRateScale: Float)
         fun draw(canvas: Canvas)
 
         fun hit() = Unit
@@ -189,7 +189,7 @@ class Ship(private val game: Game): Craft {
             ship.targetRotation = angle
         } // rotateTowards
 
-        override fun update(fps: Long) {
+        override fun update(frameRateScale: Float) {
             thrustFrames.tick()
         } // update
 
@@ -214,7 +214,7 @@ class Ship(private val game: Game): Craft {
             ship.explosionSound(ship.pan)
         }
 
-        override fun update(fps: Long) {
+        override fun update(frameRateScale: Float) {
             blowUpShip()
         } // update
 
@@ -256,9 +256,9 @@ class Ship(private val game: Game): Craft {
         private var radius = 600f
 
         override fun rotateTowards(angle: Double) {
-            ship.pos.move(Vector(15.0, angle), ship.game.extent)
+            ship.pos.move(Vector(15.0, angle), 1f, ship.game.extent)
         }
-        override fun update(fps: Long) {
+        override fun update(frameRateScale: Float) {
             pause.tick()
             if (pause.running) return
 
@@ -281,7 +281,7 @@ class Ship(private val game: Game): Craft {
         private val rezOutShape = shape.copyOf()
         private var r = 0
 
-        override fun update(fps: Long) {
+        override fun update(frameRateScale: Float) {
             ++r
 
             for (i in 0 until rezOutShape.size) {
@@ -300,7 +300,7 @@ class Ship(private val game: Game): Craft {
     } // RezOut
 
     private class SpinningInTheVoid : ShipState {
-        override fun update(fps: Long) = Unit
+        override fun update(frameRateScale: Float) = Unit
         override fun draw(canvas: Canvas) = Unit
     }
 } // Ship

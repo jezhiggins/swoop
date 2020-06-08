@@ -29,8 +29,8 @@ class GameOver(
         if (pen.alpha > 60) goToAttract()
     } // onSingleTapUp
 
-    override fun update(fps: Long) {
-        wave.update(fps)
+    override fun update(frameRateScale: Float) {
+        wave.update(frameRateScale)
         brightener.tick()
     } // update
 

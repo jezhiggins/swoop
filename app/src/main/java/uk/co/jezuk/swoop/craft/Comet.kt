@@ -30,8 +30,8 @@ class Comet(
 
     override val killDist get() = 50f
 
-    override fun update(fps: Long) {
-        if (!position.moveNoWrap(velocity, game.extent, killDist))
+    override fun update(frameRateScale: Float) {
+        if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
             wave.removeTarget(this)
         orientation += rotation
         if (orientation < 0) orientation += 360
@@ -60,16 +60,16 @@ class Comet(
 
     companion object {
         fun CometVector(position: Point) =
-            Vector(8.0, angleFromOffsets(position.x, position.y))
+            Vector(7.0, angleFromOffsets(position.x, position.y))
 
         val brush = Paint()
         val shape = floatArrayOf(
             0f, 25f, 25f, 50f,
             25f, 50f, 50f, 25f,
-            50f, 25f, 18.75f, 0f,
+            50f, 25f, 37.5f, 0f,
             37.5f, 0f, 50f, -25f,
-            50f, -25f, 13f, -50f,
-            13f, -50f, -25f, -50f,
+            50f, -25f, 12.5f, -50f,
+            12.5f, -50f, -25f, -50f,
             -25f, -50f, -50f, -25f,
             -50f, -25f, -50f, 25f,
             -50f, 25f, -25f, 50f,
@@ -77,7 +77,7 @@ class Comet(
         )
 
         init {
-            brush.setARGB(255, 160, 160, 210)
+            brush.setARGB(255, 160, 160, 225)
             brush.strokeWidth = 3f
             brush.strokeCap = Paint.Cap.ROUND
             brush.strokeJoin = Paint.Join.ROUND

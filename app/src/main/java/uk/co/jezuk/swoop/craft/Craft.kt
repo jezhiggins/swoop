@@ -7,7 +7,7 @@ interface Craft {
     val position: Point
     val killDist: Float
 
-    fun update(fps: Long)
+    fun update(frameRateScale: Float)
     fun draw(canvas: Canvas)
 
     companion object {
