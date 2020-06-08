@@ -40,10 +40,7 @@ class Asteroid(
     override fun draw(canvas: Canvas) {
         canvas.save()
 
-        canvas.translate(
-            position.x.toFloat(),
-            position.y.toFloat()
-        )
+        position.translate(canvas)
         canvas.scale(scale, scale)
 
         // canvas.drawCircle(0f, 0f, killRadius, brush)

@@ -1,6 +1,12 @@
 package uk.co.jezuk.swoop.geometry
 
-data class Point(var x: Double, var y: Double) {
+import android.graphics.Canvas
+import android.graphics.Paint
+
+data class Point(
+    var x: Double,
+    var y: Double
+) {
     fun move(
         vec: Vector,
         frameScaleRate: Float,
@@ -44,6 +50,12 @@ data class Point(var x: Double, var y: Double) {
         val panned = x.toFloat() / extent.canvasOffsetX
         return panned
     } // pan
+
+    fun translate(canvas: Canvas) =
+        canvas.translate(x.toFloat(), y.toFloat())
+
+    fun draw(canvas: Canvas, brush: Paint) =
+        canvas.drawPoint(x.toFloat(), y.toFloat(), brush)
 
     fun reset() {
         x = 0.0

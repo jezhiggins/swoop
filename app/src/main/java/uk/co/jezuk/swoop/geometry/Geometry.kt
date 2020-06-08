@@ -8,7 +8,7 @@ fun angleFromOffsets(offsetX: Float, offsetY: Float): Double {
 } // angleFromOffsets
 
 fun angleFromOffsets(offsetX: Double, offsetY: Double): Double {
-    var desiredAngle = Math.toDegrees(
+    val desiredAngle = Math.toDegrees(
         Math.atan(Math.abs(offsetY)/Math.abs(offsetX))
     )
 

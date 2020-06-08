@@ -36,11 +36,7 @@ class Bullet(
     } // update
 
     override fun draw(canvas: Canvas) {
-        canvas.drawPoint(
-            position.x.toFloat(),
-            position.y.toFloat(),
-            brush
-        )
+        position.draw(canvas, brush)
     } // draw
 
     override fun hit() {

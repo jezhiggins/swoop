@@ -62,7 +62,7 @@ class Ship(private val game: Game): Craft {
     override fun draw(canvas: Canvas) {
         canvas.save()
 
-        canvas.translate(pos.x.toFloat(), pos.y.toFloat())
+        pos.translate(canvas)
         canvas.rotate(rotation.toFloat())
 
         state.draw(canvas)
