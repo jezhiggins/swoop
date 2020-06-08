@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.geometry.Point
+import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
 
@@ -13,7 +14,7 @@ class Bullet(
     private val game: Game,
     private val wave: Wave,
     pos: Point,
-    orientation: Double,
+    orientation: Rotation,
     initVel: Vector
 ): Projectile {
     override val position = pos.copy()

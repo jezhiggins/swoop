@@ -10,6 +10,12 @@ class Vector(
     private var direction: Double,
     var maximum: Double = 20.0
 ) {
+    constructor(
+        magnitude: Double,
+        orientation: Rotation,
+        maximum: Double = 20.0
+    ) : this(magnitude, orientation.angle, maximum)
+
     private var directionRad = Math.toRadians(direction)
 
     fun copy() = Vector(magnitude, direction)

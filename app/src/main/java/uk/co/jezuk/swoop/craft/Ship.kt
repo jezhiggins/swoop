@@ -7,13 +7,14 @@ import android.graphics.Path
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
+import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.RestartableLatch
 
 class Ship(private val game: Game): Craft {
-    private var rotation = -90.0
-    private var targetRotation = rotation
+    var orientation = Rotation(-90.0)
+    private var targetOrientation = orientation.clone()
 
     private val thrustSound = game.sounds.load(R.raw.thrust)
     private val explosionSound = game.sounds.load(R.raw.shipexplosion)
@@ -26,7 +27,6 @@ class Ship(private val game: Game): Craft {
     override val position get() = state.position
     override val killDist get() = shipRadius
 
-    val orientation get() = rotation
     val velocity = Vector(0.0, 0.0)
     val pan get() = position.pan(game.extent)
 
@@ -42,8 +42,8 @@ class Ship(private val game: Game): Craft {
     } // lifeLost
 
     private fun reset() {
-        rotation = -90.0
-        targetRotation = rotation
+        orientation.reset(-90.0)
+        targetOrientation = orientation.clone()
         velocity.reset()
         pos.reset()
     } // reset
@@ -63,7 +63,7 @@ class Ship(private val game: Game): Craft {
         canvas.save()
 
         pos.translate(canvas)
-        canvas.rotate(rotation.toFloat())
+        orientation.rotate(canvas)
 
         state.draw(canvas)
 
@@ -75,13 +75,10 @@ class Ship(private val game: Game): Craft {
 
     ////////////////
     private fun rotateShip(frameRateScale: Float) {
-        var angleOffset = targetRotation - rotation
+        val angleOffset = targetOrientation - orientation
 
-        if (angleOffset > 180) angleOffset -= 360
-        if (angleOffset < -180) angleOffset += 360
-
-        val direction = if (angleOffset >= 0) 1.0 else -1.0
-        val magnitude = Math.abs(angleOffset)
+        val direction = if (angleOffset.angle >= 0) 1.0 else -1.0
+        val magnitude = Math.abs(angleOffset.angle)
         val rotationDelta = if (magnitude > 30) {
             direction * 5
         } else if (magnitude > 3) {
@@ -90,9 +87,7 @@ class Ship(private val game: Game): Craft {
             direction
         }
 
-        rotation += (rotationDelta * frameRateScale)
-        if (rotation > 180) rotation -= 360
-        if (rotation < -180) rotation += 360
+        orientation += (rotationDelta * frameRateScale)
     } // rotateShip
 
     private fun applyThrust(frameRateScale: Float) {
@@ -178,7 +173,7 @@ class Ship(private val game: Game): Craft {
         override val armed get() = true
 
         override fun thrust() {
-            val thrust = Vector(2.0, ship.rotation)
+            val thrust = Vector(2.0, ship.orientation)
             ship.velocity += thrust
 
             thrustFrames.start()
@@ -186,7 +181,7 @@ class Ship(private val game: Game): Craft {
         } // thrust
 
         override fun rotateTowards(angle: Double) {
-            ship.targetRotation = angle
+            ship.targetOrientation = Rotation(angle)
         } // rotateTowards
 
         override fun update(frameRateScale: Float) {
