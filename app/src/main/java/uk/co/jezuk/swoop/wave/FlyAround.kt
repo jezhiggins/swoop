@@ -16,8 +16,14 @@ class FlyAround(
     private val ship = Ship(game)
     private val gun = Gun(game, this, ship)
 
+    private var cometGun: Latch? = null
+
     init {
         Asteroid.field(game, this, initialAsteroids)
+
+        if (initialAsteroids > 5)
+            cometGun = Latch(250 + (50 * (11-initialAsteroids)), { Comet(game, this) })
+
         targets.onEliminated { endOfLevel() }
     }
 
@@ -37,6 +43,8 @@ class FlyAround(
 
         updateTargets(frameRateScale)
         updateProjectiles(frameRateScale)
+
+        cometGun?.tick(frameRateScale)
 
         checkCollisions(ship)
     } // update
