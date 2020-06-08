@@ -28,7 +28,7 @@ class Asteroid(
     }
 
     override val killDist get() = scale * killRadius
-    val size get() = scale.toInt()
+    private val size get() = scale.toInt()
 
     override fun update(fps: Long) {
         position.move(velocity, game.extent, killDist)
