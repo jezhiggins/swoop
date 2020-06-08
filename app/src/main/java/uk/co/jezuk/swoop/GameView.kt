@@ -64,10 +64,10 @@ class GameView(
     } // onScroll
     override fun onLongPress(ev: MotionEvent) = game.onLongPress()
 
-    fun update(fps: Long) {
-        game.update(fps)
+    fun update(frameRateScale: Float) {
+        game.update(frameRateScale.toLong())
 
-        debug.update(fps)
+        debug.update(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {

@@ -15,7 +15,8 @@ class GameThread(
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun run() {
-        var fps: Long = 60
+        var targetFps = 50f;
+        var fps: Long = 50
 
         while(!surfaceHolder.surface.isValid) {
             sleep(100)
@@ -24,7 +25,8 @@ class GameThread(
         while (running) {
             val startTime = System.nanoTime() / 1000000
 
-            this.gameView.update(fps)
+            val scaling = targetFps / fps
+            this.gameView.update(scaling)
 
             val canvas = this.surfaceHolder.lockHardwareCanvas()
             this.gameView.draw(canvas)

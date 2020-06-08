@@ -6,7 +6,10 @@ import android.graphics.Paint
 
 class Debug {
     private var textPen = Paint()
-    private var fps: Long = 0
+    private var updates: Long = 0
+    private var cumulativeScale: Float = 0f
+
+    private var avg: Int = 0
 
     init {
         textPen.color = Color.WHITE
@@ -14,12 +17,15 @@ class Debug {
         textPen.textSize = 32f
     }
 
-    fun update(fps: Long) {
-        this.fps = fps
+    fun update(frameRateScale: Float) {
+        cumulativeScale += frameRateScale
+        ++updates
+
+        avg = (50 / (cumulativeScale/updates)).toInt()
     } // update
 
     fun draw(canvas: Canvas) {
-        canvas.drawText("FPS: ${this.fps}", 100f, 100f, textPen)
+        canvas.drawText("FPS: ${avg}", 100f, 100f, textPen)
         canvas.drawText("Accel: ${canvas.isHardwareAccelerated}", 100f, 130f, textPen)
     }
 }
