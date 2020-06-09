@@ -1,4 +1,5 @@
 /build
 /release
-keystore.jks
+keystore.jks*
 license.properties
+*.pem
