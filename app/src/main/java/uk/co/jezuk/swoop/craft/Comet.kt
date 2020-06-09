@@ -12,7 +12,7 @@ import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
 
 class Comet(
-    private val game: Game,
+    game: Game,
     private val wave: Wave
 ): Target {
     override val position = game.extent.randomPointOnEdge()
@@ -20,14 +20,8 @@ class Comet(
     private var velocity = CometVector(position)
     private var orientation = Rotation.random()
     private val rotation = Random.nextDouble(-5.0, 5.0)
-    private val cometPath = Path()
 
     init {
-        cometPath.moveTo(shape[0], shape[1])
-        for (i in 0 until shape.size step 2)
-            cometPath.lineTo(shape[i], shape[i+1])
-        cometPath.close()
-
         wave.addTarget(this)
     } // init
 
@@ -51,12 +45,14 @@ class Comet(
 
         // comet tail
         canvas.rotate(velocity.angle.toFloat())
-        for (y in -60 until 60 step 10)
+        for (y in -50 until 50 step 10)
             canvas.drawLine(
-                -65f + Random.nextInt(0, 20),
+                -35f + Random.nextInt(0, 20),
                 y.toFloat(),
-                -500f + Random.nextInt(-50, 50),
-                y.toFloat()*1.1f, brush)
+                -500f + Random.nextInt(-50, 100),
+                (y*Random.nextDouble(1.0, 1.75)).toFloat(),
+                brush
+            )
 
         canvas.restore()
     } // draw
@@ -68,10 +64,10 @@ class Comet(
 
     companion object {
         fun CometVector(position: Point) =
-            Vector(7.0, angleFromOffsets(position.x, position.y))
+            Vector(Random.nextDouble(4.0, 7.0), angleFromOffsets(position.x, position.y))
 
         val brush = Paint()
-        val shape = floatArrayOf(
+        private val shape = floatArrayOf(
             0f, 25f, 25f, 50f,
             25f, 50f, 50f, 25f,
             50f, 25f, 37.5f, 0f,
@@ -83,6 +79,7 @@ class Comet(
             -50f, 25f, -25f, 50f,
             -25f, 50f, 0f, 25f
         )
+        val cometPath = Path()
 
         init {
             brush.setARGB(255, 160, 160, 225)
@@ -90,6 +87,11 @@ class Comet(
             brush.strokeCap = Paint.Cap.ROUND
             brush.strokeJoin = Paint.Join.ROUND
             brush.style = Paint.Style.FILL_AND_STROKE
-        }
+
+            cometPath.moveTo(shape[0], shape[1])
+            for (i in shape.indices step 2)
+                cometPath.lineTo(shape[i], shape[i+1])
+            cometPath.close()
+        } // init
     } // companion object
 } // Comet
