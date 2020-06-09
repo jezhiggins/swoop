@@ -46,11 +46,6 @@ data class Point(
         return magnitudeFromOffsets(offsetX, offsetY).toFloat()
     } // distance
 
-    fun pan(extent: Extent): Float {
-        val panned = x.toFloat() / extent.canvasOffsetX
-        return panned
-    } // pan
-
     fun translate(canvas: Canvas) =
         canvas.translate(x.toFloat(), y.toFloat())
 

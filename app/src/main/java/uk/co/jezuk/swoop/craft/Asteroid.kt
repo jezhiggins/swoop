@@ -21,9 +21,9 @@ class Asteroid(
     private var orientation = Rotation.random()
     private val rotation = Random.nextDouble(-2.0, 2.0)
     private val killRadius = 25f
-    private val smallBang = game.sounds.load(R.raw.bangsmall)
-    private val midBang = game.sounds.load(R.raw.bangmedium)
-    private val bigBang = game.sounds.load(R.raw.banglarge)
+    private val smallBang = game.loadSound(R.raw.bangsmall)
+    private val midBang = game.loadSound(R.raw.bangmedium)
+    private val bigBang = game.loadSound(R.raw.banglarge)
 
     init {
         wave.addTarget(this)
@@ -77,7 +77,7 @@ class Asteroid(
             2 -> midBang
             else -> bigBang
         }
-        b(position.pan(game.extent))
+        b(position)
     } // bang
 
     companion object {

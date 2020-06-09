@@ -7,13 +7,14 @@ import android.graphics.Paint
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Extent
+import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.*
 
 class Game(context: Context) {
     enum class NextShip { Continue, End }
     private var wave: Wave = Emptiness()
     private lateinit var ext: Extent
-    val sounds = Sounds(context)
+    private val sounds = Sounds(context)
     private var lives: Int = 0
     private var score: Int = -1
 
@@ -90,6 +91,18 @@ class Game(context: Context) {
             canvas.translate(0f, -105f)
         } // for
     } // drawLives
+
+    /////
+    fun loadSound(soundResId: Int): (Point) -> Unit {
+        val soundFn = sounds.load(soundResId)
+
+        val pannedSoundFn = { position: Point ->
+            val pan = position.x.toFloat() / extent.canvasOffsetX
+            soundFn(pan)
+        } // pannedSoundFn
+
+        return pannedSoundFn
+    } // loadSound
 
     companion object {
         private val pen = Paint()

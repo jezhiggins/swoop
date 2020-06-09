@@ -4,16 +4,14 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
 
-typealias PlaySound = (Float) -> Unit
-
 class Sounds(private val context: Context) {
     private val pool = SoundPool.Builder()
         .setMaxStreams(10)
         .setAudioAttributes(soundAttrs())
         .build()
-    private val loadedSounds = mutableMapOf<Int, PlaySound>()
+    private val loadedSounds = mutableMapOf<Int, (Float) -> Unit>()
 
-    fun load(soundResId: Int): PlaySound {
+    fun load(soundResId: Int): (Float) -> Unit {
         if (loadedSounds.containsKey(soundResId))
             return loadedSounds[soundResId]!!
         val loadedId = pool.load(context, soundResId, 1)
