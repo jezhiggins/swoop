@@ -10,7 +10,7 @@ class Targets {
     private val callbacks = ArrayList<() -> Unit>()
 
     operator fun iterator() = ArrayList(targets).iterator()
-    fun first() = targets.first()
+    operator fun get(index: Int) = targets[index]
     val size get() = targets.size
 
     fun onEliminated(callback: () -> Unit) = callbacks.add(callback)
@@ -21,9 +21,7 @@ class Targets {
     } // updateTargets
 
     fun checkShipCollision(ship: Ship) {
-        iterator().forEach {
-            t -> t.checkShipCollision(ship)
-        }
+        iterator().forEach { t -> t.checkShipCollision(ship) }
     } // checkShipCollision
 
     fun draw(canvas: Canvas) {

@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Targets
 import uk.co.jezuk.swoop.utils.Repeat
+import kotlin.random.Random
 
 class EndAttract(
     private val game: Game,
@@ -30,7 +31,7 @@ class EndAttract(
 
     /////
     private fun explodeOneTarget() {
-        val t = targets.first()
+        val t = targets[Random.nextInt(targets.size)]
         t.explode()
         targets.remove(t)
     } // explodeOneTarget
