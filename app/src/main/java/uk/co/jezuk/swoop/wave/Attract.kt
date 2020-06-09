@@ -5,20 +5,24 @@ import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Asteroid
+import uk.co.jezuk.swoop.craft.Comet
+import uk.co.jezuk.swoop.utils.Latch
+import uk.co.jezuk.swoop.utils.Repeat
 import kotlin.random.Random
 
 class Attract(
     private val game: Game
 ) : WaveWithTargets() {
     private var starField = StarField(game.extent)
+    val cometGun = Repeat(750, { Comet(game, this) })
 
     init {
         Asteroid.field(
             game,
             this,
-            Random.nextInt(1, 4),
-            Random.nextInt(1, 6),
-            Random.nextInt(1,5),
+            Random.nextInt(2, 5),
+            Random.nextInt(2, 7),
+            Random.nextInt(2,6),
             { game.extent.randomPoint() }
         )
     }
@@ -32,6 +36,7 @@ class Attract(
     /////
     override fun update(frameRateScale: Float) {
         updateTargets(frameRateScale)
+        cometGun.tick(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {
