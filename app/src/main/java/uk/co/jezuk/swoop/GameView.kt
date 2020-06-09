@@ -34,7 +34,9 @@ class GameView(
         startThread()
     } // surfaceCreated
 
-    override fun surfaceChanged(surfaceHolder: SurfaceHolder, i: Int, i1: Int, i2: Int) = Unit
+    override fun surfaceChanged(surfaceHolder: SurfaceHolder, i: Int, i1: Int, i2: Int) {
+        game.setExtent(width, height)
+    } // surfaceChanged
 
     override fun surfaceDestroyed(surfaceHolder: SurfaceHolder) {
         stopThread()
