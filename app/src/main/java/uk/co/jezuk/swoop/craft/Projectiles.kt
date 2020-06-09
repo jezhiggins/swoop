@@ -22,6 +22,6 @@ class Projectiles {
     fun remove(projectile: Projectile) = projectiles.remove(projectile)
 
     /////
-    fun collision(target: Target): Boolean =
-        projectiles.any { p -> Craft.collision(p, target) }
+    fun collision(target: Target): Projectile? =
+        projectiles.firstOrNull { p -> Craft.collision(p, target) }
 } // Asteroids

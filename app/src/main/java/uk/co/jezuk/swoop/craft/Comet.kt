@@ -59,9 +59,10 @@ class Comet(
         canvas.restore()
     } // draw
 
-    override fun shot() {
+    override fun shot(): Target.Impact {
         slap(position)
-    }
+        return Target.Impact.HARD
+    } // shot
     override fun explode() { }
 
     override fun shipCollision(ship: Ship) = ship.hit()

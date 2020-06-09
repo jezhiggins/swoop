@@ -40,8 +40,8 @@ class Bullet(
         position.draw(canvas, brush)
     } // draw
 
-    override fun hit() {
-        age += 20
+    override fun hit(impact: Target.Impact) {
+        age += if (impact == Target.Impact.HARD) 100 else 20
     } // hit
 
     companion object {

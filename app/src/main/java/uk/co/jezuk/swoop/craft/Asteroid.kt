@@ -61,9 +61,10 @@ class Asteroid(
         explode()
     } // split
 
-    override fun shot() {
+    override fun shot(): Target.Impact {
         game.scored(400/scale.toInt())
         split()
+        return Target.Impact.SOFT
     } // shot
 
     override fun shipCollision(ship: Ship) {

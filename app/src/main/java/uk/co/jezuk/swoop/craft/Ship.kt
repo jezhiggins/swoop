@@ -28,8 +28,6 @@ class Ship(private val game: Game): Craft {
     override val killDist get() = shipRadius
 
     val velocity = Vector(0.0, 0.0)
-    val pan get() = position.pan(game.extent)
-
     val armed get() = state.armed
 
     init {

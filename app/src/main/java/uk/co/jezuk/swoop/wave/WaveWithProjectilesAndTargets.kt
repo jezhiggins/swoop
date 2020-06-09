@@ -16,8 +16,10 @@ abstract class WaveWithProjectilesAndTargets(
 
     protected fun checkCollisions(ship: Ship) {
         targets.iterator().forEach {
-            t -> t.checkProjectileCollision(projectiles) ||
-                 t.checkShipCollision(ship)
+            t -> t.checkProjectileCollision(projectiles)
+        }
+        targets.iterator().forEach {
+            t -> t.checkShipCollision(ship)
         }
     } // checkCollisions
 
