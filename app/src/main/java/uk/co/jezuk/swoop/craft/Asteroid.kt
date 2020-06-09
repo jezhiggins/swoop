@@ -8,6 +8,7 @@ import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.random.Random
 
 class Asteroid(
     private val game: Game,
@@ -18,7 +19,7 @@ class Asteroid(
     override val position = pos.copy()
     private var velocity = AsteroidVector(scale)
     private var orientation = Rotation.random()
-    private val rotation = (Math.random() * 3) - 2
+    private val rotation = Random.nextDouble(-2.0, 2.0)
     private val killRadius = 25f
     private val smallBang = game.sounds.load(R.raw.bangsmall)
     private val midBang = game.sounds.load(R.raw.bangmedium)
@@ -85,7 +86,7 @@ class Asteroid(
         val Small: Float = 1f
 
         fun AsteroidVector(scale: Float) =
-            Vector(6.0 - scale, Math.random() * 360)
+            Vector(6.0 - scale, Random.nextDouble(360.0))
 
         val brush = Paint()
         val shape = floatArrayOf(

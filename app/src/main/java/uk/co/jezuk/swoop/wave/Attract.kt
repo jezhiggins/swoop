@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Asteroid
+import kotlin.random.Random
 
 class Attract(
     private val game: Game
@@ -15,9 +16,9 @@ class Attract(
         Asteroid.field(
             game,
             this,
-            randInt(3) + 1,
-            randInt(5) + 1,
-            randInt(4) + 1,
+            Random.nextInt(1, 4),
+            Random.nextInt(1, 6),
+            Random.nextInt(1,5),
             { game.extent.randomPoint() }
         )
     }
@@ -56,7 +57,5 @@ class Attract(
             smallPen.textSkewX = -.2f
             smallPen.textAlign = Paint.Align.CENTER
         }
-
-        private fun randInt(max: Int) = (Math.random() * (max+1)).toInt()
     }
 } // Attract

@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.geometry
 
 import android.graphics.Canvas
+import kotlin.random.Random
 
 class Rotation(
     initial: Double
@@ -35,6 +36,6 @@ class Rotation(
     } // wraparound
 
     companion object {
-        fun random() = Rotation(Math.random() * 360)
+        fun random() = Rotation(Random.nextDouble(360.0))
     } // companion object
 } // Rotation

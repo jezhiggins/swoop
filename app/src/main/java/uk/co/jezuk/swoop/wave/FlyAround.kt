@@ -22,7 +22,7 @@ class FlyAround(
         Asteroid.field(game, this, initialAsteroids)
 
         if (initialAsteroids > 5)
-            cometGun = Latch(250 + (50 * (11-initialAsteroids)), { Comet(game, this) })
+            cometGun = Latch(500 + (100 * (11-initialAsteroids)), { Comet(game, this) })
 
         targets.onEliminated { endOfLevel() }
     }

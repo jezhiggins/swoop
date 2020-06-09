@@ -19,7 +19,7 @@ class Comet(
     private val extentWithTail = game.extent.inflated(500f)
     private var velocity = CometVector(position)
     private var orientation = Rotation.random()
-    private val rotation = (Math.random() * 11) - 5
+    private val rotation = Random.nextDouble(-5.0, 5.0)
     private val cometPath = Path()
 
     init {

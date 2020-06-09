@@ -1,5 +1,7 @@
 package uk.co.jezuk.swoop.geometry
 
+import kotlin.random.Random
+
 class Extent(
     private val width: Int,
     private val height: Int
@@ -30,9 +32,9 @@ class Extent(
         }
     }
 
-    private fun randomX() = (Math.random() * width) - right
-    private fun randomY() = (Math.random() * height) - bottom
-    private fun rollD4() = (Math.random() * 4).toInt()
+    private fun randomX() = Random.nextDouble(left, right)
+    private fun randomY() = Random.nextDouble(top, bottom)
+    private fun rollD4() = Random.nextInt(4)
 
     fun inflated(dist: Float): Extent {
         val doubleDist = (dist * 2).toInt()
