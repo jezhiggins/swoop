@@ -27,7 +27,7 @@ class Asteroid(
 
     init {
         wave.addTarget(this)
-    }
+    } // init
 
     override val killDist get() = scale * killRadius
     private val size get() = scale.toInt()
@@ -58,6 +58,10 @@ class Asteroid(
         } else {
             wave.removeTarget(this)
         }
+
+        if (Random.nextFloat() < 0.1f)
+            Spaceman(game, wave, position)
+
         explode()
     } // split
 
