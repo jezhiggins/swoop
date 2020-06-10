@@ -7,6 +7,8 @@ data class Point(
     var x: Double,
     var y: Double
 ) {
+    constructor(p: Point): this(p.x, p.y)
+
     fun move(
         vec: Vector,
         frameScaleRate: Float,

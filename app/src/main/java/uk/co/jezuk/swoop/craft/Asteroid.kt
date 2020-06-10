@@ -73,6 +73,7 @@ class Asteroid(
     } // shipCollision
 
     override fun explode() {
+        Puff(wave, position)
         val b = when(size) {
             1 -> smallBang
             2 -> midBang
