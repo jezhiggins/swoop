@@ -66,11 +66,11 @@ class Puff(
         val brush = Paint()
 
         init {
-            brush.setARGB(255, 255, 255, 160)
+            brush.setARGB(180, 160, 160, 80)
             brush.strokeWidth = 3f
             brush.strokeCap = Paint.Cap.ROUND
             brush.strokeJoin = Paint.Join.ROUND
-            brush.style = Paint.Style.STROKE
+            brush.style = Paint.Style.FILL_AND_STROKE
         } // init
     } // companion
 } // Pull
