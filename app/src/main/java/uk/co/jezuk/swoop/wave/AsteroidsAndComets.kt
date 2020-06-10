@@ -3,12 +3,11 @@ package uk.co.jezuk.swoop.wave
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.*
-import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.utils.Latch
 import kotlin.math.min
 
-class FlyAround(
+class AsteroidsAndComets(
     private val game: Game,
     private val starField: StarField,
     private val initialAsteroids: Int = 5
@@ -25,7 +24,7 @@ class FlyAround(
             cometGun = Latch(500 + (100 * (11-initialAsteroids)), { Comet(game, this) })
 
         targets.onEliminated { endOfLevel() }
-    }
+    } // init
 
     /////
     override fun onSingleTapUp() = ship.thrust()
@@ -61,7 +60,12 @@ class FlyAround(
     /////
     private fun endOfLevel() {
         val newStarField = StarField(game.extent)
-        val nextWave = FlyAround(game, newStarField, min(initialAsteroids+1, 11))
+
+        val numberOfAsteroids = initialAsteroids+1
+        val nextWave = if (numberOfAsteroids != 8)
+            AsteroidsAndComets(game, newStarField, min(numberOfAsteroids, 11))
+        else
+            CometStorm(game, newStarField)
 
         game.nextWave(LevelTransition(
             game,
