@@ -41,7 +41,11 @@ class Bullet(
     } // draw
 
     override fun hit(impact: Target.Impact) {
-        age += if (impact == Target.Impact.HARD) 100 else 20
+        when (impact) {
+            Target.Impact.HARD -> age = 100
+            Target.Impact.SOFT -> age += 20
+            Target.Impact.NONE -> Unit
+        }
     } // hit
 
     companion object {
