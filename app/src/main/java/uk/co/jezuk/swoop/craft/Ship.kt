@@ -81,8 +81,10 @@ class Ship(private val game: Game): Craft {
             direction * 5
         } else if (magnitude > 3) {
             direction * 2
-        } else {
+        } else if (magnitude > 1) {
             direction
+        } else {
+            0.0
         }
 
         orientation += (rotationDelta * frameRateScale)
