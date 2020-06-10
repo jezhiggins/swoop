@@ -51,6 +51,9 @@ class Asteroid(
     } // draw
 
     private fun split() {
+        if (Random.nextFloat() < 0.1f)
+            Spaceman(game, wave, position)
+
         if (scale != 1f) {
             scale /= 2
             velocity = AsteroidVector(scale)
@@ -58,9 +61,6 @@ class Asteroid(
         } else {
             wave.removeTarget(this)
         }
-
-        if (Random.nextFloat() < 0.1f)
-            Spaceman(game, wave, position)
 
         explode()
     } // split

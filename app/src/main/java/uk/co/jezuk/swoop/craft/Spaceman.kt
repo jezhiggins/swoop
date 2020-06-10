@@ -24,6 +24,7 @@ class Spaceman(
     private val matrix = Matrix()
     private val sound = game.loadSound(R.raw.spaceman)
     override val killDist = spaceman.width / 2f
+    private var age = 0f
 
     init {
         wave.addTarget(this)
@@ -39,6 +40,12 @@ class Spaceman(
     override fun update(frameRateScale: Float) {
         position.move(velocity, frameRateScale, game.extent, killDist)
         matrix.postRotate(rotation.toFloat())
+
+        age += frameRateScale
+        if (age > 500)
+            matrix.postScale(0.98f, 0.98f)
+        if (age > 575)
+            wave.removeTarget(this)
     } // update
 
     override fun draw(canvas: Canvas) {
