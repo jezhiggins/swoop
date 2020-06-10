@@ -9,7 +9,7 @@ class Gun(
     private val wave: Wave,
     private val ship: Ship
 ) {
-    private var trigger = Repeat(15, { fire() })
+    private var trigger = Repeat(12, { fire() })
 
     private fun fire() {
         if (!ship.armed) return
