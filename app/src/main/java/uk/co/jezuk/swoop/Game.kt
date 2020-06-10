@@ -42,7 +42,7 @@ class Game(context: Context) {
     fun nextWave(w: Wave) { wave = w }
 
     fun lifeLost(): NextShip {
-        if (--lives != 0) return NextShip.Continue
+        if (--lives > 0) return NextShip.Continue
 
         nextWave(GameOver(this, wave))
 

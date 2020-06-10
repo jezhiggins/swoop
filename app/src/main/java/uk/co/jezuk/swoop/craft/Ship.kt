@@ -19,6 +19,7 @@ class Ship(private val game: Game): Craft {
     private val thrustSound = game.loadSound(R.raw.thrust)
     private val explosionSound = game.loadSound(R.raw.shipexplosion)
     private val rezInSound = game.loadSound(R.raw.rezin)
+    private val rezOutSound = game.loadSound(R.raw.rezout)
 
     private val pos = Point(0.0, 0.0)
     private var state: ShipState = RezIn(this)
@@ -275,6 +276,10 @@ class Ship(private val game: Game): Craft {
     private class RezOut(private val ship: Ship): ShipState {
         private val rezOutShape = shape.copyOf()
         private var r = 0
+
+        init {
+            ship.rezOutSound(ship.position)
+        }
 
         override fun update(frameRateScale: Float) {
             ++r
