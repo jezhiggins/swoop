@@ -1,16 +1,19 @@
 package uk.co.jezuk.swoop
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.*
 
-class Game(context: Context) {
+class Game(private val context: Context) {
     enum class NextShip { Continue, End }
     private var wave: Wave = Emptiness()
     private lateinit var ext: Extent
@@ -103,6 +106,9 @@ class Game(context: Context) {
 
         return pannedSoundFn
     } // loadSound
+
+    fun loadBitmap(bitmapId: Int): BitmapDrawable =
+        context.resources.getDrawable(bitmapId, null) as BitmapDrawable
 
     companion object {
         private val pen = Paint()
