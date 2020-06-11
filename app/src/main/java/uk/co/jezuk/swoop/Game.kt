@@ -12,6 +12,7 @@ import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.*
+import kotlin.math.min
 
 class Game(private val context: Context) {
     enum class NextShip { Continue, End }
@@ -51,6 +52,9 @@ class Game(private val context: Context) {
 
         return NextShip.End
     } // lifeLost
+    fun lifeGained() {
+        lives = min(lives + 1, 9)
+    } // livesGained
     fun scored(add: Int) {
         score += add
     }// scored

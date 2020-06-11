@@ -13,19 +13,16 @@ class LevelTransition(
     private val ship: Ship,
     private val nextWave: Wave
 ): Wave {
-    private var transition = Latch(120, { game.nextWave(nextWave) })
-    private var currentStarField = newStarField
-
-    init {
-        ship.rezOut()
-    } // init
+    private var transition = Latch(180, { startNextWave() })
+    private var currentStarField = starField
 
     override fun update(frameRateScale: Float) {
         ship.update(frameRateScale)
 
         when (transition.tick(frameRateScale)) {
-            60, 100 -> currentStarField = starField
-            75, 50 -> currentStarField = newStarField
+            120 -> ship.rezOut()
+            40, 60, 100 -> currentStarField = newStarField
+            50, 75 -> currentStarField = starField
         }
     } // update
 
@@ -33,4 +30,9 @@ class LevelTransition(
         currentStarField.draw(canvas)
         ship.draw(canvas)
     } // draw
+
+    private fun startNextWave() {
+        game.lifeGained()
+        game.nextWave(nextWave)
+    } // startNextWave
 } // Emptiness
