@@ -14,6 +14,7 @@ class GameOver(
     private var brightener = Repeat(5, { brighten() })
 
     init {
+        pen.alpha = 0
         wave.addTarget(Nothing())
     } // init
 
@@ -51,7 +52,6 @@ class GameOver(
 
         init {
             pen.color = Color.RED
-            pen.alpha = 0
             pen.textSize = 160f
             pen.textAlign = Paint.Align.CENTER
         } // init
