@@ -2,7 +2,6 @@ package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
 import android.graphics.Matrix
-import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
@@ -22,14 +21,17 @@ class Spaceman(
     private val rotation = Random.nextDouble(-1.5, 1.5)
     private val spaceman = game.loadBitmap(R.drawable.spaceman).bitmap
     private val matrix = Matrix()
-    private val sound = game.loadSound(R.raw.spaceman)
+    private val problemSound = game.loadSound(R.raw.spaceman)
+    private val fallenSound = game.loadSound(R.raw.spacemanfallen)
+    private val savedSound = game.loadSound(R.raw.spacemansaved)
     override val killDist = spaceman.width / 2f
     private var age = 0f
+    private var falling = false
 
     init {
         wave.addTarget(this)
 
-        sound(position)
+        problemSound(position)
 
         matrix.postTranslate(-spaceman.width / 2f, -spaceman.height / 2f)
         matrix.postRotate(orientation.angle.toFloat())
@@ -43,10 +45,19 @@ class Spaceman(
 
         age += frameRateScale
         if (age > 500)
-            matrix.postScale(0.98f, 0.98f)
+            falling()
+    } // update
+
+    private fun falling() {
+        if (!falling) fallenSound(position)
+
+        matrix.postRotate(rotation.toFloat() * 3)
+        matrix.postScale(0.98f, 0.98f)
+
         if (age > 575)
             wave.removeTarget(this)
-    } // update
+        falling = true
+    } // falling
 
     override fun draw(canvas: Canvas) {
         canvas.save()
@@ -61,6 +72,7 @@ class Spaceman(
 
     /////
     override fun shipCollision(ship: Ship) {
+        savedSound(position)
         game.scored(1000)
         wave.removeTarget(this)
     } // shipCollision

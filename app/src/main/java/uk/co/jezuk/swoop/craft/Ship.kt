@@ -290,7 +290,6 @@ class Ship(private val game: Game): Craft {
                 if (v > 0) v += r
                 rezOutShape[i] = v
             }
-
         } // update
 
         override fun draw(canvas: Canvas) {
