@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.craft.Nothing
 import uk.co.jezuk.swoop.utils.Repeat
 
 class GameOver(
@@ -11,13 +12,9 @@ class GameOver(
     private val wave: Wave
 ) : Wave {
     private var brightener = Repeat(5, { brighten() })
-    private val pen = Paint()
 
     init {
-        pen.color = Color.RED
-        pen.alpha = 0
-        pen.textSize = 160f
-        pen.textAlign = Paint.Align.CENTER
+        wave.addTarget(Nothing())
     } // init
 
     private fun goToAttract() {
@@ -48,4 +45,15 @@ class GameOver(
 
         canvas.drawText("Game Over", 0f, 0f, pen)
     } // draw
+
+    companion object {
+        private val pen = Paint()
+
+        init {
+            pen.color = Color.RED
+            pen.alpha = 0
+            pen.textSize = 160f
+            pen.textAlign = Paint.Align.CENTER
+        } // init
+    } // companion object
 } // GameOver
