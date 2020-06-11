@@ -97,8 +97,6 @@ class Ship(private val game: Game): Craft {
 
     //////////////////////////
     companion object {
-        val Hyperspace = Point(-100000.0, -100000.0)
-
         val shipBrush = Paint()
         private val shipFillBrush = Paint()
         private val thrustBrush = Paint()
@@ -155,7 +153,7 @@ class Ship(private val game: Game): Craft {
 
     //////////////////////////
     private interface ShipState {
-        val position: Point get() = Hyperspace
+        val position: Point get() = Point.Hyperspace
         val armed: Boolean get() = false
 
         fun thrust() = Unit

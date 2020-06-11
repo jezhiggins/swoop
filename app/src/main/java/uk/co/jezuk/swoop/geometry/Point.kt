@@ -58,4 +58,8 @@ data class Point(
         x = 0.0
         y = 0.0
     } // reset
+
+    companion object {
+        val Hyperspace = Point(-100000.0, -100000.0)
+    }
 } // Point
