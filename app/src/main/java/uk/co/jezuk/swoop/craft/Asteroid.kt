@@ -53,6 +53,7 @@ class Asteroid(
     private fun split() {
         if (Random.nextFloat() < 0.1f)
             Spaceman(game, wave, position)
+        explode()
 
         if (scale != 1f) {
             scale /= 2
@@ -61,8 +62,6 @@ class Asteroid(
         } else {
             wave.removeTarget(this)
         }
-
-        explode()
     } // split
 
     override fun shot(): Target.Impact {
