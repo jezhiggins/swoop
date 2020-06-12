@@ -1,11 +1,12 @@
 package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
+import android.view.MotionEvent
 import uk.co.jezuk.swoop.craft.Projectile
 import uk.co.jezuk.swoop.craft.Target
 
 interface Wave {
-    fun onSingleTapUp() = Unit
+    fun onSingleTapUp(ev: MotionEvent) = Unit
     fun onScroll(offsetX: Float, offsetY: Float) = Unit
     fun onLongPress() = Unit
 

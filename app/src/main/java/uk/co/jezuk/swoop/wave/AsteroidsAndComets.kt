@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
+import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.*
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
@@ -27,7 +28,7 @@ class AsteroidsAndComets(
     } // init
 
     /////
-    override fun onSingleTapUp() = ship.thrust()
+    override fun onSingleTapUp(event: MotionEvent) = ship.thrust()
     override fun onScroll(offsetX: Float, offsetY: Float) {
         ship.rotateTowards(
             angleFromOffsets(offsetX, offsetY)

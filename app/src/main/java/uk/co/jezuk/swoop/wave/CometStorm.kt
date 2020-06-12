@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
+import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.*
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
@@ -12,7 +13,6 @@ class CometStorm(
     private val starField: StarField
 ) : WaveWithProjectilesAndTargets() {
     private val ship = Ship(game)
-    private val gun = Gun(game, this, ship)
     private var comets = 0
 
     private var cometGun: Latch = Latch(120, { launchComet() })
@@ -27,7 +27,7 @@ class CometStorm(
     }
 
     /////
-    override fun onSingleTapUp() = ship.thrust()
+    override fun onSingleTapUp(event: MotionEvent) = ship.thrust()
     override fun onScroll(offsetX: Float, offsetY: Float) {
         ship.rotateTowards(
             angleFromOffsets(offsetX, offsetY)
@@ -37,7 +37,6 @@ class CometStorm(
 
     /////
     override fun update(frameRateScale: Float) {
-        gun.update(frameRateScale)
         ship.update(frameRateScale)
 
         updateTargets(frameRateScale)

@@ -3,8 +3,8 @@ package uk.co.jezuk.swoop.geometry
 import kotlin.random.Random
 
 class Extent(
-    private val width: Int,
-    private val height: Int
+    val width: Int,
+    val height: Int
 ) {
     private val halfWidth = width/2.0
     private val l = -halfWidth

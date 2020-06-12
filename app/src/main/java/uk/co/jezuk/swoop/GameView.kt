@@ -44,7 +44,7 @@ class GameView(
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.actionMasked == MotionEvent.ACTION_POINTER_DOWN)
-            game.onSingleTapUp()
+            game.onSingleTapUp(event)
 
         return if (gestureDetector.onTouchEvent(event)) {
             true
@@ -57,7 +57,7 @@ class GameView(
     override fun onDown(ev: MotionEvent): Boolean = true
     override fun onShowPress(ev: MotionEvent) = Unit
     override fun onSingleTapUp(ev: MotionEvent): Boolean {
-        game.onSingleTapUp()
+        game.onSingleTapUp(ev)
         return true
     } // onSingleTapUp
     override fun onScroll(ev1: MotionEvent, ev2: MotionEvent, offsetX: Float, offsetY: Float): Boolean {

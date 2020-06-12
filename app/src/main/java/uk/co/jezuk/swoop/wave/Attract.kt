@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.wave
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Asteroid
 import uk.co.jezuk.swoop.craft.Comet
@@ -14,6 +15,7 @@ class Attract(
 ) : WaveWithTargets() {
     private var starField = StarField(game.extent)
     val cometGun = Repeat(750, { Comet(game, this) })
+    private var infoMode = false
 
     init {
         Asteroid.field(
@@ -26,11 +28,19 @@ class Attract(
         )
     }
 
-    /////
-    override fun onSingleTapUp() =
-        game.nextWave(EndAttract(game, starField, targets))
-    override fun onScroll(offsetX: Float, offsetY: Float) = Unit
-    override fun onLongPress() = Unit
+    override fun onSingleTapUp(ev: MotionEvent) {
+        val x = ev.x
+        val y = ev.y
+
+        if (!infoMode) {
+            if ((x > game.extent.width - 250) && (y < 250))
+                infoMode = true
+            else
+                game.nextWave(EndAttract(game, starField, targets))
+        } else {
+            infoMode = false
+        }
+    } // onDown
 
     /////
     override fun update(frameRateScale: Float) {
@@ -42,6 +52,13 @@ class Attract(
         starField.draw(canvas)
         drawTargets(canvas)
 
+        if (infoMode)
+            drawInfo(canvas)
+        else
+            drawTitle(canvas)
+    } // draw
+
+    private fun drawTitle(canvas: Canvas) {
         drawText("SWOOP", canvas,0.0, 0.0, pen)
 
         val margin = 40.0
@@ -58,10 +75,16 @@ class Attract(
         val infoY = (game.extent.top + 120).toFloat()
         canvas.drawCircle(infoX, infoY, 100f, infoBrush)
         infoPen.style = Paint.Style.STROKE
+        infoPen.strokeWidth = 8f
         canvas.drawCircle(infoX, infoY, 100f, infoPen)
         infoPen.style = Paint.Style.FILL_AND_STROKE
-        canvas.drawText("i", infoX, infoY+20f, infoPen)
-    } // draw
+        infoPen.strokeWidth = 4f
+        canvas.drawText("i", infoX, infoY+30f, infoPen)
+    } // drawTitle
+
+    private fun drawInfo(canvas: Canvas) {
+
+    } // drawInfo
 
     private fun drawText(text: String, canvas: Canvas, x: Double, y: Double, pen: Paint) {
         canvas.drawText(text, x.toFloat(), y.toFloat(), pen)
@@ -84,7 +107,7 @@ class Attract(
             infoPen.alpha = 255
             infoPen.textSize = 80f
             infoPen.textAlign = Paint.Align.CENTER
-            infoPen.strokeWidth = 4f
+            infoPen.strokeWidth = 8f
             infoPen.style = Paint.Style.STROKE
 
             infoBrush.setARGB(255, 0, 0, 200)

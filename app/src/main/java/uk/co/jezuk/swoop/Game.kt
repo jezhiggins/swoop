@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.view.MotionEvent
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Extent
@@ -60,7 +61,7 @@ class Game(private val context: Context) {
     }// scored
 
     /////
-    fun onSingleTapUp() = wave.onSingleTapUp()
+    fun onSingleTapUp(ev: MotionEvent) = wave.onSingleTapUp(ev)
     fun onScroll(offsetX: Float, offsetY: Float) = wave.onScroll(offsetX, offsetY)
     fun onLongPress() = wave.onLongPress()
 

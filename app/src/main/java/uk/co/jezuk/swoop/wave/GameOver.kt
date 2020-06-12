@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.wave
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Nothing
 import uk.co.jezuk.swoop.utils.Repeat
@@ -23,7 +24,7 @@ class GameOver(
         game.attract()
     } // goToAttract
 
-    override fun onSingleTapUp() {
+    override fun onSingleTapUp(event: MotionEvent) {
         if (pen.alpha > 60) goToAttract()
     } // onSingleTapUp
 
