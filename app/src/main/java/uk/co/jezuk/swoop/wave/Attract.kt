@@ -3,11 +3,9 @@ package uk.co.jezuk.swoop.wave
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.text.TextPaint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Asteroid
 import uk.co.jezuk.swoop.craft.Comet
-import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.Repeat
 import kotlin.random.Random
 
@@ -55,6 +53,14 @@ class Attract(
         drawText("Alright Bab!", canvas, almostLeft, justOffBottom, tinyPen)
         tinyPen.textAlign = Paint.Align.RIGHT
         drawText("Made in Birmingham", canvas, almostRight, justOffBottom, tinyPen)
+
+        val infoX = (game.extent.right - 120).toFloat()
+        val infoY = (game.extent.top + 120).toFloat()
+        canvas.drawCircle(infoX, infoY, 100f, infoBrush)
+        infoPen.style = Paint.Style.STROKE
+        canvas.drawCircle(infoX, infoY, 100f, infoPen)
+        infoPen.style = Paint.Style.FILL_AND_STROKE
+        canvas.drawText("i", infoX, infoY+20f, infoPen)
     } // draw
 
     private fun drawText(text: String, canvas: Canvas, x: Double, y: Double, pen: Paint) {
@@ -62,7 +68,9 @@ class Attract(
     } // drawText
 
     companion object {
-        private val pen = TextPaint()
+        private val pen = Paint()
+        private val infoPen = Paint()
+        private val infoBrush = Paint()
         private val smallPen = Paint()
         private val tinyPen = Paint()
 
@@ -71,6 +79,16 @@ class Attract(
             pen.alpha = 255
             pen.textSize = 256f
             pen.textAlign = Paint.Align.CENTER
+
+            infoPen.color = Color.WHITE
+            infoPen.alpha = 255
+            infoPen.textSize = 80f
+            infoPen.textAlign = Paint.Align.CENTER
+            infoPen.strokeWidth = 4f
+            infoPen.style = Paint.Style.STROKE
+
+            infoBrush.setARGB(255, 0, 0, 200)
+            infoBrush.style = Paint.Style.FILL_AND_STROKE
 
             smallPen.setARGB(255, 0, 200, 0)
             smallPen.textSize = 48f
@@ -81,6 +99,6 @@ class Attract(
             tinyPen.textSize = 24f
             tinyPen.textSkewX = -.2f
             tinyPen.textAlign = Paint.Align.RIGHT
-        }
-    }
+        } // init
+    } // companion object
 } // Attract
