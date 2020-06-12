@@ -3,7 +3,7 @@ package uk.co.jezuk.swoop.utils
 import kotlin.math.max
 
 class Repeat(
-    private val start: Int,
+    private var start: Int,
     private val action: () -> Unit
 ) {
     private var count = start.toFloat()
@@ -17,4 +17,8 @@ class Repeat(
         }
         return dec
     } // tick
-} // class Latch
+
+    fun reset(newStart: Int) {
+        start = newStart
+    } // reset
+} // class Repeat
