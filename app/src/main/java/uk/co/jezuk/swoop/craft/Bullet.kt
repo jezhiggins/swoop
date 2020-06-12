@@ -15,14 +15,14 @@ class Bullet(
     private val wave: Wave,
     pos: Point,
     orientation: Rotation,
-    initVel: Vector
+    initVel: Vector,
+    private val maxAge: Int
 ): Projectile {
     override val position = pos.copy()
     override val killDist = 1f
 
     private val velocity = initVel.copy()
-    var age = 0
-    private val maxAge = 75
+    private var age = 0
 
     init {
         velocity.maximum = 30.0
