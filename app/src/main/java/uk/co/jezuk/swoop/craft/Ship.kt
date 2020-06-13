@@ -23,6 +23,9 @@ class Ship(private val game: Game): Craft {
 
     private val pos = Point(0.0, 0.0)
     private var state: ShipState = RezIn(this)
+    private val callbacks = ArrayList<() -> Unit>()
+
+    fun onLifeLost(callback: () -> Unit) = callbacks.add(callback)
 
     /////////////////////////////////////
     override val position get() = state.position
@@ -37,6 +40,7 @@ class Ship(private val game: Game): Craft {
 
     private fun lifeLost(): Game.NextShip {
         reset()
+        callbacks.forEach { it() }
         return game.lifeLost()
     } // lifeLost
 

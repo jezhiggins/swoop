@@ -16,6 +16,10 @@ class Gun(
     private var trigger = Repeat(repeatDelay, { fire() })
     private var bulletMaxAge:Int = oldGun?.bulletMaxAge ?: 75
 
+    init {
+        ship.onLifeLost { reset() }
+    }
+
     private fun fire() {
         if (!ship.armed) return
 
@@ -34,8 +38,19 @@ class Gun(
     } // update
 
     fun upgrade() {
-        repeatDelay = max(repeatDelay-1, 7)
-        bulletMaxAge = min(bulletMaxAge+10, 140)
-        trigger.reset(repeatDelay)
+        reset(
+            max(repeatDelay-1, 7),
+            min(bulletMaxAge+10, 140)
+        )
     } // upgrade
+
+    private fun reset() {
+        reset(12, 75)
+    } // reset
+
+    private fun reset(newRepeat: Int, newMaxAge: Int) {
+        repeatDelay = newRepeat
+        bulletMaxAge = newMaxAge
+        trigger.reset(repeatDelay)
+    } // update
 } // Gun

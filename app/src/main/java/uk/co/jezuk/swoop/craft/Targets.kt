@@ -33,6 +33,6 @@ class Targets {
     fun remove(target: Target) {
         targets.remove(target)
         if (targets.isEmpty())
-            callbacks.forEach { c -> c() }
+            callbacks.forEach { it() }
     } // remove
 } // Asteroids
