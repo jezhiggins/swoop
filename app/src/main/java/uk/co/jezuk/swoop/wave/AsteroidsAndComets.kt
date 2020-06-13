@@ -11,11 +11,11 @@ import kotlin.math.min
 class AsteroidsAndComets(
     private val game: Game,
     private val starField: StarField,
-    private val initialAsteroids: Int = 5
+    private val initialAsteroids: Int = 5,
+    val g: Gun? = null
 ) : WaveWithProjectilesAndTargets() {
-    private val ship = Ship(game)
-    private val gun = Gun(game, this, ship)
-
+    private val ship: Ship = Ship(game)
+    private val gun: Gun = Gun(game, this, ship, g)
     private var cometGun: Latch? = null
 
     init {
@@ -58,13 +58,17 @@ class AsteroidsAndComets(
         ship.draw(canvas)
     } // draw
 
+    override fun upgrade() {
+        gun.upgrade()
+    } // upgrade
+
     /////
     private fun endOfLevel() {
         val newStarField = StarField(game.extent)
 
         val numberOfAsteroids = initialAsteroids+1
         val nextWave = if (numberOfAsteroids != 8)
-            AsteroidsAndComets(game, newStarField, min(numberOfAsteroids, 11))
+            AsteroidsAndComets(game, newStarField, min(numberOfAsteroids, 11), gun)
         else
             CometStorm(game, newStarField)
 

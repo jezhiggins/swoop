@@ -9,11 +9,12 @@ import kotlin.math.min
 class Gun(
     private val game: Game,
     private val wave: Wave,
-    private val ship: Ship
+    private val ship: Ship,
+    oldGun: Gun? = null
 ) {
-    private var repeatDelay = 12
+    private var repeatDelay: Int = oldGun?.repeatDelay ?: 12
     private var trigger = Repeat(repeatDelay, { fire() })
-    private var bulletMaxAge = 75
+    private var bulletMaxAge:Int = oldGun?.bulletMaxAge ?: 75
 
     private fun fire() {
         if (!ship.armed) return
@@ -34,7 +35,7 @@ class Gun(
 
     fun upgrade() {
         repeatDelay = max(repeatDelay-1, 7)
-        bulletMaxAge = min(bulletMaxAge+5, 120)
+        bulletMaxAge = min(bulletMaxAge+10, 140)
         trigger.reset(repeatDelay)
     } // upgrade
 } // Gun

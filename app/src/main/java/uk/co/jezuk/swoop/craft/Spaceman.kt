@@ -74,6 +74,7 @@ class Spaceman(
     override fun shipCollision(ship: Ship) {
         savedSound(position)
         game.scored(1000)
+        wave.upgrade()
         wave.removeTarget(this)
     } // shipCollision
     override fun shot(): Target.Impact = Target.Impact.NONE
