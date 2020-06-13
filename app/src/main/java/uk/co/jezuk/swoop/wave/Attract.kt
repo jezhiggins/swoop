@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Asteroid
 import uk.co.jezuk.swoop.craft.Comet
+import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.utils.Repeat
 import kotlin.random.Random
 
@@ -83,7 +84,22 @@ class Attract(
     } // drawTitle
 
     private fun drawInfo(canvas: Canvas) {
+        infoPen.style = Paint.Style.FILL_AND_STROKE
+        infoPen.strokeWidth = 4f
 
+        val info = listOf(
+            "Swipe to steer. Tap to thrust.",
+            "Shoot what you can. Avoid what you can't.",
+            "Rescue those in peril."
+        )
+
+        for (i in 0 until info.size)
+            canvas.drawText(
+                info[i],
+                0f,
+                -120f + (120 * i),
+                infoPen
+            )
     } // drawInfo
 
     private fun drawText(text: String, canvas: Canvas, x: Double, y: Double, pen: Paint) {
