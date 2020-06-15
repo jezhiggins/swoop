@@ -14,8 +14,13 @@ class CometStorm(
 ) : WaveWithProjectilesAndTargets() {
     private val ship = Ship(game)
     private var comets = 0
+    private var survivalBonus = true
 
     private var cometGun: Latch = Latch(120, { launchComet() })
+
+    init {
+        ship.onLifeLost { survivalBonus = false }
+    } // init
 
     private fun launchComet() {
         Comet(game, this)
@@ -24,7 +29,7 @@ class CometStorm(
             cometGun = Latch(70, { launchComet() })
         else
             targets.onEliminated { endOfLevel() }
-    }
+    } // launchComet
 
     /////
     override fun onSingleTapUp(event: MotionEvent) = ship.thrust()
@@ -58,6 +63,8 @@ class CometStorm(
 
     /////
     private fun endOfLevel() {
+        if (survivalBonus) game.scored(5000)
+
         val newStarField = StarField(game.extent)
         val nextWave = AsteroidsAndComets(game, newStarField, 8)
 
