@@ -1,15 +1,14 @@
 package uk.co.jezuk.swoop
 
 import android.content.Context
-import android.graphics.Bitmap
+import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.view.MotionEvent
+import androidx.core.content.edit
 import uk.co.jezuk.swoop.craft.Ship
-import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.*
@@ -20,8 +19,8 @@ class Game(private val context: Context) {
     private var wave: Wave = Emptiness()
     private lateinit var ext: Extent
     private val sounds = Sounds(context)
-    private var lives: Int = 0
-    private var score: Int = -1
+    private var lives = 0
+    private var score = -1
 
     fun setExtent(width: Int, height: Int) {
         ext = Extent(width, height)
@@ -35,6 +34,7 @@ class Game(private val context: Context) {
     fun start() {
         lives = 3
         score = 0
+        newHighScore = false
     } // start
 
     fun end() {
@@ -58,6 +58,11 @@ class Game(private val context: Context) {
     } // livesGained
     fun scored(add: Int) {
         score += add
+
+        if (score > highScore) {
+            highScore = score
+            newHighScore = true
+        }
     }// scored
 
     /////
@@ -86,8 +91,18 @@ class Game(private val context: Context) {
             "${score}".padStart(6, '0'),
             -extent.canvasOffsetX + 50,
             extent.canvasOffsetY - 50,
-            pen
+            scorePen
         )
+        if (!newHighScore) return
+
+        scorePen.textSize = 32f
+        canvas.drawText(
+            "High Score",
+            -extent.canvasOffsetX + 60,
+            extent.canvasOffsetY - 160,
+            scorePen
+        )
+        scorePen.textSize = 128f
     } // drawScore
 
     private fun drawLives(canvas: Canvas) {
@@ -115,14 +130,24 @@ class Game(private val context: Context) {
     fun loadBitmap(bitmapId: Int): BitmapDrawable =
         context.resources.getDrawable(bitmapId, null) as BitmapDrawable
 
+    private val prefs: SharedPreferences
+        get() = context.getSharedPreferences("swoop", Context.MODE_PRIVATE)
+
+    var highScore: Int
+        get() = prefs.getInt("highscore", 0)
+        private set(value) = prefs.edit { putInt("highscore", value) }
+    private var newHighScore: Boolean
+        get() = prefs.getBoolean("newHighscore", false)
+        set(value) = prefs.edit { putBoolean("newHighscore", value) }
+
     companion object {
-        private val pen = Paint()
+        private val scorePen = Paint()
 
         init {
-            pen.color = Color.CYAN
-            pen.alpha = 255
-            pen.textSize = 128f
-            pen.textAlign = Paint.Align.LEFT
+            scorePen.color = Color.CYAN
+            scorePen.alpha = 255
+            scorePen.textSize = 128f
+            scorePen.textAlign = Paint.Align.LEFT
         }
     }
 } // Game

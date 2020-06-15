@@ -66,11 +66,21 @@ class Attract(
         val almostLeft = game.extent.left + margin
         val almostRight = game.extent.right - margin
         val justOffBottom = game.extent.bottom - margin
+        val justOffTop = game.extent.top + margin*2
         drawText("Forest Road Game Krew", canvas, 0.0, justOffBottom, smallPen)
         tinyPen.textAlign = Paint.Align.LEFT
         drawText("Alright Bab!", canvas, almostLeft, justOffBottom, tinyPen)
         tinyPen.textAlign = Paint.Align.RIGHT
         drawText("Made in Birmingham", canvas, almostRight, justOffBottom, tinyPen)
+
+        if (game.highScore != 0)
+            drawText(
+                "High Score " + "${game.highScore}".padStart(6, '0'),
+                canvas,
+                0.0,
+                justOffTop,
+                scorePen
+            )
 
         val infoX = (game.extent.right - 120).toFloat()
         val infoY = (game.extent.top + 120).toFloat()
@@ -112,6 +122,7 @@ class Attract(
         private val infoBrush = Paint()
         private val smallPen = Paint()
         private val tinyPen = Paint()
+        private val scorePen = Paint()
 
         init {
             pen.color = Color.WHITE
@@ -138,6 +149,11 @@ class Attract(
             tinyPen.textSize = 24f
             tinyPen.textSkewX = -.2f
             tinyPen.textAlign = Paint.Align.RIGHT
+
+            scorePen.color = Color.CYAN
+            scorePen.alpha = 255
+            scorePen.textSize = 48f
+            scorePen.textAlign = Paint.Align.CENTER
         } // init
     } // companion object
 } // Attract
