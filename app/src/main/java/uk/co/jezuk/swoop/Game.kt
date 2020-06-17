@@ -17,13 +17,27 @@ import kotlin.math.min
 class Game(private val context: Context) {
     enum class NextShip { Continue, End }
     private var wave: Wave = Emptiness()
-    private lateinit var ext: Extent
+    private val ext = Extent(1920, 1080)
+    private lateinit var screenExt: Extent
+    private var screenOffsetX = 240f
+    private var screenOffsetY = 0f
+    private var screenScale = 1f
     private val sounds = Sounds(context)
     private var lives = 0
     private var score = -1
 
     fun setExtent(width: Int, height: Int) {
-        ext = Extent(width, height)
+        screenExt = Extent(width, height)
+        val scaleX = screenExt.width.toFloat() / ext.width
+        val scaleY = screenExt.height.toFloat() / ext.height
+        screenScale = min(scaleX, scaleY)
+
+        val scaledWidth = (ext.width * screenScale).toInt()
+        val scaledHeight = (ext.height * screenScale).toInt()
+
+        screenOffsetX = (screenExt.width - scaledWidth) / 2f
+        screenOffsetY = (screenExt.height - scaledHeight) / 2f
+
         attract()
     } // setExtent
 
@@ -74,6 +88,9 @@ class Game(private val context: Context) {
     fun update(frameRateScale: Float) = wave.update(frameRateScale)
     fun draw(canvas: Canvas) {
         canvas.save()
+        canvas.translate(screenOffsetX, screenOffsetY)
+        canvas.scale(screenScale, screenScale)
+        canvas.clipRect(0, 0, extent.width, extent.height)
         canvas.translate(extent.canvasOffsetX, extent.canvasOffsetY)
 
         wave.draw(canvas)
