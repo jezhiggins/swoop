@@ -12,7 +12,7 @@ import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
 
-class StonyAsteroid(
+class IronAsteroid(
     game: Game,
     wave: Wave,
     pos: Point,
@@ -22,14 +22,23 @@ class StonyAsteroid(
     private val midBang = game.loadSound(R.raw.bangmedium)
     private val bigBang = game.loadSound(R.raw.banglarge)
 
-   override fun drawAsteroid(canvas: Canvas) {
-       canvas.drawLines(
-           shape,
-           brush
-       )
-   } // drawAsteroid
+    private var spang = 0
+    private fun resetSpang() {
+        spang = (2 * size).toInt()
+    } // resetSpang
+
+    init {
+        resetSpang()
+    } // init
+
+    override fun drawAsteroid(canvas: Canvas) {
+       canvas.drawPath(path, brush)
+    } // drawAsteroid
 
     override fun shot(): Target.Impact {
+        if (--spang != 0)
+            return Target.Impact.HARD
+
         game.scored(400/size.toInt())
         split()
         return Target.Impact.SOFT
@@ -58,7 +67,9 @@ class StonyAsteroid(
         if (size != Small) {
             scale /= 2
             velocity = AsteroidVector(scale)
-            StonyAsteroid(
+            resetSpang()
+            
+            IronAsteroid(
                 game,
                 wave,
                 position,
@@ -73,42 +84,11 @@ class StonyAsteroid(
         val brush = Paint()
 
         init {
-            brush.setARGB(255, 160, 160, 160)
+            brush.setARGB(255, 204, 85, 0)
             brush.strokeWidth = 3f
             brush.strokeCap = Paint.Cap.ROUND
             brush.strokeJoin = Paint.Join.ROUND
-            brush.style = Paint.Style.STROKE
+            brush.style = Paint.Style.FILL_AND_STROKE
         }
-
-        fun field(
-            game: Game,
-            wave: Wave,
-            big: Int,
-            medium: Int = 0,
-            small: Int = 0,
-            originFn: () -> Point = { game.extent.randomPointOnEdge() }
-        ) {
-            val sizes = mapOf(
-                Pair(big,
-                    Big
-                ),
-                Pair(medium,
-                    Medium
-                ),
-                Pair(small,
-                    Small
-                )
-            )
-            for ((count, size) in sizes) {
-                for(a in 0 until count) {
-                    StonyAsteroid(
-                        game,
-                        wave,
-                        originFn(),
-                        size
-                    )
-                }
-            }
-        } // field
     } // companion object
 } // Asteroid

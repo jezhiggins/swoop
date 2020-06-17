@@ -1,7 +1,9 @@
 package uk.co.jezuk.swoop.craft.asteroid
 
 import android.graphics.Canvas
+import android.graphics.Path
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
@@ -64,6 +66,16 @@ abstract class Asteroid(
             -25f, 12.5f, -12.5f, 25f,
             -12.5f, 25f, 0f, 12.5f
         )
+
+        val path = Path()
+
+        init {
+            path.moveTo(shape[0], shape[1])
+            for (i in 0 until shape.size step 2)
+                path.lineTo(shape[i], shape[i+1])
+            path.close()
+        } // init
+
 
         fun AsteroidVector(scale: Float) =
             Vector(6.0 - scale, Random.nextDouble(360.0))
