@@ -73,6 +73,7 @@ class CometStorm(
             starField,
             newStarField,
             ship,
+            Projectiles(),
             nextWave
         ))
     } // endOfLevel

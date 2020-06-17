@@ -77,6 +77,7 @@ class AsteroidsAndComets(
             starField,
             newStarField,
             ship,
+            projectiles,
             nextWave
         ))
     } // endOfLevel
