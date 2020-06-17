@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.asteroid.Asteroid
+import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
 import uk.co.jezuk.swoop.utils.Repeat
 import kotlin.random.Random
@@ -18,7 +18,7 @@ class Attract(
     private var infoMode = false
 
     init {
-        Asteroid.field(
+        StonyAsteroid.field(
             game,
             this,
             Random.nextInt(2, 5),

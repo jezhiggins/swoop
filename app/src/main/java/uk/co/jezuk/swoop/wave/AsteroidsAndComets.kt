@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.*
-import uk.co.jezuk.swoop.craft.asteroid.Asteroid
+import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.utils.Latch
 import kotlin.math.min
@@ -20,7 +20,7 @@ class AsteroidsAndComets(
     private var cometGun: Latch? = null
 
     init {
-        Asteroid.field(game, this, initialAsteroids)
+        StonyAsteroid.field(game, this, initialAsteroids)
 
         if (initialAsteroids > 5)
             cometGun = Latch(500 + (100 * (11-initialAsteroids)), { Comet(game, this) })
