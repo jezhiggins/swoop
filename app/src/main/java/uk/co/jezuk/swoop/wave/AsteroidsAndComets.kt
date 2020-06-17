@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.*
+import uk.co.jezuk.swoop.craft.asteroid.Asteroid
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.utils.Latch
 import kotlin.math.min

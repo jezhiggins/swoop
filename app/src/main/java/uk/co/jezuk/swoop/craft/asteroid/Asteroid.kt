@@ -1,9 +1,13 @@
-package uk.co.jezuk.swoop.craft
+package uk.co.jezuk.swoop.craft.asteroid
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
+import uk.co.jezuk.swoop.craft.Puff
+import uk.co.jezuk.swoop.craft.Ship
+import uk.co.jezuk.swoop.craft.Spaceman
+import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
@@ -17,7 +21,8 @@ class Asteroid(
     private var scale: Float = 4f
 ): Target {
     override val position = pos.copy()
-    private var velocity = AsteroidVector(scale)
+    private var velocity =
+        AsteroidVector(scale)
     private var orientation = Rotation.random()
     private val rotation = Random.nextDouble(-2.0, 2.0)
     private val killRadius = 25f
@@ -45,7 +50,10 @@ class Asteroid(
 
         // canvas.drawCircle(0f, 0f, killRadius, brush)
         orientation.rotate(canvas)
-        canvas.drawLines(shape, brush)
+        canvas.drawLines(
+            shape,
+            brush
+        )
 
         canvas.restore()
     } // draw
@@ -57,8 +65,16 @@ class Asteroid(
 
         if (scale != 1f) {
             scale /= 2
-            velocity = AsteroidVector(scale)
-            Asteroid(game, wave, position, scale)
+            velocity =
+                AsteroidVector(
+                    scale
+                )
+            Asteroid(
+                game,
+                wave,
+                position,
+                scale
+            )
         } else {
             wave.removeTarget(this)
         }
@@ -124,9 +140,15 @@ class Asteroid(
             originFn: () -> Point = { game.extent.randomPointOnEdge() }
         ) {
             val sizes = mapOf(
-                Pair(big, Big),
-                Pair(medium, Medium),
-                Pair(small, Small)
+                Pair(big,
+                    Big
+                ),
+                Pair(medium,
+                    Medium
+                ),
+                Pair(small,
+                    Small
+                )
             )
             for ((count, size) in sizes) {
                 for(a in 0 until count) {

@@ -5,9 +5,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.Asteroid
+import uk.co.jezuk.swoop.craft.asteroid.Asteroid
 import uk.co.jezuk.swoop.craft.Comet
-import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.utils.Repeat
 import kotlin.random.Random
 
@@ -29,9 +28,9 @@ class Attract(
         )
     }
 
-    override fun onSingleTapUp(ev: MotionEvent) {
-        val x = ev.x
-        val y = ev.y
+    override fun onSingleTapUp(event: MotionEvent) {
+        val x = event.x
+        val y = event.y
 
         val extent = game.extent
 

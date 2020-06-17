@@ -6,7 +6,7 @@ import uk.co.jezuk.swoop.craft.Projectile
 import uk.co.jezuk.swoop.craft.Target
 
 interface Wave {
-    fun onSingleTapUp(ev: MotionEvent) = Unit
+    fun onSingleTapUp(event: MotionEvent) = Unit
     fun onScroll(offsetX: Float, offsetY: Float) = Unit
     fun onLongPress() = Unit
 
