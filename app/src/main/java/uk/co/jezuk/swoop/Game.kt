@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.view.MotionEvent
 import androidx.core.content.edit
+import androidx.core.graphics.withMatrix
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
@@ -18,25 +20,33 @@ class Game(private val context: Context) {
     enum class NextShip { Continue, End }
     private var wave: Wave = Emptiness()
     private val ext = Extent(1920, 1080)
-    private lateinit var screenExt: Extent
-    private var screenOffsetX = 240f
-    private var screenOffsetY = 0f
-    private var screenScale = 1f
+    private var scaleMatrix = Matrix()
+    private var touchMatrix = Matrix()
     private val sounds = Sounds(context)
     private var lives = 0
     private var score = -1
 
     fun setExtent(width: Int, height: Int) {
-        screenExt = Extent(width, height)
+        val screenExt = Extent(width, height)
         val scaleX = screenExt.width.toFloat() / ext.width
         val scaleY = screenExt.height.toFloat() / ext.height
-        screenScale = min(scaleX, scaleY)
+        val screenScale = min(scaleX, scaleY)
 
         val scaledWidth = (ext.width * screenScale).toInt()
         val scaledHeight = (ext.height * screenScale).toInt()
 
-        screenOffsetX = (screenExt.width - scaledWidth) / 2f
-        screenOffsetY = (screenExt.height - scaledHeight) / 2f
+        val screenOffsetX = (screenExt.width - scaledWidth) / 2f
+        val screenOffsetY = (screenExt.height - scaledHeight) / 2f
+
+        scaleMatrix = Matrix()
+        scaleMatrix.preTranslate(screenOffsetX, screenOffsetY)
+        scaleMatrix.preScale(screenScale, screenScale)
+        scaleMatrix.preTranslate(extent.canvasOffsetX, extent.canvasOffsetY)
+
+        touchMatrix = Matrix()
+        touchMatrix.preTranslate(-extent.canvasOffsetX, -extent.canvasOffsetY)
+        touchMatrix.preScale(1/screenScale, 1/screenScale)
+        touchMatrix.preTranslate(-screenOffsetX, -screenOffsetY)
 
         attract()
     } // setExtent
@@ -80,7 +90,10 @@ class Game(private val context: Context) {
     }// scored
 
     /////
-    fun onSingleTapUp(ev: MotionEvent) = wave.onSingleTapUp(ev)
+    fun onSingleTapUp(ev: MotionEvent) {
+        ev.transform(touchMatrix)
+        wave.onSingleTapUp(ev)
+    }
     fun onScroll(offsetX: Float, offsetY: Float) = wave.onScroll(offsetX, offsetY)
     fun onLongPress() = wave.onLongPress()
 
@@ -88,10 +101,8 @@ class Game(private val context: Context) {
     fun update(frameRateScale: Float) = wave.update(frameRateScale)
     fun draw(canvas: Canvas) {
         canvas.save()
-        canvas.translate(screenOffsetX, screenOffsetY)
-        canvas.scale(screenScale, screenScale)
-        canvas.clipRect(0, 0, extent.width, extent.height)
-        canvas.translate(extent.canvasOffsetX, extent.canvasOffsetY)
+        canvas.setMatrix(scaleMatrix)
+        canvas.clipRect(extent.bounds)
 
         wave.draw(canvas)
 

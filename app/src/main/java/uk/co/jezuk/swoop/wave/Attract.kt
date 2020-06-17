@@ -33,8 +33,18 @@ class Attract(
         val x = ev.x
         val y = ev.y
 
+        val extent = game.extent
+
+        if (x < extent.left || x > extent.right ||
+            y < extent.top || y > extent.bottom)
+            return
+
         if (!infoMode) {
-            if ((x > game.extent.width - 250) && (y < 250))
+            val infoX = (extent.right - 120).toFloat()
+            val infoY = (extent.top + 120).toFloat()
+
+            if ((x >= infoX-120f && x <= infoX+120f) &&
+                (y >= infoY-120f && y <= infoY+120f))
                 infoMode = true
             else
                 game.nextWave(EndAttract(game, starField, targets))
