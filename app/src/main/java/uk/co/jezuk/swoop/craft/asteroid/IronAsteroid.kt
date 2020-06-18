@@ -39,12 +39,11 @@ class IronAsteroid(
     override fun shot(): Target.Impact {
         if (--spang != 0) {
             ting()
-            return Target.Impact.HARD
+        } else {
+            game.scored(400 / size.toInt())
+            split()
         }
-
-        game.scored(400/size.toInt())
-        split()
-        return Target.Impact.SOFT
+        return Target.Impact.HARD
     } // shot
 
     override fun shipCollision(ship: Ship) {
