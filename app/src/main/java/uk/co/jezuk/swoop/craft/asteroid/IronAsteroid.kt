@@ -18,9 +18,6 @@ class IronAsteroid(
     pos: Point,
     scale: Float = Big
 ): Asteroid(game, wave, pos, scale) {
-    private val smallBang = { game.sound(R.raw.bangsmall, position) }
-    private val midBang = { game.sound(R.raw.bangmedium, position) }
-    private val bigBang = { game.sound(R.raw.banglarge, position) }
     private val ting = { game.sound(R.raw.ting, position) }
 
     private var spang = 0
@@ -47,19 +44,8 @@ class IronAsteroid(
     } // shot
 
     override fun shipCollision(ship: Ship) {
-        split()
         ship.hit()
     } // shipCollision
-
-    override fun explode() {
-        Puff(wave, position)
-        val b = when(size) {
-            Small -> smallBang
-            Medium -> midBang
-            else -> bigBang
-        }
-        b()
-    } // bang
 
     private fun split() {
         if (Random.nextFloat() < 0.1f)

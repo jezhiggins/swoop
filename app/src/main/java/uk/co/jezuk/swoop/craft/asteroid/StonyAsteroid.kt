@@ -18,10 +18,6 @@ class StonyAsteroid(
     pos: Point,
     scale: Float = Big
 ): Asteroid(game, wave, pos, scale) {
-    private val smallBang = { game.sound(R.raw.bangsmall, position) }
-    private val midBang = { game.sound(R.raw.bangmedium, position) }
-    private val bigBang = { game.sound(R.raw.banglarge, position) }
-
    override fun drawAsteroid(canvas: Canvas) {
        canvas.drawLines(
            shape,
@@ -39,16 +35,6 @@ class StonyAsteroid(
         split()
         ship.hit()
     } // shipCollision
-
-    override fun explode() {
-        Puff(wave, position)
-        val b = when(size) {
-            Small -> smallBang
-            Medium -> midBang
-            else -> bigBang
-        }
-        b()
-    } // bang
 
     private fun split() {
         if (Random.nextFloat() < 0.1f)

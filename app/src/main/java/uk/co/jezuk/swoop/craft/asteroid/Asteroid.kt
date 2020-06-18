@@ -3,6 +3,8 @@ package uk.co.jezuk.swoop.craft.asteroid
 import android.graphics.Canvas
 import android.graphics.Path
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.R
+import uk.co.jezuk.swoop.craft.Puff
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Point
@@ -24,6 +26,10 @@ abstract class Asteroid(
     private val killRadius = 25f
     override val killDist get() = scale * killRadius
     protected val size get() = scale
+
+    private val smallBang = { game.sound(R.raw.bangsmall, position) }
+    private val midBang = { game.sound(R.raw.bangmedium, position) }
+    private val bigBang = { game.sound(R.raw.banglarge, position) }
 
     init {
         wave.addTarget(this)
@@ -49,6 +55,16 @@ abstract class Asteroid(
     } // draw
 
     abstract fun drawAsteroid(canvas: Canvas)
+
+    override fun explode() {
+        Puff(wave, position)
+        val b = when(size) {
+            Small -> smallBang
+            Medium -> midBang
+            else -> bigBang
+        }
+        b()
+    } // bang
 
     companion object {
         val Big: Float = 4f
