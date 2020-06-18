@@ -74,27 +74,15 @@ class StonyAsteroid(
             small: Int = 0,
             originFn: () -> Point = { game.extent.randomPointOnEdge() }
         ) {
-            val sizes = mapOf(
-                Pair(big,
-                    Big
-                ),
-                Pair(medium,
-                    Medium
-                ),
-                Pair(small,
-                    Small
-                )
+            field(
+                ::StonyAsteroid,
+                game,
+                wave,
+                big,
+                medium,
+                small,
+                originFn
             )
-            for ((count, size) in sizes) {
-                for(a in 0 until count) {
-                    StonyAsteroid(
-                        game,
-                        wave,
-                        originFn(),
-                        size
-                    )
-                }
-            }
         } // field
     } // companion object
 } // Asteroid

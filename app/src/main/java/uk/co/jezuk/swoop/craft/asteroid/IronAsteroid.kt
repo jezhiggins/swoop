@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.craft.asteroid
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
@@ -30,13 +31,13 @@ class IronAsteroid(
     } // init
 
     override fun drawAsteroid(canvas: Canvas) {
-       canvas.drawPath(path, brush)
+        canvas.drawPath(path, brush)
+        canvas.drawLines(shape, outline)
     } // drawAsteroid
 
     override fun shot(): Target.Impact {
-        if (--spang != 0) {
-            ting()
-        } else {
+        ting()
+        if (--spang == 0) {
             game.scored(400 / size.toInt())
             split()
         }
@@ -70,13 +71,34 @@ class IronAsteroid(
 
     companion object {
         val brush = Paint()
+        val outline = Paint()
 
         init {
             brush.setARGB(255, 204, 85, 0)
             brush.strokeWidth = 3f
             brush.strokeCap = Paint.Cap.ROUND
             brush.strokeJoin = Paint.Join.ROUND
-            brush.style = Paint.Style.FILL_AND_STROKE
+            brush.style = Paint.Style.FILL
+
+            outline.color = Color.BLACK
+            outline.strokeWidth = 3f
+            outline.strokeCap = Paint.Cap.ROUND
+            outline.strokeJoin = Paint.Join.ROUND
+            outline.style = Paint.Style.FILL
         }
+
+        fun field(
+            game: Game,
+            wave: Wave,
+            big: Int
+        ) {
+            field(
+                ::IronAsteroid,
+                game,
+                wave,
+                big
+            )
+        } // field
+
     } // companion object
 } // Asteroid

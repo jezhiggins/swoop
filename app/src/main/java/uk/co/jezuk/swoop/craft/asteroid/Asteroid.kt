@@ -92,6 +92,31 @@ abstract class Asteroid(
             path.close()
         } // init
 
+        fun field(
+            makeFn: (Game, Wave, Point, Float) -> Asteroid,
+            game: Game,
+            wave: Wave,
+            big: Int,
+            medium: Int = 0,
+            small: Int = 0,
+            originFn: () -> Point = { game.extent.randomPointOnEdge() }
+        ) {
+            val sizes = mapOf(
+                Pair(big, Big),
+                Pair(medium, Medium),
+                Pair(small, Small)
+            )
+            for ((count, size) in sizes) {
+                for(a in 0 until count) {
+                    makeFn(
+                        game,
+                        wave,
+                        originFn(),
+                        size
+                    )
+                }
+            }
+        } // field
 
         fun AsteroidVector(scale: Float) =
             Vector(6.0 - scale, Random.nextDouble(360.0))
