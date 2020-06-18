@@ -84,6 +84,8 @@ class Ship(private val game: Game): Craft {
         val magnitude = Math.abs(angleOffset.angle)
         val rotationDelta = if (magnitude > 30) {
             direction * 5
+        } else if (magnitude > 15) {
+            direction * 3
         } else if (magnitude > 3) {
             direction * 2
         } else if (magnitude > 1) {
