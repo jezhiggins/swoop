@@ -9,7 +9,6 @@ import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.view.MotionEvent
 import androidx.core.content.edit
-import androidx.core.graphics.withMatrix
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
@@ -25,6 +24,24 @@ class Game(private val context: Context) {
     private val sounds = Sounds(context)
     private var lives = 0
     private var score = -1
+
+    init {
+        val soundIds = listOf(
+            R.raw.banglarge,
+            R.raw.bangmedium,
+            R.raw.bangsmall,
+            R.raw.cometslap,
+            R.raw.rezin,
+            R.raw.rezout,
+            R.raw.shipexplosion,
+            R.raw.spaceman,
+            R.raw.spacemanfallen,
+            R.raw.spacemansaved,
+            R.raw.thrust,
+            R.raw.ting
+        )
+        soundIds.forEach({ sounds.load(it) })
+    }
 
     fun setExtent(width: Int, height: Int) {
         val screenExt = Extent(width, height)
