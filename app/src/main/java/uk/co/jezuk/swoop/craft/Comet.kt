@@ -21,7 +21,7 @@ class Comet(
     private var velocity = CometVector(position)
     private var orientation = Rotation.random()
     private val rotation = Random.nextDouble(-5.0, 5.0)
-    private val slap = game.loadSound(R.raw.cometslap)
+    private val slap = { game.sound(R.raw.cometslap, position) }
 
     init {
         wave.addTarget(this)
@@ -60,7 +60,7 @@ class Comet(
     } // draw
 
     override fun shot(): Target.Impact {
-        slap(position)
+        slap()
         return Target.Impact.HARD
     } // shot
     override fun explode() { }

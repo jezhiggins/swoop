@@ -21,9 +21,9 @@ class Spaceman(
     private val rotation = Random.nextDouble(-1.5, 1.5)
     private val spaceman = game.loadBitmap(R.drawable.spaceman).bitmap
     private val matrix = Matrix()
-    private val problemSound = game.loadSound(R.raw.spaceman)
-    private val fallenSound = game.loadSound(R.raw.spacemanfallen)
-    private val savedSound = game.loadSound(R.raw.spacemansaved)
+    private val problemSound = { game.sound(R.raw.spaceman, position) }
+    private val fallenSound = { game.sound(R.raw.spacemanfallen, position) }
+    private val savedSound = { game.sound(R.raw.spacemansaved, position) }
     override val killDist = spaceman.width / 2f
     private var age = 0f
     private var falling = false
@@ -31,7 +31,7 @@ class Spaceman(
     init {
         wave.addTarget(this)
 
-        problemSound(position)
+        problemSound()
 
         matrix.postTranslate(-spaceman.width / 2f, -spaceman.height / 2f)
         matrix.postRotate(orientation.angle.toFloat())
@@ -49,7 +49,7 @@ class Spaceman(
     } // update
 
     private fun falling() {
-        if (!falling) fallenSound(position)
+        if (!falling) fallenSound()
 
         matrix.postRotate(rotation.toFloat() * 3)
         matrix.postScale(0.98f, 0.98f)
@@ -72,7 +72,7 @@ class Spaceman(
 
     /////
     override fun shipCollision(ship: Ship) {
-        savedSound(position)
+        savedSound()
         game.scored(1000)
         wave.upgrade()
         wave.removeTarget(this)

@@ -18,9 +18,9 @@ class StonyAsteroid(
     pos: Point,
     scale: Float = Big
 ): Asteroid(game, wave, pos, scale) {
-    private val smallBang = game.loadSound(R.raw.bangsmall)
-    private val midBang = game.loadSound(R.raw.bangmedium)
-    private val bigBang = game.loadSound(R.raw.banglarge)
+    private val smallBang = { game.sound(R.raw.bangsmall, position) }
+    private val midBang = { game.sound(R.raw.bangmedium, position) }
+    private val bigBang = { game.sound(R.raw.banglarge, position) }
 
    override fun drawAsteroid(canvas: Canvas) {
        canvas.drawLines(
@@ -47,7 +47,7 @@ class StonyAsteroid(
             Medium -> midBang
             else -> bigBang
         }
-        b(position)
+        b()
     } // bang
 
     private fun split() {

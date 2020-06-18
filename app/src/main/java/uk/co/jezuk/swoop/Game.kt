@@ -142,16 +142,11 @@ class Game(private val context: Context) {
     } // drawLives
 
     /////
-    fun loadSound(soundResId: Int): (Point) -> Unit {
+    fun sound(soundResId: Int, position: Point) {
         val soundFn = sounds.load(soundResId)
-
-        val pannedSoundFn = { position: Point ->
-            val pan = position.x.toFloat() / extent.canvasOffsetX
-            soundFn(pan)
-        } // pannedSoundFn
-
-        return pannedSoundFn
-    } // loadSound
+        val pan = position.x.toFloat() / extent.canvasOffsetX
+        soundFn(pan)
+    } // sound
 
     fun loadBitmap(bitmapId: Int): BitmapDrawable =
         context.resources.getDrawable(bitmapId, null) as BitmapDrawable

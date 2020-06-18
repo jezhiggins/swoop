@@ -16,10 +16,10 @@ class Ship(private val game: Game): Craft {
     var orientation = Rotation(-90.0)
     private var targetOrientation = orientation.clone()
 
-    private val thrustSound = game.loadSound(R.raw.thrust)
-    private val explosionSound = game.loadSound(R.raw.shipexplosion)
-    private val rezInSound = game.loadSound(R.raw.rezin)
-    private val rezOutSound = game.loadSound(R.raw.rezout)
+    private val thrustSound = { game.sound(R.raw.thrust, position) }
+    private val explosionSound = { game.sound(R.raw.shipexplosion, position) }
+    private val rezInSound = { game.sound(R.raw.rezin, position) }
+    private val rezOutSound = { game.sound(R.raw.rezout, position) }
 
     private val pos = Point(0.0, 0.0)
     private var state: ShipState = RezIn(this)
@@ -180,7 +180,7 @@ class Ship(private val game: Game): Craft {
             ship.velocity += thrust
 
             thrustFrames.start()
-            ship.thrustSound(ship.position)
+            ship.thrustSound()
         } // thrust
 
         override fun rotateTowards(angle: Double) {
@@ -209,7 +209,7 @@ class Ship(private val game: Game): Craft {
         private var explosion = Latch(50, { whatsNext() })
 
         init {
-            ship.explosionSound(ship.position)
+            ship.explosionSound()
         }
 
         override fun update(frameRateScale: Float) {
@@ -250,7 +250,7 @@ class Ship(private val game: Game): Craft {
     } // Exploding
 
     private class RezIn(private val ship: Ship): ShipState {
-        private val pause = Latch(60, { ship.rezInSound(ship.position) })
+        private val pause = Latch(60, { ship.rezInSound() })
         private var radius = 600f
 
         override fun rotateTowards(angle: Double) {
@@ -280,7 +280,7 @@ class Ship(private val game: Game): Craft {
         private var r = 0
 
         init {
-            ship.rezOutSound(ship.position)
+            ship.rezOutSound()
         }
 
         override fun update(frameRateScale: Float) {
