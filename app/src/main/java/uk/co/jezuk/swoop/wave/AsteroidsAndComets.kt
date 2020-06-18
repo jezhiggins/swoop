@@ -13,7 +13,7 @@ class AsteroidsAndComets(
     private val game: Game,
     private val starField: StarField,
     private val initialAsteroids: Int = 5,
-    val g: Gun? = null
+    g: Gun? = null
 ) : WaveWithProjectilesAndTargets() {
     private val ship: Ship = Ship(game)
     private val gun: Gun = Gun(game, this, ship, g)

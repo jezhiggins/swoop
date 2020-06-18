@@ -66,7 +66,7 @@ class CometStorm(
         if (survivalBonus) game.scored(5000)
 
         val newStarField = StarField(game.extent)
-        val nextWave = AsteroidsAndComets(game, newStarField, 8)
+        val nextWave = IronAsteroids(game, newStarField)
 
         game.nextWave(LevelTransition(
             game,
