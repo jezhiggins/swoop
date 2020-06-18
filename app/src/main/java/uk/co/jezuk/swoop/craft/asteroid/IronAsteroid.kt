@@ -21,6 +21,7 @@ class IronAsteroid(
     private val smallBang = { game.sound(R.raw.bangsmall, position) }
     private val midBang = { game.sound(R.raw.bangmedium, position) }
     private val bigBang = { game.sound(R.raw.banglarge, position) }
+    private val ting = { game.sound(R.raw.ting, position) }
 
     private var spang = 0
     private fun resetSpang() {
@@ -36,8 +37,10 @@ class IronAsteroid(
     } // drawAsteroid
 
     override fun shot(): Target.Impact {
-        if (--spang != 0)
+        if (--spang != 0) {
+            ting()
             return Target.Impact.HARD
+        }
 
         game.scored(400/size.toInt())
         split()
