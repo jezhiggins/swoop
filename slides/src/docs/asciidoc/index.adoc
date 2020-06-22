@@ -11,5 +11,8 @@ Jez Higgins, jez@jezuk.co.uk
 [background-image='images/brave-new-world.jpg']
 == !
 
+[background-image='images/zxspectrum.jpg']
+== !
+
 [background-iframe=http://torinak.com/qaop]
 == !
