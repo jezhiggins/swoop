@@ -1,0 +1,15 @@
+= Journey Into Space
+Jez Higgins, jez@jezuk.co.uk
+{docdate}
+:customcss: style/theme-tweak.css
+:revealjs_theme: white
+:revealjs_progress: false
+
+[background-image='images/journey-into-space.jpg']
+== !
+
+[background-image='images/brave-new-world.jpg']
+== !
+
+[background-iframe=http://torinak.com/qaop]
+== !
