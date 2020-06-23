@@ -84,18 +84,30 @@ And most of them were crap. But we typed them in and played them anyway. And gra
 
 - Starswarm
 
-And that's what we did. We wrote a game, played them for a few minutes, maybe took a tape into school and showed our friends, then wrote another. I must have written 50, 60, maybe a hundred games over the next couple of years. Shooters, maze games, vertical scrollers, even had a crack at a couple of text adventure - Tardis and Slo-ped Quest - an epic odyssey across south Norfolk to borrow Pagey's Honda C50. They were mainly rubbish. Maybe a handful were actually fun. I remember our awe at Scott's Centipede-Head, because it was actually fun to play. It would have been Centipede, but that was too slow so he just had the head. But we did this stuff because, you know, you could make stuff just with the power of your own brain. It was amazing - intoxicating.
+And that's what we did. We wrote a game, played them for a few minutes, maybe took a tape into school and showed our friends, then wrote another. I must have written 50, 60, maybe a hundred games over the next couple of years. Shooters, maze games, vertical scrollers, even had a crack at a couple of text adventure - Tardis and Slo-ped Quest - an epic odyssey across south Norfolk to borrow Pagey's Honda C50. They were mainly rubbish. Maybe a handful were actually fun. I remember our awe at Scott's Centipede-Head, because it was actually fun to play. It would have been Centipede, but that was too slow so he just had the head. But we did this stuff because, you know, you could make stuff just with the power of your own brain. It was amazing - intoxicating. And it was easy. You'd sit down on the floor in the front of the tv, or at the dining table maybe if you had a portable tv, and you could just start. Yes, it was constrained, and I don't want to get all oulipo (freeing literature by tightening the rules) on you, but there was so much you didn't have to concern yourself with that you could just start. I didn't know that then, but I know that now.
 
-Language acquisition is a complex business and fluency does not necessarily confer understanding. We - and by we here I mean me and my friends - Scott, Adcock, Woody, Pagey - and that cohort of young teenage boys were fluent - we could write code standing on our heads - but understanding? Not so much.
+Now, Language acquisition is a complex business and fluency does not necessarily confer understanding. We - and by we here I mean me and my friends - Scott, Adcock, Woody, Pagey - and that cohort of young teenage boys were fluent - we could write code standing on our heads - but understanding? Not so much.
 --
 
 [background-image='images/norwich-city-college.jpg']
 == !
 [NOTE.speaker]
 --
-I've no idea what its like now, but 6th form provision in Norfolk in 1985 was best described as 'patchy', possibly even 'grudging'. Simultaneously with leaving school, we moved into Norwich and I headed off to Norwich City College, now funkily rebadged as City College Norwich and merged with North Walsham College. I mean who even knows where North Walsham is?. Anyway, I went there to not study computers, but electronics. The entire reason for that is down to a man Scott and I met at an open evening. He was a System Analyst, who described what he job was and how it was different and more important that a Computer Programmer (you could hear the capital letters), and by god he made them both sound as boring as hell.
+I've no idea what its like now, but 6th form provision in Norfolk in 1985 was 'grudging', at best you could say 'patchy'. Simultaneously with leaving school, we moved into Norwich and I headed off to Norwich City College, now funkily rebadged as City College Norwich and, I understand, merged with North Walsham College. I mean who even knows where North Walsham is?. Anyway, I went there to not study computers, but electronics. The entire reason for that is down to a man Scott and I met at an open evening. He was a System Analyst, who described what his job was and how it was different and far far more important than a Computer Programmer (you could hear the capital letters), and by god he made them both sound as boring as hell.
 
 Do you know the difference between a SA and a CP? Jack Schofield's computer joke book in Personal Computer World.
 
-Scott was underdeterred, but I decided that if that was programming for work I wanted no part of it. While I was there I picked up a leaflet about Electrical and Electronic Engineering, so I did that. Loved it. Went to university to do four more years of electronics. Loved that too. Got a job doing electronics. Had a great time. But then, I had to find my next job ...
+Scott was undeterred, but I decided that if that was what programming for work was like I wanted no part of it. While I was at that open evening I picked up a leaflet about Electrical and Electronic Engineering, so I did that. Loved it. Went to university to do four more years of electronics. Loved that too. Got a job doing electronics. Had a great time. But then, I had to find my next job ...
+--
+[background-image='images/ouoxygenlab.jpg']
+== !
+[NOTE.speaker]
+--
+Because there's not a great call for people who can build these...
+
+This is a piece of kit from the oxygen lab at the Open University's Planetary and Space Sciences discipline within the Department of Physical Sciences. The mass spec is on the right, there's a chunk of high vacuum stuff for collecting your sample in the middle, with sundry bits of control electronics on the left there. This photo is from 2011, I think, but I'm pretty sure there's stuff I built still in service.
+
+But you know, I could write software ... so I got a job writing software for a year, and then I accidentally became a contractor, and went from job to job, like you do.
+
+And it was, you know, fine.
 --
