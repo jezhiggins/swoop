@@ -7,45 +7,95 @@ Jez Higgins, jez@jezuk.co.uk
 
 [background-image='images/journey-into-space.jpg']
 == !
-[NOTES.speaker]
-----
-Journey Into Space
-----
+[NOTE.speaker]
+--
+* cue up Journey in Space & Brave New World
+* cue up Fuse
+
+Welcome to "Journey Into Space"
+
+Hello. My name is Jez Higgins, and as the sound effects fade away it's my pleasure to welcome our many listeners, not just in Norwich but around the world.
+
+We're going to take a journey into space, and also through time. We're going to travel back to one of the defining cultural events of 1982.
+--
 
 [background-image='images/brave-new-world.jpg']
 == !
-[NOTES.speaker]
-----
+[NOTE.speaker]
+--
 Significant cultural events in 1982
 
-Brave New World, the only single from Toyah's The Changeling LP. That's long player for you young people. 
+Brave New World, the only single from Toyah's The Changeling LP. That's long player for you young people.
 
-We could think about the Falklands Conflict, the opening of the Hacienda club, the launch of the Hyundai Pony - the first Korean car to be sold in Britain, Bobby Robson taking the England Manager job - bringing a crushing end to Ipswich Town's brief few years a proper top flight club, or even the publication of The Secret Diary of Adrian Mole Aged 13 3/4s
-----
+We could think about the Falklands Conflict, the Hyundai Pony - the first Korean car to be sold in Britain, Bobby Robson taking the England Manager job - bringing a crushing end to Ipswich Town's brief few years a proper top flight club, or even the publication of The Secret Diary of Adrian Mole Aged 13 3/4s
+--
 
 [background-image='images/zxspectrum.jpg']
 == !
-[NOTES.speaker]
-----
+[NOTE.speaker]
+--
 1982 was the year the 'home computer revolution' really kicked off. It had begun a couple of years earlier with the launch of the Sinclair ZX80, which was the first 'affordable' home computer. I'm using affordable in a loose sense here - it was under a hundred quid (just) but that wasn't pocket change, but an Acorn Atom would cost you £170 and both of those were a fraction of the $1200 you'd need to drop on an Apple ][+. (That's about £430 and £4000 in modern currency.)
 
 The ZX80 was succeeded by the ZX81 in March the following year. It cost £70. The Atom was succeeded by the BBC Micro in December 81, (£235, £335). But 1982, 1982 was like the Cambrian explosion of the home computer revolution. There was the Commodore 64, the Dragon 32, the Oric-1, the Jupiter Ace, the Camputers Lynx, the NewBrain, there were new computers springing up all the time. The big beast though, the big launch, was this thing, the ZX Spectrum. Available in a 16k or 48k model, yours for a £125 or £175 respectively.
 
 So what happens is your Dad inherits some money from his maiden aunt and, in an uncharacteristic fit of generosity, lets his three children buy some a big fancy. My recollection is I got a new bike, my brother Ric got a 12 inch tv - black and white CRT fans!, and it was my youngest brother Ali who wanted a computer, but he would only have been 6 so I think I'm getting that wrong. Anyway, my Dad sent away the mail order coupon and after many weeks of manufacturing delay, this box is delivered, we all gather round to unpack it and plug it into the big colour tv in the lounge and ...
-----
+--
 
 [background-iframe=http://torinak.com/qaop]
 == !
-[NOTES.speaker]
-----
+[NOTE.speaker]
+--
 Now what?
-----
+
+What did you do with this computer? Nobody really knew. What were they for? Nobody used computers for anything - certainly not at work. It's true that Visicalc - it's bugs still faithfully replicated in Excel even unto today - was causing a bit of storm in certain circles, but we knew nothing about that. It wasn't going to 'help with your homework'. What was it for, this genuine miracle of modern technology?
+
+Well, obviously, we played games on them. Games that we bought, and games that we typed in from magazines. And there were a million magazines, and they all carried listings for you to type in yourself.
+--
 
 [background-iframe=https://archive.org/details/popular-computing-weekly-1983-05-19/mode/2up]
 == !
+[NOTE.speaker]
+--
+This was one of my favourites - Popular Computing Weekly. Miss Mack used to get it for the school library. The were all like this - here's a new computer on the way, here's some feature programs, games reviews, listing sent in by readers, problem page, ads, ads, ads.
+--
 
 [background-iframe=https://archive.org/details/your-computer-magazine-1982-12/mode/2up]
 == !
+[NOTE.speaker]
+--
+The other magazine I read regularly was Your Computer. It has basically the same kind of content as Popular Computing Weekly, but longer and less frequently, and some times a bit more tediously.
+
+Get some of these letters. "Well, actually ...". The older members of the audience have probably worked with people like this. Hopefully the younger ones haven't and won't.
+
+Look - here's the most realistic flight simulator ever published. If you like flying on instruments only. How can we tell?
+
+In retrospect, these seems alternately hilarious and kind of pathetic.
+--
 
 [background-iframe=http://torinak.com/qaop]
 == !
+[NOTE.speaker]
+--
+So we typed those programs in and we played the games.
+
+And most of them were crap. But we typed them in and played them anyway. And gradually, in the way of a child learning to speak, we acquired the language and we started writing our own programs, our own games.
+
+- write a bit of stuff -
+
+- Starswarm
+
+And that's what we did. We wrote a game, played them for a few minutes, maybe took a tape into school and showed our friends, then wrote another. I must have written 50, 60, maybe a hundred games over the next couple of years. Shooters, maze games, vertical scrollers, even had a crack at a couple of text adventure - Tardis and Slo-ped Quest - an epic odyssey across south Norfolk to borrow Pagey's Honda C50. They were mainly rubbish. Maybe a handful were actually fun. I remember our awe at Scott's Centipede-Head, because it was actually fun to play. It would have been Centipede, but that was too slow so he just had the head. But we did this stuff because, you know, you could make stuff just with the power of your own brain. It was amazing - intoxicating.
+
+Language acquisition is a complex business and fluency does not necessarily confer understanding. We - and by we here I mean me and my friends - Scott, Adcock, Woody, Pagey - and that cohort of young teenage boys were fluent - we could write code standing on our heads - but understanding? Not so much.
+--
+
+[background-image='images/norwich-city-college.jpg']
+== !
+[NOTE.speaker]
+--
+I've no idea what its like now, but 6th form provision in Norfolk in 1985 was best described as 'patchy', possibly even 'grudging'. Simultaneously with leaving school, we moved into Norwich and I headed off to Norwich City College, now funkily rebadged as City College Norwich and merged with North Walsham College. I mean who even knows where North Walsham is?. Anyway, I went there to not study computers, but electronics. The entire reason for that is down to a man Scott and I met at an open evening. He was a System Analyst, who described what he job was and how it was different and more important that a Computer Programmer (you could hear the capital letters), and by god he made them both sound as boring as hell.
+
+Do you know the difference between a SA and a CP? Jack Schofield's computer joke book in Personal Computer World.
+
+Scott was underdeterred, but I decided that if that was programming for work I wanted no part of it. While I was there I picked up a leaflet about Electrical and Electronic Engineering, so I did that. Loved it. Went to university to do four more years of electronics. Loved that too. Got a job doing electronics. Had a great time. But then, I had to find my next job ...
+--
