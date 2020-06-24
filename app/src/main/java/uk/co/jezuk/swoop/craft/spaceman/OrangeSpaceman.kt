@@ -11,13 +11,4 @@ class OrangeSpaceman(
     private val wave: Wave,
     pos: Point
 ) : Spaceman(game, wave, pos, R.drawable.orangespaceman) {
-    private val savedSound = { game.sound(R.raw.spacemansaved, position) }
-
-    /////
-    override fun shipCollision(ship: Ship) {
-        savedSound()
-        game.scored(1000)
-        wave.upgrade()
-        wave.removeTarget(this)
-    } // shipCollision
 } // OrangeSpaceman

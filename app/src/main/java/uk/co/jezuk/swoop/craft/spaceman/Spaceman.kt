@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Matrix
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
+import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
@@ -25,6 +26,7 @@ abstract class Spaceman(
     private val matrix = Matrix()
     private val problemSound = { game.sound(R.raw.spaceman, position) }
     private val fallenSound = { game.sound(R.raw.spacemanfallen, position) }
+    private val savedSound = { game.sound(R.raw.spacemansaved, position) }
     override val killDist = spaceman.width / 2f
     private var age = 0f
     private var falling = false
@@ -72,6 +74,13 @@ abstract class Spaceman(
     } // draw
 
     /////
+    override fun shipCollision(ship: Ship) {
+        savedSound()
+        game.scored(1000)
+        wave.upgrade()
+        wave.removeTarget(this)
+    } // shipCollision
+
     override fun shot(): Target.Impact = Target.Impact.NONE
     override fun explode() = Unit
 

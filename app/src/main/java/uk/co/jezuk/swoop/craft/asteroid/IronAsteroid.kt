@@ -8,6 +8,7 @@ import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.spaceman.OrangeSpaceman
 import uk.co.jezuk.swoop.craft.Target
+import uk.co.jezuk.swoop.craft.spaceman.BlueSpaceman
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
@@ -48,8 +49,13 @@ class IronAsteroid(
     } // shipCollision
 
     private fun split() {
-        if (Random.nextFloat() < 0.1f)
-            OrangeSpaceman(game, wave, position)
+        val spacemanPops = Random.nextFloat()
+        if (spacemanPops < 0.12f) {
+            if (spacemanPops < 0.05f)
+                BlueSpaceman(game, wave, position)
+            else
+                OrangeSpaceman(game, wave, position)
+        }
         explode()
 
         if (size != Small) {
