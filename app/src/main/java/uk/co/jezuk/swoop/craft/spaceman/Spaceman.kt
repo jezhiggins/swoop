@@ -1,29 +1,30 @@
-package uk.co.jezuk.swoop.craft
+package uk.co.jezuk.swoop.craft.spaceman
 
 import android.graphics.Canvas
 import android.graphics.Matrix
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
+import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
 
-class Spaceman(
+abstract class Spaceman(
     private val game: Game,
     private val wave: Wave,
-    pos: Point
+    pos: Point,
+    bitmapId: Int
 ) : Target {
     override val position = Point(pos)
     private val velocity = SpacemanVector()
     private val orientation = Rotation.random()
     private val rotation = Random.nextDouble(-1.5, 1.5)
-    private val spaceman = game.loadBitmap(R.drawable.spaceman).bitmap
+    private val spaceman = game.loadBitmap(bitmapId).bitmap
     private val matrix = Matrix()
     private val problemSound = { game.sound(R.raw.spaceman, position) }
     private val fallenSound = { game.sound(R.raw.spacemanfallen, position) }
-    private val savedSound = { game.sound(R.raw.spacemansaved, position) }
     override val killDist = spaceman.width / 2f
     private var age = 0f
     private var falling = false
@@ -71,12 +72,6 @@ class Spaceman(
     } // draw
 
     /////
-    override fun shipCollision(ship: Ship) {
-        savedSound()
-        game.scored(1000)
-        wave.upgrade()
-        wave.removeTarget(this)
-    } // shipCollision
     override fun shot(): Target.Impact = Target.Impact.NONE
     override fun explode() = Unit
 

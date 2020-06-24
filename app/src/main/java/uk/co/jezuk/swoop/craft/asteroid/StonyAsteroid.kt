@@ -3,10 +3,8 @@ package uk.co.jezuk.swoop.craft.asteroid
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.R
-import uk.co.jezuk.swoop.craft.Puff
 import uk.co.jezuk.swoop.craft.Ship
-import uk.co.jezuk.swoop.craft.Spaceman
+import uk.co.jezuk.swoop.craft.spaceman.OrangeSpaceman
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.Wave
@@ -38,7 +36,7 @@ class StonyAsteroid(
 
     private fun split() {
         if (Random.nextFloat() < 0.1f)
-            Spaceman(game, wave, position)
+            OrangeSpaceman(game, wave, position)
         explode()
 
         if (size != Small) {
