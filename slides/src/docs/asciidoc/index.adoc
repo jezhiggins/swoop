@@ -59,6 +59,19 @@ Well, obviously, we played games on them. Games that we bought, and games that w
 This was one of my favourites - Popular Computing Weekly. Miss Mack used to get it for the school library. The were all like this - here's a new computer on the way, here's some feature programs, games reviews, listing sent in by readers, problem page, ads, ads, ads.
 --
 
+[background-video=https://youtu.be/A0ibHqKEZwc?t=15]
+=== !
+[NOTE.speaker]
+--
+Sheep In Space
+
+Flying bonios
+
+Gravity
+
+Grazing
+--
+
 [background-iframe=https://archive.org/details/your-computer-magazine-1982-12/mode/2up]
 == !
 [NOTE.speaker]
@@ -109,5 +122,5 @@ This is a piece of kit from the oxygen lab at the Open University's Planetary an
 
 But you know, I could write software ... so I got a job writing software for a year, and then I accidentally became a contractor, and went from job to job, like you do.
 
-I was ok at it - I flatter myself I was better than most people I worked with, but I carried round this snobby idea that because I'd done an engineering degree I was bringing a certain rigour and, erm, discipline. And it was, you know, fine.
+I was ok at it - I flatter myself I was better than most people I worked with, but I did carry round this snobby idea that because I'd done an engineering degree I was bringing a certain rigour and, erm, discipline. And it was, you know, fine.
 --
