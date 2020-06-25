@@ -1,4 +1,4 @@
-= Journey Into Space
+= Journey Into Space - 1982
 Jez Higgins, jez@jezuk.co.uk
 {docdate}
 :customcss: style/theme-tweak.css

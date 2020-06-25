@@ -1,0 +1,35 @@
+= Journey Into Space - 1998
+Jez Higgins, jez@jezuk.co.uk
+{docdate}
+:customcss: style/theme-tweak.css
+:revealjs_theme: white
+:revealjs_progress: false
+
+* working on a big project out in Germany
+
+* some how, not sure how, possibly via Jim Coplien's column in C++ Report,  I'm a regular on the C2 Wiki
+
+* This is the original wiki. It is, rather portentiously, the Portland Pattern Repository, where people are working out patterns - design patterns. Design Patterns were, following the publication of the GoF book, very fashionable at the time.
+
+* But as well as patterns, what starts to emerge on the C2 Wiki is Extreme Programming. Ward Cunningham is there. Kent Beck is there. Ron Jeffries was there. These three basically defined XP together when they worked on C3 - the Chrysler Comprehensive Compensation project. Martin Fowler was there I think, doing some of the groundwork for his Refactoring book. Cope was there, disagreeing obviously. Michael Feathers was there, being characteristically thoughtful. Lots of other people where there. And there was these huge conversations going on. Beck, Cunningham, and Jeffries were describing TDD - it may not even have been called TDD then - and people where aghast. Staggered. Well, maybe you Smalltalkers need to do something like that, but over here in statically typed world, we're good. Or well, that's ok for you Smalltalkers, and you can kindof munge it for Java but I don't know if we can even do that in C++. Michael Feathers showed us we could.
+
+And somehow I was there and participating, and once I'd realised the Cope was wrong about something, corrected him, and had that correction acknowledged by other people, my self-confidence took a real boost.
+
+But that's all by the by. The thing that really took me was XP, and the XP principles that Beck, Cunningham, and Jeffries were outlining.
+It really spoke to me about what was important. In someways, and I would never have said this out loud then, took me back to being a teenager. The code was important - if you didn't write any code you didn't have a project. It had to be the right code, it had to work. We do that in two ways - testing and rapid delivery. It really lit fire under me, and I tried to put those principles into practice - even though my then employer didn't want me too. Even though I didn't fully understand the principles. But doing so made me a better programmer, and I did better work. And even if my employer didn't know why I was doing better work, they realised I was because they gave me a fucking great payrise to stay on.
+
+When Kent Beck published his book, I was at the front of the queue. It's slightly unfortunate, but extreme programming books fired out at a rate of knots, and they weren't all great. But this is, and you should read it and absorb it if you haven't.
+
+There was something in ther air, of course. XP wasn't the only thing around. Prag Prog came out about the same time. Sutherland and Schwaber were working on Scrum around then. Alistair Cockburn was working on Crystal Clear. Jim Highsmith was working on Adaptive Software Development. There was a big software development mood going on.
+
+This crystallised in 2001, when these people and a few others all got together to draft the Manifesto for Agile Software Development. It describes 12 principles on which, they believed, software development should be founded.
+
+We could argue that this is where it all went wrong for agile, the word suddenly and permenantly acquiring a capital letter, and maybe we never should have come down out of the trees but that's maybe a different talk for another time.
+
+If you haven't read Beck's book, or PragProg, I'd really recommend them - particularly if you've come into programming since that time. I really believe they'll help you understand what many of the common practices we use today are trying to achieve and how they help us create better software.
+
+Over time, of course, the excitment dies down. The gang breaks up - people move on to different things, the web becomes a different place, the kerfuffle dies down. But the world has been changed.
+
+For me, at that time, XP was what I needed and what I have tried, with various degrees of success and with many degrees of failure, to practice and understand and improve ever since. The changes it prompted me to make have, it's not any kind of exaggeration to say, changed my life. I'm a better programmer as a result, for a start. I've met and got to know many of you wonderful people. That's enabled me to do all kinds of really interesting pieces of work I wouldn't otherwise have done.
+
+1998 turned to 1999 and then to 2000, and I headed into the new millenium profoundly changed.

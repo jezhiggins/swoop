@@ -23,7 +23,9 @@ revealjs {
 
 asciidoctorRevealJs {
   sources {
-    include "index.adoc"
+    include "1982.adoc"
+    include "1998.adoc"
+    include "2020.adoc"
   }
 
   baseDirFollowsSourceDir()
