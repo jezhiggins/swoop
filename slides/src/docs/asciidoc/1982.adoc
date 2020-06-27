@@ -9,8 +9,14 @@ Jez Higgins, jez@jezuk.co.uk
 == !
 [NOTE.speaker]
 --
+* start OBS before Zoom
+* sudo modprobe v4l2loopback video_nr=10 card_label="OBS Video Source" exclusive_caps=1
+* OBS | Tools | Start v4l2sink
+* start Zoom, make sure it's connected to the video source
+
 * cue up Journey in Space & Brave New World
 * cue up Fuse
+* cue up the three presentations
 
 Welcome to "Journey Into Space"
 

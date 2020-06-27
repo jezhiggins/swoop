@@ -39,6 +39,10 @@ asciidoctorRevealJs {
       include '**'
       into 'style'
     }
+    from("${sourceDir}/pages") {
+      include '**'
+      into 'pages'
+    }
   }
 }
 

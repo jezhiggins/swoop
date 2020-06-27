@@ -5,6 +5,62 @@ Jez Higgins, jez@jezuk.co.uk
 :revealjs_theme: white
 :revealjs_progress: false
 
-[background-iframe='https://twitter.com/GeePawHill/status/1263894030443741185']
+[background-iframe='pages/geepaw-hill-may-22.html']
 == !
+[NOTE.speaker]
+--
+So few weeks ago, I saw this tweet and because I hadn't, as I've suggested, followed everything that Kent Beck, Ward Cunningham, and whomever had been up to, this was interesting news.
+--
 
+[background-iframe='pages/jez-may-31.html']
+== !
+[NOTE.speaker]
+--
+So it took me a couple of days but I went and read this articles. What Ron Jeffries is doing is writing a version of Asteroids for his iPad, using an environment called Codea. I hadn't heard of it before, I'm not Apple enabled, but it's a Lua based environment for games, simulations, and other graphical applications. It looks pretty cool. Ron describes what he's doing as he goes, and he's also trying to test drive as much as he can. Which, as says at the outset, is difficult for this kind of graphical application.
+
+And it's just wonderful. There were 13 or 14 articles when I started reading. He's getting on to 60 little articles now, and they're just a joy. So much pleasure to be derived from them. So, I alerted my programmer friends on Twitter to them ...
+--
+
+[background-iframe='pages/jez-may-31-twirly.html']
+== !
+[NOTE.speaker]
+--
+... and then immediately afterwards, I did this.
+--
+
+[background-iframe='pages/jez-june-2.html']
+== !
+[NOTE.speaker]
+--
+A couple of days later, I had my little ship flying round the place.
+--
+
+[background-iframe='pages/jez-june-4.html']
+== !
+[NOTE.speaker]
+--
+Two days after that, it started to look like a game ...
+--
+
+[background-iframe='pages/fran-dom-june-4.html']
+== !
+[NOTE.speaker]
+--
+And because no good deed goes unpunished ...
+
+So what was it that lit this retro gaming fire under my arse?
+--
+
+[background-iframe='pages/jez-oct-2016.html']
+== !
+[NOTE.speaker]
+--
+Well, it'd been in the back of my head for years, but I'd never done anything about it. It just seemed like too much faff, even just getting a surface to draw on seemed like a pain in the arse, you're operating in an event driven environment, so everything's kind of backwards, and I just didn't have the energy to fight my way through that. It just seemed like no fun.
+--
+
+[background-iframe='pages/jez-june-4.html']
+== !
+[NOTE.speaker]
+--
+Ok Jez, so what happened?
+--
