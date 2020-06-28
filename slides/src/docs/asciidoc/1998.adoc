@@ -5,6 +5,10 @@ Jez Higgins, jez@jezuk.co.uk
 :revealjs_theme: white
 :revealjs_progress: false
 
+* get props
+* XP Books, Pragmatic Programmer, The Nature of Software Development
+
+
 * working on a big project out in Germany
 
 * some how, not sure how, possibly via Jim Coplien's column in C++ Report,  I'm a regular on the C2 Wiki

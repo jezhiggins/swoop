@@ -14,9 +14,11 @@ Jez Higgins, jez@jezuk.co.uk
 * OBS | Tools | Start v4l2sink
 * start Zoom, make sure it's connected to the video source
 
-* cue up Journey in Space & Brave New World
+* cue up Journey in Space & Brave New World sound effects
 * cue up Fuse
 * cue up the three presentations
+* cue up game on phone
+* cue up google play page
 
 Welcome to "Journey Into Space"
 
