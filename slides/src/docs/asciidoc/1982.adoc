@@ -19,7 +19,12 @@ Jez Higgins, jez@jezuk.co.uk
 * cue up the three presentations
 * cue up game on phone
 * cue up google play page
+--
 
+[background-image='images/journey-into-space.jpg']
+== !
+[NOTE.speaker]
+--
 Welcome to "Journey Into Space"
 
 Hello. My name is Jez Higgins, and as the sound effects fade away it's my pleasure to welcome our many listeners, not just in Norwich but around the world.
