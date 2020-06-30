@@ -9,6 +9,17 @@ Jez Higgins, jez@jezuk.co.uk
 == !
 [NOTE.speaker]
 --
+// twirly
+git checkout 6be5bffd98523667a3dcf75c04b7f42fe049cc1c
+
+// moving and twirling
+git checkout 7d347321a51d05428181bfb3fa831de9444020a7
+
+// move on touch
+git checkout 516348f6329d37f1adb9dda13328b7b31d7ae8a8
+
+
+
 So few weeks ago, I saw this tweet and because I hadn't, as I've suggested, followed everything that Kent Beck, Ward Cunningham, and whomever had been up to, this was interesting news.
 --
 
@@ -87,7 +98,79 @@ end
 --
 [NOTE.speaker]
 --
-It was this function.
+It was this function, specifically the translate and rotate lines.
 
-You know how, at the end of Murder, She Wrote or some similar light murder mystery somebody says something off-hand that triggers the detective to recollect something? Suddenly all the pieces fall into place, like a jigsaw spontaneously assembling? Well this bit of code gave me that sensation. It was proper weird. All this stuff which I knew but hadn't joined up, wasn't even trying to join up, it was like the planets had aligned and the solution I hadn't been looking for was just beamed into my brain by a pink laser beam from space.
+You know how, at the end of Murder, She Wrote or some similar light murder mystery somebody says something off-hand that triggers the detective to recollect some key detail? Suddenly all the pieces fall into place, like a jigsaw spontaneously assembling? Well this bit of code gave me that sensation. It was proper weird. All this stuff which I knew but hadn't joined up, wasn't even trying to join up, it was like the planets had instantaneously aligned and a solution I hadn't even been looking for was just beamed into my brain by a pink laser beam from space.
 --
+
+[background-iframe="https://www.cyclestreets.net/mobile/android/"]
+== !
+
+[NOTE.speaker]
+--
+CycleStreets for Android is something I've been working on for the past several years, on and off. It's a journey planner and satnav for, you'll be surprised to learn, cyclists. A few weeks ago, I was adding a new little feature - when you're in satnav mode, rotate the map to match the direction you're heading. You know the kind of thing.
+--
+
+== !
+ --- phone video ---
+
+[NOTE.speaker]
+--
+Most of what I wanted to do was actually provided by osmdroid, the mapping library, but the little bit I did was this compass. As the phone moves, I want the little north pointer to keep pointing north. The sensors on board - either the compass or the gps - give you the bearing, so you just need to rotate you're drawing the other way. Now that sounds like a pain in the arse, until you learn the drawing code will do it for you. All you have to do is locate you centre of rotation - there in the middle of the compass widget - and then say rotate that far - in degrees weirdly in whichever direction.
+
+When I saw Ron Jeffries code - clearly the iOS surface has a similar API - I realised I could apply it  generally, not to entire controls. I wouldn't have to do the maths to turn the ship, or spin the asteroids, or anything else. The phone would do it for me. I got a new understanding of the graphics, and then boom, boom, boom, the rest just appeared.
+--
+
+== !
+
+[source,kotlin]
+--
+while (running) {
+    ...
+
+    this.gameView.update(scaling)
+
+    val canvas = this.surfaceHolder.lockHardwareCanvas()
+    this.gameView.draw(canvas)
+    surfaceHolder.unlockCanvasAndPost(canvas)
+
+    ...
+} // while ...
+--
+
+[NOTE.speakers]
+--
+All modern GUIs are reactive. I say modern - all GUIs since about 1990 have been reactive. You get a message - key pressed, mouse click, window hidden, control needs redrawing - and then you get to do something.
+
+As we saw back in 1982, games tend to be much more imperative. Update this position. Draw that thing.
+
+The Codea environment Jeffries is using turns that kind of inside out. You get some reactive stuff - primarily the input messages, but mainly it's just calling your draw method in a pretty tight loop. I knew now that I could do that same. Create a single window that fills the display, fire up a thread and just spin it. I gave myself two methods - update and draw, but it's otherwise essentially the same.
+
+This while loop is my 100 ... 200 GOTO 100 of 40 years ago.
+--
+
+== !
+
+image::images/vector-addition.png[]
+
+[NOTE.speaker]
+--
+Vector addition! You probably did some for your GCSE - that's O level for our older viewers. (All that rotation and translation stuff? That was in there too.) Getting the cool Asteroid movement is all about vectors.
+
+If we rephrase this question as your ship is travelling along line OD. As it passes point B it is orientated toward point C. Describe the movement of the bullets.
+
+Shall we jump across to AndroidStudio and look at the code?
+
+* twirly
+* twirl and move
+* rotate on touch
+
+* git log
+
+* space men
+
+As I've worked on this, and Ron's continued to work on what he's doing, sometimes I've run ahead of what he's doing, and sometimes he's run ahead of me and it's been interesting to see how our approaches have been similar or different.
+
+Some of that has been partly driven by our implementation languages. Kotlin, which not as everything-must-be-a-class as Java, is pretty keen on types. Lua not so much. Perhaps as a consequence, I went to a common base class for all the bits flying around sooner than Jeffries. Kotlin's strong typing made that easier, despite my lack of tests. My preference is, generally, for little state machines or strategy patterns for behaviour over switches and indicator variables. But in other ways we're remarkably similar - the way we manage scoring is very similar, the collection of the things on the screen except for the ship which is special.
+--
+== !
