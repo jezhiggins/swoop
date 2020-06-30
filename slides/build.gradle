@@ -43,6 +43,10 @@ asciidoctorRevealJs {
       include '**'
       into 'pages'
     }
+    from("${sourceDir}/audio") {
+      include '**'
+      into 'audio'
+    }
   }
 }
 

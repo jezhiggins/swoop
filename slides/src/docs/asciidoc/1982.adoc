@@ -36,6 +36,7 @@ We're going to take a journey into space, and also through time. We're going to 
 
 [background-image='images/brave-new-world.jpg']
 == !
+
 [NOTE.speaker]
 --
 Significant cultural events in 1982

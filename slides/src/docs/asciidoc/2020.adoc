@@ -23,6 +23,14 @@ git checkout 516348f6329d37f1adb9dda13328b7b31d7ae8a8
 So few weeks ago, I saw this tweet and because I hadn't, as I've suggested, followed everything that Kent Beck, Ward Cunningham, and whomever had been up to, this was interesting news.
 --
 
+[background-iframe='https://ronjeffries.com/categories/asteroids/']
+== !
+[NOTE.speaker]
+--
+And here they are.
+--
+
+
 [background-iframe='pages/jez-may-31.html']
 == !
 [NOTE.speaker]
@@ -51,22 +59,8 @@ A couple of days later, I had my little ship flying round the place.
 [NOTE.speaker]
 --
 Two days after that, it started to look like a game ...
---
 
-[background-iframe='pages/fran-dom-june-4.html']
-== !
-[NOTE.speaker]
---
-And because no good deed goes unpunished ...
-
-So what was it that lit this retro gaming fire under my arse?
---
-
-[background-iframe='pages/jez-oct-2016.html']
-== !
-[NOTE.speaker]
---
-Well, it'd been in the back of my head for years, but I'd never done anything about it. It just seemed like too much faff, even just getting a surface to draw on seemed like a pain in the arse, you're operating in an event driven environment, so everything's kind of backwards, and I just didn't have the energy to fight my way through that. It just seemed like no fun.
+I was trying to explain to my son Daniel how the old home computers made writing games easy - fixed sized screen you could just draw on, direct keyboard interrogation, all that was talking about back at the start of this talk, and that modern GUIs are antithetical to that.
 --
 
 [background-iframe='pages/jez-june-4.html']
@@ -112,13 +106,42 @@ CycleStreets for Android is something I've been working on for the past several 
 --
 
 == !
- --- phone video ---
+video::images/20200629-152314.mp4[options=autoplay]
 
 [NOTE.speaker]
 --
 Most of what I wanted to do was actually provided by osmdroid, the mapping library, but the little bit I did was this compass. As the phone moves, I want the little north pointer to keep pointing north. The sensors on board - either the compass or the gps - give you the bearing, so you just need to rotate you're drawing the other way. Now that sounds like a pain in the arse, until you learn the drawing code will do it for you. All you have to do is locate you centre of rotation - there in the middle of the compass widget - and then say rotate that far - in degrees weirdly in whichever direction.
 
 When I saw Ron Jeffries code - clearly the iOS surface has a similar API - I realised I could apply it  generally, not to entire controls. I wouldn't have to do the maths to turn the ship, or spin the asteroids, or anything else. The phone would do it for me. I got a new understanding of the graphics, and then boom, boom, boom, the rest just appeared.
+--
+
+== !
+[source,kotlin]
+--
+val shape = floatArrayOf(
+    -50f, 0f, 50f, 25f,
+    50f, 25f, 50f, -25f,
+    50f, -25f, -50f, 0f
+)
+
+fun draw(canvas: Canvas) {
+    canvas.save()
+
+    canvas.translate(canvas.width/2f, canvas.height/2f)
+    canvas.rotate(angle)
+
+    canvas.drawLines(shape, colour)
+
+    canvas.restore()
+}
+--
+[NOTE.speaker]
+--
+All modern GUIs are reactive. I say modern - all GUIs since about 1990 have been reactive. You get a message - key pressed, mouse click, window hidden, control needs redrawing - and then you get to do something.
+
+As we saw back in 1982, games tend to be much more imperative. Update this position. Draw that thing.
+
+The Codea environment Jeffries is using turns that kind of inside out. You get some reactive stuff - primarily the input messages, but mainly it's just calling your draw method in a pretty tight loop. I knew now that I could do that same. Create a single window that fills the display, fire up a thread and just spin it. I gave myself two methods - update and draw, but it's otherwise essentially the same.
 --
 
 == !
@@ -138,14 +161,8 @@ while (running) {
 } // while ...
 --
 
-[NOTE.speakers]
+[NOTE.speaker]
 --
-All modern GUIs are reactive. I say modern - all GUIs since about 1990 have been reactive. You get a message - key pressed, mouse click, window hidden, control needs redrawing - and then you get to do something.
-
-As we saw back in 1982, games tend to be much more imperative. Update this position. Draw that thing.
-
-The Codea environment Jeffries is using turns that kind of inside out. You get some reactive stuff - primarily the input messages, but mainly it's just calling your draw method in a pretty tight loop. I knew now that I could do that same. Create a single window that fills the display, fire up a thread and just spin it. I gave myself two methods - update and draw, but it's otherwise essentially the same.
-
 This while loop is my 100 ... 200 GOTO 100 of 40 years ago.
 --
 
@@ -173,4 +190,9 @@ As I've worked on this, and Ron's continued to work on what he's doing, sometime
 
 Some of that has been partly driven by our implementation languages. Kotlin, which not as everything-must-be-a-class as Java, is pretty keen on types. Lua not so much. Perhaps as a consequence, I went to a common base class for all the bits flying around sooner than Jeffries. Kotlin's strong typing made that easier, despite my lack of tests. My preference is, generally, for little state machines or strategy patterns for behaviour over switches and indicator variables. But in other ways we're remarkably similar - the way we manage scoring is very similar, the collection of the things on the screen except for the ship which is special.
 --
+
+[background-iframe="pages/github.html"]
+== !
+
+[background-iframe="pages/google-play.html"]
 == !
