@@ -17,10 +17,13 @@ alt: put OBS preview in a window, share that from Zoom
 
 * cue up Journey in Space & Brave New World sound effects
 * cue up Fuse
-* cue up the three presentations
+* cue up the 1982 slides, 1998 notes + props, 2020 slides
 * cue up game on phone
+* cue up emulator with game
 * cue up google play page
 * cue up manifesto for agile software development
+* cue up ronjeffries.com
+* cue up Android Studio at three past points and current
 --
 
 [background-image='images/journey-into-space.jpg']

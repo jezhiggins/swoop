@@ -23,14 +23,6 @@ git checkout 516348f6329d37f1adb9dda13328b7b31d7ae8a8
 So few weeks ago, I saw this tweet and because I hadn't, as I've suggested, followed everything that Kent Beck, Ward Cunningham, and whomever had been up to, this was interesting news.
 --
 
-[background-iframe='https://ronjeffries.com/categories/asteroids/']
-== !
-[NOTE.speaker]
---
-And here they are.
---
-
-
 [background-iframe='pages/jez-may-31.html']
 == !
 [NOTE.speaker]
