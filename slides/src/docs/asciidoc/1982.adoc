@@ -13,12 +13,14 @@ Jez Higgins, jez@jezuk.co.uk
 * sudo modprobe v4l2loopback video_nr=10 card_label="OBS Video Source" exclusive_caps=1
 * OBS | Tools | Start v4l2sink
 * start Zoom, make sure it's connected to the video source
+alt: put OBS preview in a window, share that from Zoom
 
 * cue up Journey in Space & Brave New World sound effects
 * cue up Fuse
 * cue up the three presentations
 * cue up game on phone
 * cue up google play page
+* cue up manifesto for agile software development
 --
 
 [background-image='images/journey-into-space.jpg']
