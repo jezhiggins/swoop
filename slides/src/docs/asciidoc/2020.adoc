@@ -89,5 +89,5 @@ end
 --
 It was this function.
 
-You know how, at the end of Murder, She Wrote or some similar light murder mystery somebody says something off-hand that triggers the detective to recollect something? Suddenly all the pieces fall into place, like a jigsaw spontaneously assembling? Well this bit of code gave me that sensation. It was proper weird. All this stuff which I knew but hadn't joined up, it was like the planets had aligned and the solution was just beamed into my brain.
+You know how, at the end of Murder, She Wrote or some similar light murder mystery somebody says something off-hand that triggers the detective to recollect something? Suddenly all the pieces fall into place, like a jigsaw spontaneously assembling? Well this bit of code gave me that sensation. It was proper weird. All this stuff which I knew but hadn't joined up, wasn't even trying to join up, it was like the planets had aligned and the solution I hadn't been looking for was just beamed into my brain by a pink laser beam from space.
 --

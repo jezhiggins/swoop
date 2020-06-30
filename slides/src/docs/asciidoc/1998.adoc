@@ -28,7 +28,7 @@ There was something in the air, of course. XP wasn't the only thing around. Prag
 
 This crystallised in 2001, when these people and a few others all got together to draft the Manifesto for Agile Software Development. It describes 12 principles on which, they believed, software development should be founded.
 
-We could argue that this is where it all went wrong for agile, the word suddenly and permenantly acquiring a capital letter, and maybe we never should have come down out of the trees but that's maybe a different talk for another time.
+We could argue that this is where it all went wrong for agile, the word suddenly and permanently acquiring a capital letter, and maybe we never should have come down out of the trees but that's maybe a different talk for another time.
 
 If you haven't read Beck's book, or PragProg, I'd really recommend them - particularly if you've come into programming since that time. I really believe they'll help you understand what many of the common practices we use today are trying to achieve and how they help us to create software better.
 
