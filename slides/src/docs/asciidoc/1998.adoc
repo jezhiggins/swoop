@@ -5,35 +5,53 @@ Jez Higgins, jez@jezuk.co.uk
 :revealjs_theme: white
 :revealjs_progress: false
 
-* get props
-* XP Books, Pragmatic Programmer, The Nature of Software Development
+* working on a big project out in Germany, long time scale, lots of people, awful, big feeling of permanent crunch
 
+* some how, not sure how, possibly via Jim Coplien's column in C++ Report,  I'm a regular on the C2 WikiWikiWeb. The WikiWikiWeb is the original wiki, invented by Ward Cunningham. It was an open web site, editable by anyone, powered by a few lines of Perl and, for a while, it was absolutely red hot with conversations about software.
 
-* working on a big project out in Germany
+* It was, rather portentiously, the Portland Pattern Repository, where people were working out patterns - design patterns. Design Patterns were, following the publication of the GoF book in 1994, very fashionable at the time. There were lots of conferences, the Pattern Languages of Programming Design series of books, and so on. Cunningham was active in the patterns community - he was one of the founders of the Hillside Group, for example.
 
-* some how, not sure how, possibly via Jim Coplien's column in C++ Report,  I'm a regular on the C2 Wiki
+* So there were lots of people active on the WikiWikiWeb who were interested in patterns - Cunningham himself, Jim Coplien, Kent Beck, Ken Auer, I think. But as well as patterns, the conversation widens out, and part of what starts to emerge on the C2 Wiki is Extreme Programming. These two basically defined XP together when they worked on C3 - the Chrysler Comprehensive Compensation project. I'm guessing some what, but it seems to me that Kent Beck took the lead, with Ron Jeffries acting as advisor/mentor/coach. Where Beck makes a bold statement, Jeffries provides the exegesis. (Which isn't to say Beck can't be subtle and compassionate, and that Jeffries can't be to the point, but that was the way it seemed to me at the time.)
 
-* This is the original wiki. It is, rather portentiously, the Portland Pattern Repository, where people are working out patterns - design patterns. Design Patterns were, following the publication of the GoF book, very fashionable at the time.
-
-* But as well as patterns, what starts to emerge on the C2 Wiki is Extreme Programming. Ward Cunningham is there. Kent Beck is there. Ron Jeffries was there. These three basically defined XP together when they worked on C3 - the Chrysler Comprehensive Compensation project. Martin Fowler was there I think, doing some of the groundwork for his Refactoring book. Cope was there, disagreeing obviously. Michael Feathers was there, being characteristically thoughtful. Lots of other people where there. And there was these huge conversations going on. Beck, Cunningham, and Jeffries were describing TDD - it may not even have been called TDD then - and people where aghast. Staggered. Well, maybe you Smalltalkers need to do something like that, but over here in statically typed world, we're good. Or well, that's ok for you Smalltalkers, and you can kindof munge it for Java but I don't know if we can even do that in C++. Michael Feathers showed us we could.
+Martin Fowler was there at the same kind of time, I think, doing some of the groundwork for his Refactoring book. That obviously plays into the same kind of space. Cope was there, disagreeing obviously. Michael Feathers was there, being characteristically thoughtful. Lots of other people where there. And there was these huge conversations going on. Beck, and Jeffries were describing TDD - it may not even have been called TDD then - and people where aghast. Staggered. Write the tests first? Well, maybe you Smalltalkers need to do something like that, but over here in statically typed world, we're good. Or well, that's ok for you Smalltalkers, and you can kind of munge it for Java (as Beck and Gamma had already demonstrated with JUnit) but I don't know if we can even do that in C++. We could - Michael Feathers showed us that.
 
 And somehow I was there and participating, and once I'd realised the Cope was wrong about something, corrected him, and had that correction acknowledged by other people, my self-confidence took a real boost.
 
-But that's all by the by. The thing that really took me was XP, and the XP principles that Beck, Cunningham, and Jeffries were outlining.
-It really spoke to me about what was important. In someways, and I would never have said this out loud then, took me back to being a teenager. The code was important - if you didn't write any code you didn't have a project. It had to be the right code, it had to work. We do that in two ways - testing and rapid delivery. It really lit fire under me, and I tried to put those principles into practice - even though my then employer didn't want me too. Even though I didn't fully understand the principles. But doing so made me a better programmer, and I did better work. And even if my employer didn't know why I was doing better work, they realised I was because they gave me a fucking great payrise to stay on.
+But that's all by the by. The thing that really took me was XP, and the XP principles that Beck, and Jeffries were outlining. We take the practices we know to be good, and we dial them up as high as we can.
+
+* If code reviews are good, we'll review the code all the time
+* If testing is good, everybody will test all the time
+* If design is good, we'll make it part of everybody's daily business
+* If simplicity is good, we'll leave the system with the simplest design that supports its current functionality
+* If architecture is important, everybody will work defining and refining the architecture all the time
+* If integration testing is important, we'll integrate and test several times a day
+* If short iterations are good, we'll make iterations really, really short - seconds, minutes and hours, not weeks and months and years.
+
+It really spoke to me about what was important. The code was important - if you didn't write any code you didn't have a project. It had to be the right code, it had to work. XP doesn't necessarily mean you deliver the right thing, but you'll deliver the wrong thing for less time. That idea, at that time, it really lit fire under me, and I tried to put those principles into practice - even though my then employer didn't want me too. Even though I didn't fully understand the principles. But I tried, and doing so made me a better programmer, and I did better work. And even if my employer didn't know why I was doing better work, they realised I was because they gave me a fucking great payrise to stay on.
 
 When Kent Beck published his book, I was at the front of the queue. It's slightly unfortunate, but extreme programming books fired out at a rate of knots, and they weren't all great. But this is, and you should read it and absorb it if you haven't.
 
-There was something in the air, of course. XP wasn't the only thing around. Prag Prog came out about the same time. Sutherland and Schwaber were working on Scrum around then. Alistair Cockburn was working on Crystal Clear. Jim Highsmith was working on Adaptive Software Development. There was a big software development mood going on.
+Maybe there was something in the air, of course, at that time. XP wasn't the only thing around. Prag Prog came out about the same time. Sutherland and Schwaber were working on Scrum around then. Alistair Cockburn was working on Crystal Clear. Jim Highsmith was working on Adaptive Software Development. There was a big software development mood going on, and it was kicking back against exactly the kind of project I was on at the time.
 
-This crystallised in 2001, when these people and a few others all got together to draft the Manifesto for Agile Software Development. It describes 12 principles on which, they believed, software development should be founded.
+This crystallised in 2001, when these people and a few others all got together to draft the Manifesto for Agile Software Development.
+
+ We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:
+
+* Individuals and interactions over processes and tools
+* Working software over comprehensive documentation
+* Customer collaboration over contract negotiation
+* Responding to change over following a plan
+
+That is, while there is value in the items on the right, we value the items on the left more.
+
+It describes 12 principles on which, they believed, software development should be founded.
 
 We could argue that this is where it all went wrong for agile, the word suddenly and permanently acquiring a capital letter, and maybe we never should have come down out of the trees but that's maybe a different talk for another time.
 
-If you haven't read Beck's book, or PragProg, I'd really recommend them - particularly if you've come into programming since that time. I really believe they'll help you understand what many of the common practices we use today are trying to achieve and how they help us to create software better.
+If you haven't read Beck's book, or PragProg, I'd really recommend them - particularly if you've come into programming since that time. I really believe they'll help you understand what many of the common practices we use today are trying to achieve and how they help us create better software.
 
-Over time, of course, the excitment dies down. The gang breaks up - people move on to different things, the web becomes a different place, the kerfuffle dies down. But the world has been changed.
+Over time, of course, the excitement dies down. The gang breaks up - people move on to new things, the web becomes a different place, the kerfuffle dies down. But the world has been changed.
 
 For me, at that time, XP was what I needed and what I have tried, with various degrees of success and with many degrees of failure, to practice and understand and improve ever since. The changes it prompted me to make have, it's not any kind of exaggeration to say, changed my life. I'm a better programmer as a result, for a start. I've met and got to know many of you wonderful people. That's enabled me to do all kinds of really interesting pieces of work I wouldn't otherwise have done.
 
-1998 turned to 1999 and then to 2000, and I headed into the new millenium with a new relationship with the code I was writing.
+1998 turned to 1999 and then to 2000, and I headed into the new millenium profoundly changed.
