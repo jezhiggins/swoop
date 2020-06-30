@@ -10,6 +10,13 @@ import android.view.View
 import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
 
 class Swoop : AppCompatActivity() {
+    private val fullScreenNoNav = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+            View.SYSTEM_UI_FLAG_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
     private lateinit var binding: ActivityFullscreenBinding
     private lateinit var gameView: GameView
 
@@ -24,14 +31,8 @@ class Swoop : AppCompatActivity() {
 
         gameView = binding.fullscreenContent
 
-        binding.root.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-    }
+        binding.root.systemUiVisibility = fullScreenNoNav
+    } // onCreate
 
     override fun onPause() {
         super.onPause()
@@ -49,13 +50,6 @@ class Swoop : AppCompatActivity() {
     private val hideHandler = Handler()
     @SuppressLint("InlinedApi")
     private val hideRunnable = Runnable {
-        binding.root.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LOW_PROFILE or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-    }
-
-}
+        binding.root.systemUiVisibility = fullScreenNoNav
+    } // hideRunnable
+} // class Swoop
