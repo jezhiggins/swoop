@@ -1,8 +1,11 @@
 # Swoop
 
-Retro game nonsense
+Swoop is an Asteroidsy retrogame for your Android phone.
 
-![Swoop screenshot](https://github.com/jezhiggins/swoop/blob/main/images/swoop.jpeg)
+![Swoop screenshot](https://github.com/jezhiggins/swoop/blob/main/images/swoop.png)
+
+You can install from [Google Play](https://play.google.com/store/apps/details?id=uk.co.jezuk.swoop) 
+where it is currently in public beta. 
 
 ### Thanks
 
@@ -15,4 +18,5 @@ They are just full of coding pleasure, so many thanks go to him.
 Thanks also to [Jeff Minter](http://www.minotaurproject.co.uk/). I've been a fan of his work since 
 I was 14 or 15 years old, and it continues to be a joy. If I can capture a tiny, tiny part 
 of what makes his games so wonderful, well, that'd just be fantastic.
+
 
