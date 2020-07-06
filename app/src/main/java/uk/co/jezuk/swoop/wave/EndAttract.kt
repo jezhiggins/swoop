@@ -15,7 +15,7 @@ class EndAttract(
 
     init {
         game.start()
-        targets.onEliminated({ game.nextWave(AsteroidsAndComets(game, starField)) })
+        targets.onEliminated({ game.nextWave(Waves.first(game, starField)) })
     }
 
     /////

@@ -13,7 +13,7 @@ import kotlin.math.min
 class IronAsteroids (
     private val game: Game,
     private val starField: StarField,
-    private val stonyAsteroids: Int = 5,
+    stonyAsteroids: Int = 5,
     private val ironAsteroids: Int = 1,
     g: Gun? = null
 ) : WaveWithProjectilesAndTargets() {
@@ -62,21 +62,6 @@ class IronAsteroids (
 
     /////
     private fun endOfLevel() {
-        val newStarField = StarField(game.extent)
-
-        val numberOfAsteroids = ironAsteroids*2
-        val nextWave = when(numberOfAsteroids) {
-            8 -> IronAsteroids(game, newStarField, 0, 8, gun)
-            else -> IronAsteroids(game, newStarField, 6, numberOfAsteroids, gun)
-        }
-
-        game.nextWave(LevelTransition(
-            game,
-            starField,
-            newStarField,
-            ship,
-            projectiles,
-            nextWave
-        ))
+        game.endOfWave(starField, ship, projectiles, gun)
     } // endOfLevel
 } // IronAsteroids

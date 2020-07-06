@@ -65,21 +65,6 @@ class AsteroidsAndComets(
 
     /////
     private fun endOfLevel() {
-        val newStarField = StarField(game.extent)
-
-        val numberOfAsteroids = initialAsteroids+1
-        val nextWave = if (numberOfAsteroids != 8)
-            AsteroidsAndComets(game, newStarField, min(numberOfAsteroids, 11), gun)
-        else
-            CometStorm(game, newStarField)
-
-        game.nextWave(LevelTransition(
-            game,
-            starField,
-            newStarField,
-            ship,
-            projectiles,
-            nextWave
-        ))
+        game.endOfWave(starField, ship, projectiles, gun)
     } // endOfLevel
 } // FlyAround

@@ -9,6 +9,8 @@ import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.view.MotionEvent
 import androidx.core.content.edit
+import uk.co.jezuk.swoop.craft.Gun
+import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
@@ -83,6 +85,9 @@ class Game(private val context: Context) {
         score = -1
     } // end
 
+    fun endOfWave(starField: StarField, ship: Ship, projectiles: Projectiles? = null, gun: Gun? = null) {
+        nextWave(Waves.transition(this, starField, ship, projectiles, gun))
+    } // endOfWave
     fun nextWave(w: Wave) { wave = w }
 
     fun lifeLost(): NextShip {

@@ -12,7 +12,7 @@ class LevelTransition(
     private val starField: StarField,
     private val newStarField: StarField,
     private val ship: Ship,
-    private val projectiles: Projectiles,
+    private val projectiles: Projectiles?,
     private val nextWave: Wave
 ): Wave {
     private var transition = Latch(180, { startNextWave() })
@@ -20,7 +20,7 @@ class LevelTransition(
 
     override fun update(frameRateScale: Float) {
         ship.update(frameRateScale)
-        projectiles.update(frameRateScale)
+        projectiles?.update(frameRateScale)
 
         when (transition.tick(frameRateScale)) {
             120 -> ship.rezOut()
@@ -32,7 +32,7 @@ class LevelTransition(
     override fun draw(canvas: Canvas) {
         currentStarField.draw(canvas)
         if (currentStarField == starField)
-          projectiles.draw(canvas)
+          projectiles?.draw(canvas)
 
         ship.draw(canvas)
     } // draw

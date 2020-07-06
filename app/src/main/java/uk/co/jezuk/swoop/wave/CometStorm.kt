@@ -65,16 +65,6 @@ class CometStorm(
     private fun endOfLevel() {
         if (survivalBonus) game.scored(5000)
 
-        val newStarField = StarField(game.extent)
-        val nextWave = IronAsteroids(game, newStarField)
-
-        game.nextWave(LevelTransition(
-            game,
-            starField,
-            newStarField,
-            ship,
-            Projectiles(),
-            nextWave
-        ))
+        game.endOfWave(starField, ship)
     } // endOfLevel
 } // FlyAround
