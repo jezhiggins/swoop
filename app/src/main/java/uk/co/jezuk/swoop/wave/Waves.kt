@@ -18,9 +18,10 @@ fun CometStormMaker(game: Game, starField: StarField, gun: Gun?): Wave {
     return CometStorm(game, starField)
 } // CometStormMaker
 
-fun IronAsteroidsMaker(stonyAsteroid: Int, ironAsteroids: Int): WaveMaker {
+fun IronAsteroidsMaker(stonyAsteroid: Int, ironAsteroids: Int, gunReset: Boolean = false): WaveMaker {
     return { game: Game, starField: StarField, gun: Gun? ->
-        IronAsteroids(game, starField, stonyAsteroid, ironAsteroids, gun)
+        val g = if (gunReset) gun else null
+        IronAsteroids(game, starField, stonyAsteroid, ironAsteroids, g)
     }
 } // IronAsteroidsMaker
 
@@ -31,7 +32,7 @@ class Waves {
             AsteroidsAndCometsMaker(6),
             AsteroidsAndCometsMaker(7),
             ::CometStormMaker,
-            IronAsteroidsMaker(5, 1),
+            IronAsteroidsMaker(5, 1, true),
             IronAsteroidsMaker(6, 2),
             IronAsteroidsMaker(6, 4),
             IronAsteroidsMaker(0,8)
