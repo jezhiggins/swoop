@@ -25,9 +25,14 @@ fun IronAsteroidsMaker(stonyAsteroid: Int, ironAsteroids: Int, gunReset: Boolean
     }
 } // IronAsteroidsMaker
 
+fun MinefieldMaker(game: Game, starField: StarField, gun: Gun?): Wave {
+    return Minefield(game, starField)
+} // Minefield
+
 class Waves {
     companion object {
         private val waves = listOf<WaveMaker>(
+            ::MinefieldMaker,
             AsteroidsAndCometsMaker(5),
             AsteroidsAndCometsMaker(6),
             AsteroidsAndCometsMaker(7),
