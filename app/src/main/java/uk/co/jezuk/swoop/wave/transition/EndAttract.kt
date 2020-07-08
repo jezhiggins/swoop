@@ -1,9 +1,12 @@
-package uk.co.jezuk.swoop.wave
+package uk.co.jezuk.swoop.wave.transition
 
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Targets
 import uk.co.jezuk.swoop.utils.Repeat
+import uk.co.jezuk.swoop.wave.StarField
+import uk.co.jezuk.swoop.wave.WaveWithTargets
+import uk.co.jezuk.swoop.wave.Waves
 import kotlin.random.Random
 
 class EndAttract(
@@ -15,7 +18,12 @@ class EndAttract(
 
     init {
         game.start()
-        targets.onEliminated({ game.nextWave(Waves.first(game, starField)) })
+        targets.onEliminated({ game.nextWave(
+            Waves.first(
+                game,
+                starField
+            )
+        ) })
     }
 
     /////

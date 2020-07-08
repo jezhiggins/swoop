@@ -1,4 +1,4 @@
-package uk.co.jezuk.swoop.wave
+package uk.co.jezuk.swoop.wave.transition
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -8,6 +8,8 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
 import uk.co.jezuk.swoop.utils.Repeat
+import uk.co.jezuk.swoop.wave.StarField
+import uk.co.jezuk.swoop.wave.WaveWithTargets
 import kotlin.random.Random
 
 class Attract(
@@ -46,7 +48,13 @@ class Attract(
                 (y >= infoY-120f && y <= infoY+120f))
                 infoMode = true
             else
-                game.nextWave(EndAttract(game, starField, targets))
+                game.nextWave(
+                    EndAttract(
+                        game,
+                        starField,
+                        targets
+                    )
+                )
         } else {
             infoMode = false
         }
@@ -69,18 +77,26 @@ class Attract(
     } // draw
 
     private fun drawTitle(canvas: Canvas) {
-        drawText("SWOOP", canvas,0.0, 0.0, pen)
+        drawText("SWOOP", canvas,0.0, 0.0,
+            pen
+        )
 
         val margin = 40.0
         val almostLeft = game.extent.left + margin
         val almostRight = game.extent.right - margin
         val justOffBottom = game.extent.bottom - margin
         val justOffTop = game.extent.top + margin*2
-        drawText("Forest Road Game Krew", canvas, 0.0, justOffBottom, smallPen)
+        drawText("Forest Road Game Krew", canvas, 0.0, justOffBottom,
+            smallPen
+        )
         tinyPen.textAlign = Paint.Align.LEFT
-        drawText("Alright Bab!", canvas, almostLeft, justOffBottom, tinyPen)
+        drawText("Alright Bab!", canvas, almostLeft, justOffBottom,
+            tinyPen
+        )
         tinyPen.textAlign = Paint.Align.RIGHT
-        drawText("Made in Birmingham", canvas, almostRight, justOffBottom, tinyPen)
+        drawText("Made in Birmingham", canvas, almostRight, justOffBottom,
+            tinyPen
+        )
 
         if (game.highScore != 0)
             drawText(
@@ -93,13 +109,19 @@ class Attract(
 
         val infoX = (game.extent.right - 120).toFloat()
         val infoY = (game.extent.top + 120).toFloat()
-        canvas.drawCircle(infoX, infoY, 100f, infoBrush)
+        canvas.drawCircle(infoX, infoY, 100f,
+            infoBrush
+        )
         infoPen.style = Paint.Style.STROKE
         infoPen.strokeWidth = 8f
-        canvas.drawCircle(infoX, infoY, 100f, infoPen)
+        canvas.drawCircle(infoX, infoY, 100f,
+            infoPen
+        )
         infoPen.style = Paint.Style.FILL_AND_STROKE
         infoPen.strokeWidth = 4f
-        canvas.drawText("i", infoX, infoY+30f, infoPen)
+        canvas.drawText("i", infoX, infoY+30f,
+            infoPen
+        )
     } // drawTitle
 
     private fun drawInfo(canvas: Canvas) {

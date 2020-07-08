@@ -1,11 +1,12 @@
-package uk.co.jezuk.swoop.wave
+package uk.co.jezuk.swoop.wave.transition
 
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.utils.Latch
-import kotlin.math.min
+import uk.co.jezuk.swoop.wave.StarField
+import uk.co.jezuk.swoop.wave.Wave
 
 class LevelTransition(
     private val game: Game,

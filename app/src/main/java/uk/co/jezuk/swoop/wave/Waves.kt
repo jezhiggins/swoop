@@ -4,7 +4,7 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.craft.Ship
-import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
+import uk.co.jezuk.swoop.wave.transition.LevelTransition
 
 typealias WaveMaker = (Game, StarField, Gun?) -> Wave
 

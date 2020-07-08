@@ -15,6 +15,9 @@ import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.*
+import uk.co.jezuk.swoop.wave.transition.Attract
+import uk.co.jezuk.swoop.wave.transition.Emptiness
+import uk.co.jezuk.swoop.wave.transition.GameOver
 import kotlin.math.min
 
 class Game(private val context: Context) {

@@ -1,4 +1,4 @@
-package uk.co.jezuk.swoop.wave
+package uk.co.jezuk.swoop.wave.transition
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Nothing
 import uk.co.jezuk.swoop.utils.Repeat
+import uk.co.jezuk.swoop.wave.Wave
 
 class GameOver(
     private val game: Game,
@@ -45,7 +46,9 @@ class GameOver(
         wave.draw(canvas)
         canvas.restore()
 
-        canvas.drawText("Game Over", 0f, 0f, pen)
+        canvas.drawText("Game Over", 0f, 0f,
+            pen
+        )
     } // draw
 
     companion object {
