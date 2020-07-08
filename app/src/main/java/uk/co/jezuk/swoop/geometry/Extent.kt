@@ -27,7 +27,16 @@ class Extent(
             2 -> Point(right, randomY())
             else -> Point(randomX(), bottom)
         }
-    }
+    } // randomPointOnEdge
+
+    fun randomTraverse(): Array<Point> {
+        return when (rollD4()) {
+            0 -> arrayOf(Point(randomX(), top), Point(randomX(), bottom))
+            1 -> arrayOf(Point(left, randomY()), Point(right, randomY()))
+            2 -> arrayOf(Point(right, randomY()), Point(left, randomY()))
+            else -> arrayOf(Point(randomX(), bottom), Point(randomX(), top))
+        }
+    } // randomTraverse
 
     private fun randomX() = Random.nextDouble(left, right)
     private fun randomY() = Random.nextDouble(top, bottom)
