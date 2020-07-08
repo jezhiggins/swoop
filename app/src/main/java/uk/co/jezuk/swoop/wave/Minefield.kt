@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Gun
+import uk.co.jezuk.swoop.craft.Minelayer
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.wave.Wave
@@ -14,6 +15,14 @@ class Minefield(
 ): WaveWithProjectilesAndTargets() {
     private val ship = Ship(game)
     private val gun = Gun(game, this, ship)
+
+    init {
+        Minelayer(game, this)
+        Minelayer(game, this)
+        Minelayer(game, this)
+        Minelayer(game, this)
+        Minelayer(game, this)
+    }
 
     /////
     override fun onSingleTapUp(event: MotionEvent) = ship.thrust()
