@@ -18,8 +18,8 @@ class Comet(
 ): Target {
     override val position = game.extent.randomPointOnEdge()
     private val extentWithTail = game.extent.inflated(500f)
-    private var velocity = CometVector(position)
-    private var orientation = Rotation.random()
+    private val velocity = CometVector(position)
+    private val orientation = Rotation.random()
     private val rotation = Random.nextDouble(-5.0, 5.0)
     private val slap = { game.sound(R.raw.cometslap, position) }
 
