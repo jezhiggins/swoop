@@ -48,6 +48,13 @@ data class Point(
         return magnitudeFromOffsets(offsetX, offsetY).toFloat()
     } // distance
 
+    fun angleTo(pos: Point): Double {
+        val offsetX = x - pos.x
+        val offsetY = y - pos.y
+
+        return angleFromOffsets(offsetX, offsetY)
+    } // angleTo
+
     fun translate(canvas: Canvas) =
         canvas.translate(x.toFloat(), y.toFloat())
 
