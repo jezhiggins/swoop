@@ -16,7 +16,7 @@ class CometStorm(
     private var comets = 0
     private var survivalBonus = true
 
-    private var cometGun: Latch = Latch(120, { launchComet() })
+    private var cometGun: Latch = Latch(150, { launchComet() })
 
     init {
         ship.onLifeLost { survivalBonus = false }
