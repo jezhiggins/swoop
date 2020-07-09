@@ -14,22 +14,30 @@ class Minelayer(
 
     override val position = traverse[0]
     private val velocity = Vector(4.0, position.angleTo(traverse[1]))
-    private val brush = Paint()
+    private val shipBrush = Paint()
+    private val shieldBrush = Paint()
+    private var shieldRadius = 75f
 
     init {
         wave.addTarget(this)
 
-        brush.setARGB(255, 127, 255, 255)
-        brush.strokeWidth = 5f
-        brush.strokeCap = Paint.Cap.ROUND
-        brush.style = Paint.Style.STROKE
+        shipBrush.setARGB(255, 127, 255, 255)
+        shipBrush.strokeWidth = 5f
+        shipBrush.strokeCap = Paint.Cap.ROUND
+        shipBrush.style = Paint.Style.STROKE
+
+        shieldBrush.setARGB(127, 180, 0, 180)
+        shieldBrush.strokeWidth = 8f
+        shieldBrush.strokeCap = Paint.Cap.ROUND
+        shieldBrush.style = Paint.Style.STROKE
     } // init
 
-    override val killDist get() = 27f
+    override val killDist get() = shieldRadius
 
     override fun update(frameRateScale: Float) {
-        if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
-            wave.removeTarget(this)
+        position.move(velocity, frameRateScale, game.extent, shieldRadius)
+        //if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
+        //    wave.removeTarget(this)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -37,15 +45,21 @@ class Minelayer(
 
         position.translate(canvas)
         canvas.rotate(velocity.angle.toFloat())
-        canvas.drawLines(shape, brush)
-        canvas.drawCircle(0f, 0f, killDist, brush)
+        canvas.drawLines(shape, shipBrush)
+        canvas.drawCircle(0f, 0f, 27f, shipBrush)
+
+        canvas.drawCircle(0f, 0f, shieldRadius, shieldBrush)
 
         canvas.restore()
     } // draw
 
     override fun shot(): Target.Impact {
-        game.scored(500)
-        explode()
+        shieldRadius -= 5f
+
+        if (shieldRadius < 38f) {
+            game.scored(500)
+            explode()
+        }
         return Target.Impact.HARD
     } // shot
 
