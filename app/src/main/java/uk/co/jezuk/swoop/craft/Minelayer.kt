@@ -3,7 +3,9 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
+import uk.co.jezuk.swoop.utils.RestartableLatch
 import uk.co.jezuk.swoop.wave.Wave
 
 class Minelayer(
@@ -17,8 +19,13 @@ class Minelayer(
     private val shipBrush = Paint()
     private val shieldBrush = Paint()
     private var shieldRadius = 75f
+    private var dropAt = Point(position)
+    private var trigger = RestartableLatch(25, ::dropMine)
+    private val minefield = game.extent.inflated(-30f)
 
     init {
+        trigger.start()
+
         wave.addTarget(this)
 
         shipBrush.setARGB(255, 127, 255, 255)
@@ -32,9 +39,18 @@ class Minelayer(
         shieldBrush.style = Paint.Style.STROKE
     } // init
 
+    private fun dropMine() {
+        if (minefield.within(dropAt))
+            Mine(game, wave, dropAt)
+        dropAt = Point(position)
+        trigger.start()
+    } // dropMine
+
     override val killDist get() = shieldRadius
 
     override fun update(frameRateScale: Float) {
+        trigger.tick(frameRateScale)
+
         if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
             wave.removeTarget(this)
     } // update
