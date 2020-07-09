@@ -7,6 +7,7 @@ import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.RestartableLatch
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.random.Random
 
 class Minelayer(
     private val game: Game,
@@ -22,25 +23,28 @@ class Minelayer(
     private var dropAt = Point(position)
     private var trigger = RestartableLatch(25, ::dropMine)
     private val minefield = game.extent.inflated(-30f)
+    private var dropping = Random.nextBoolean()
 
     init {
         trigger.start()
 
         wave.addTarget(this)
 
-        shipBrush.setARGB(255, 127, 255, 255)
-        shipBrush.strokeWidth = 5f
+        shipBrush.setARGB(225, 127, 255, 255)
+        shipBrush.strokeWidth = 8f
         shipBrush.strokeCap = Paint.Cap.ROUND
         shipBrush.style = Paint.Style.STROKE
 
-        shieldBrush.setARGB(127, 180, 0, 180)
-        shieldBrush.strokeWidth = 8f
+        shieldBrush.setARGB(80, 180, 0, 180)
+        shieldBrush.strokeWidth = 16f
         shieldBrush.strokeCap = Paint.Cap.ROUND
         shieldBrush.style = Paint.Style.STROKE
     } // init
 
     private fun dropMine() {
-        if (minefield.within(dropAt))
+        if (Random.nextFloat() < 0.2) dropping = !dropping
+
+        if (minefield.within(dropAt) && dropping)
             Mine(game, wave, dropAt)
         dropAt = Point(position)
         trigger.start()
@@ -61,13 +65,14 @@ class Minelayer(
         position.translate(canvas)
         canvas.rotate(velocity.angle.toFloat())
         canvas.drawLines(shape, shipBrush)
-        canvas.drawCircle(0f, 0f, shieldRadius, shieldBrush)
+        if (shieldRadius >= 50f)
+            canvas.drawCircle(0f, 0f, shieldRadius, shieldBrush)
 
         canvas.restore()
     } // draw
 
     override fun shot(): Target.Impact {
-        shieldRadius -= 5f
+        shieldRadius -= 7f
 
         if (shieldRadius < 42f) {
             game.scored(500)
