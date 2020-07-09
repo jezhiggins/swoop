@@ -6,7 +6,9 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Minelayer
 import uk.co.jezuk.swoop.craft.Ship
+import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
+import uk.co.jezuk.swoop.utils.RepeatN
 import uk.co.jezuk.swoop.wave.Wave
 
 class Minefield(
@@ -15,14 +17,13 @@ class Minefield(
 ): WaveWithProjectilesAndTargets() {
     private val ship = Ship(game)
     private val gun = Gun(game, this, ship)
+    private val launcher = RepeatN(400, 5, { Minelayer(game, this) })
 
     init {
-        Minelayer(game, this)
-        Minelayer(game, this)
-        Minelayer(game, this)
-        Minelayer(game, this)
-        Minelayer(game, this)
-    }
+        StonyAsteroid.field(game, this, 6)
+
+        targets.onEliminated { endOfLevel() }
+    } // init
 
     /////
     override fun onSingleTapUp(event: MotionEvent) = ship.thrust()
@@ -35,6 +36,8 @@ class Minefield(
 
     /////
     override fun update(frameRateScale: Float) {
+        launcher.tick(frameRateScale)
+
         gun.update(frameRateScale)
         ship.update(frameRateScale)
 
