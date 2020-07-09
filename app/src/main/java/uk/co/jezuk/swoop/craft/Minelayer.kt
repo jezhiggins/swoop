@@ -83,7 +83,7 @@ class Minelayer(
     } // shot
 
     override fun explode() {
-        wave.removeTarget(this)
+        destroyed()
         Puff(wave, position)
     } // explode
 
