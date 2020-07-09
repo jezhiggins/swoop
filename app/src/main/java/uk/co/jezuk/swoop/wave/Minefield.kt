@@ -9,6 +9,7 @@ import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.utils.RepeatN
+import uk.co.jezuk.swoop.utils.RestartableLatch
 import uk.co.jezuk.swoop.wave.Wave
 
 class Minefield(
@@ -17,13 +18,20 @@ class Minefield(
 ): WaveWithProjectilesAndTargets() {
     private val ship = Ship(game)
     private val gun = Gun(game, this, ship)
-    private val launcher = RepeatN(400, 5, { Minelayer(game, this) })
+    private val launcher = RestartableLatch(400, ::launchMinelayer)
+    private var layerCount = 0
 
     init {
         StonyAsteroid.field(game, this, 6)
 
+        launcher.start()
         targets.onEliminated { endOfLevel() }
     } // init
+
+    private fun launchMinelayer() {
+        ++layerCount
+        Minelayer(game, this) { if (layerCount < 5) launcher.start() }
+    } // launchMinelayer
 
     /////
     override fun onSingleTapUp(event: MotionEvent) = ship.thrust()

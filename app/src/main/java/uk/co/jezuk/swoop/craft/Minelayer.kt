@@ -11,7 +11,8 @@ import kotlin.random.Random
 
 class Minelayer(
     private val game: Game,
-    private val wave: Wave
+    private val wave: Wave,
+    private val onDestroyed: () -> Unit
 ): Target {
     private val traverse = game.extent.randomTraverse()
 
@@ -56,7 +57,7 @@ class Minelayer(
         trigger.tick(frameRateScale)
 
         if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
-            wave.removeTarget(this)
+            destroyed()
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -85,6 +86,11 @@ class Minelayer(
         wave.removeTarget(this)
         Puff(wave, position)
     } // explode
+
+    private fun destroyed() {
+        wave.removeTarget(this)
+        onDestroyed()
+    } // destroyed
 
     override fun shipCollision(ship: Ship) = ship.hit()
 
