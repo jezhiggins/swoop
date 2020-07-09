@@ -35,9 +35,8 @@ class Minelayer(
     override val killDist get() = shieldRadius
 
     override fun update(frameRateScale: Float) {
-        position.move(velocity, frameRateScale, game.extent, shieldRadius)
-        //if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
-        //    wave.removeTarget(this)
+        if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
+            wave.removeTarget(this)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -46,8 +45,6 @@ class Minelayer(
         position.translate(canvas)
         canvas.rotate(velocity.angle.toFloat())
         canvas.drawLines(shape, shipBrush)
-        canvas.drawCircle(0f, 0f, 27f, shipBrush)
-
         canvas.drawCircle(0f, 0f, shieldRadius, shieldBrush)
 
         canvas.restore()
@@ -56,7 +53,7 @@ class Minelayer(
     override fun shot(): Target.Impact {
         shieldRadius -= 5f
 
-        if (shieldRadius < 38f) {
+        if (shieldRadius < 42f) {
             game.scored(500)
             explode()
         }
