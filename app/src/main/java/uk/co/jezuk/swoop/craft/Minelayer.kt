@@ -30,7 +30,7 @@ class Minelayer(
 
         wave.addTarget(this)
 
-        shipBrush.setARGB(225, 127, 255, 255)
+        shipBrush.setARGB(225, 60, 255, 255)
         shipBrush.strokeWidth = 8f
         shipBrush.strokeCap = Paint.Cap.ROUND
         shipBrush.style = Paint.Style.STROKE
