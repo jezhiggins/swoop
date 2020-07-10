@@ -43,7 +43,12 @@ class Game(private val context: Context) {
             R.raw.spacemanfallen,
             R.raw.spacemansaved,
             R.raw.thrust,
-            R.raw.ting
+            R.raw.ting,
+            R.raw.minedrop,
+            R.raw.mineexplosion,
+            R.raw.minelayershieldhit,
+            R.raw.minelayerexplosion,
+            R.raw.minelayeralarm
         )
         soundIds.forEach({ sounds.load(it) })
     }

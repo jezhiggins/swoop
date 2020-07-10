@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.RestartableLatch
@@ -29,6 +30,7 @@ class Minelayer(
     init {
         trigger.start()
 
+        game.sound(R.raw.minelayeralarm, position)
         wave.addTarget(this)
 
         shipBrush.setARGB(225, 60, 255, 255)
@@ -78,12 +80,15 @@ class Minelayer(
         if (shieldRadius < 42f) {
             game.scored(500)
             explode()
+        } else {
+            game.sound(R.raw.minelayershieldhit, position)
         }
         return Target.Impact.HARD
     } // shot
 
     override fun explode() {
         destroyed()
+        game.sound(R.raw.minelayerexplosion, position)
         Puff(wave, position)
     } // explode
 

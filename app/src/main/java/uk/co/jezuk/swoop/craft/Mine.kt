@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
@@ -19,6 +20,7 @@ class Mine(
 
     init {
         wave.addTarget(this)
+        game.sound(R.raw.minedrop, position)
 
         brush.color = Color.YELLOW
         brush.alpha = 180
@@ -59,6 +61,7 @@ class Mine(
     } // shot
 
     override fun explode() {
+        game.sound(R.raw.mineexplosion, position)
         wave.removeTarget(this)
         Puff(wave, position)
     } // explode
