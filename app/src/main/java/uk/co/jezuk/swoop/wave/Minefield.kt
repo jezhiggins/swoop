@@ -14,11 +14,14 @@ import uk.co.jezuk.swoop.wave.Wave
 
 class Minefield(
     private val game: Game,
-    private val starField: StarField
+    private val starField: StarField,
+    minelayerDelay: Int,
+    private val minelayerCount: Int,
+    g: Gun?
 ): WaveWithProjectilesAndTargets() {
     private val ship = Ship(game)
-    private val gun = Gun(game, this, ship)
-    private val launcher = RestartableLatch(400, ::launchMinelayer)
+    private val gun = Gun(game, this, ship, g)
+    private val launcher = RestartableLatch(minelayerDelay, ::launchMinelayer)
     private var layerCount = 0
 
     init {
@@ -30,7 +33,7 @@ class Minefield(
 
     private fun launchMinelayer() {
         ++layerCount
-        Minelayer(game, this) { if (layerCount < 5) launcher.start() }
+        Minelayer(game, this) { if (layerCount < minelayerCount) launcher.start() }
     } // launchMinelayer
 
     /////

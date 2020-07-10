@@ -20,19 +20,21 @@ fun CometStormMaker(game: Game, starField: StarField, gun: Gun?): Wave {
 
 fun IronAsteroidsMaker(stonyAsteroid: Int, ironAsteroids: Int, gunReset: Boolean = false): WaveMaker {
     return { game: Game, starField: StarField, gun: Gun? ->
-        val g = if (gunReset) gun else null
+        val g = if (gunReset) null else gun
         IronAsteroids(game, starField, stonyAsteroid, ironAsteroids, g)
     }
 } // IronAsteroidsMaker
 
-fun MinefieldMaker(game: Game, starField: StarField, gun: Gun?): Wave {
-    return Minefield(game, starField)
-} // Minefield
+fun MinefieldMaker(minelayerDelay: Int, minelayerCount: Int, gunReset: Boolean = false): WaveMaker {
+    return { game: Game, starField: StarField, gun: Gun? ->
+        val g = if (gunReset) null else gun
+        Minefield(game, starField, minelayerDelay, minelayerCount, g)
+    }
+} // AsteroidsAndCometsMaker
 
 class Waves {
     companion object {
         private val waves = listOf<WaveMaker>(
-            ::MinefieldMaker,
             AsteroidsAndCometsMaker(5),
             AsteroidsAndCometsMaker(6),
             AsteroidsAndCometsMaker(7),
@@ -40,7 +42,10 @@ class Waves {
             IronAsteroidsMaker(5, 1, true),
             IronAsteroidsMaker(6, 2),
             IronAsteroidsMaker(6, 4),
-            IronAsteroidsMaker(0,8)
+            IronAsteroidsMaker(0,8),
+            MinefieldMaker(400, 5, true),
+            MinefieldMaker(300, 5),
+            MinefieldMaker(250, 7)
         )
 
         private var wave = 0
