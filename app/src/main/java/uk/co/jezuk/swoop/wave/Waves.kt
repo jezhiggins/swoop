@@ -32,6 +32,10 @@ fun MinefieldMaker(minelayerDelay: Int, minelayerCount: Int, gunReset: Boolean =
     }
 } // AsteroidsAndCometsMaker
 
+fun TholianWebMaker(game: Game, starField: StarField, gun: Gun?): Wave {
+    return TholianWeb(game, starField, gun)
+} // TholianWebMaker
+
 class Waves {
     companion object {
         private val waves = listOf<WaveMaker>(
@@ -45,7 +49,9 @@ class Waves {
             IronAsteroidsMaker(0,8),
             MinefieldMaker(400, 5, true),
             MinefieldMaker(300, 5),
-            MinefieldMaker(250, 7)
+            MinefieldMaker(250, 7),
+            ::TholianWebMaker,
+            IronAsteroidsMaker(4,8)
         )
 
         private var wave = 0

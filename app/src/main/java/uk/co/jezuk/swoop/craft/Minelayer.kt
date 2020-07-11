@@ -13,10 +13,10 @@ import kotlin.random.Random
 class Minelayer(
     private val game: Game,
     private val wave: Wave,
-    private val onDestroyed: () -> Unit
+    private val onDestroyed: () -> Unit,
+    traverse: Array<Point> = game.extent.randomTraverse(),
+    private val alwaysDrop: Boolean = false
 ): Target {
-    private val traverse = game.extent.randomTraverse()
-
     override val position = traverse[0]
     private val velocity = Vector(4.0, position.angleTo(traverse[1]))
     private val shipBrush = Paint()
@@ -47,7 +47,7 @@ class Minelayer(
     private fun dropMine() {
         if (Random.nextFloat() < 0.2) dropping = !dropping
 
-        if (minefield.within(dropAt) && dropping)
+        if (minefield.within(dropAt) && (dropping || alwaysDrop))
             Mine(game, wave, dropAt)
         dropAt = Point(position)
         trigger.start()
