@@ -56,7 +56,8 @@ class Waves {
         } // first
 
         fun next(game: Game, starField: StarField, gun: Gun?): Wave {
-            if (wave != waves.size) ++wave
+            ++wave
+            if (wave == waves.size) wave = waves.size-1
             return waves[wave](game, starField, gun)
         } // next
 
@@ -65,8 +66,8 @@ class Waves {
             starField: StarField,
             ship: Ship,
             projectiles: Projectiles?,
-            gun: Gun?): Wave {
-
+            gun: Gun?
+        ): Wave {
             val newStarField = StarField(game.extent)
             val nextWave = next(game, newStarField, gun)
 
