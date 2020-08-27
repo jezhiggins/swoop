@@ -32,7 +32,7 @@ class Comet(
     override fun update(frameRateScale: Float) {
         if (!position.moveNoWrap(velocity, frameRateScale, extentWithTail, killDist))
             wave.removeTarget(this)
-        orientation += rotation
+        orientation += (rotation * frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {

@@ -37,7 +37,7 @@ abstract class Asteroid(
 
     override fun update(frameRateScale: Float) {
         position.move(velocity, frameRateScale, game.extent, killDist)
-        orientation += rotation
+        orientation += rotation * frameRateScale
     } // update
 
     override fun draw(canvas: Canvas) {
