@@ -4,7 +4,6 @@ plugins {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 def keystorePropertiesFile = file('license.properties')
 def keystoreProperties = new Properties()
