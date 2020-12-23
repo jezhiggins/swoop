@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
+import org.w3c.dom.Attr
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
@@ -15,9 +16,11 @@ import kotlin.random.Random
 class Attract(
     private val game: Game
 ) : WaveWithTargets() {
+    private val extent = game.extent
+    private val highScore = game.highScore
     private var starField = StarField(game.extent)
     val cometGun = Repeat(750, { Comet(game, this) })
-    private var infoMode = false
+    private var mode: AttractMode = TitleScreen()
 
     init {
         StonyAsteroid.field(
@@ -31,33 +34,7 @@ class Attract(
     }
 
     override fun onSingleTapUp(event: MotionEvent) {
-        val x = event.x
-        val y = event.y
-
-        val extent = game.extent
-
-        if (x < extent.left || x > extent.right ||
-            y < extent.top || y > extent.bottom)
-            return
-
-        if (!infoMode) {
-            val infoX = (extent.right - 120).toFloat()
-            val infoY = (extent.top + 120).toFloat()
-
-            if ((x >= infoX-120f && x <= infoX+120f) &&
-                (y >= infoY-120f && y <= infoY+120f))
-                infoMode = true
-            else
-                game.nextWave(
-                    EndAttract(
-                        game,
-                        starField,
-                        targets
-                    )
-                )
-        } else {
-            infoMode = false
-        }
+        mode = mode.onSingleTapUp(event, this)
     } // onDown
 
     /////
@@ -70,82 +47,107 @@ class Attract(
         starField.draw(canvas)
         drawTargets(canvas)
 
-        if (infoMode)
-            drawInfo(canvas)
-        else
-            drawTitle(canvas)
+        mode.draw(canvas, this)
     } // draw
 
-    private fun drawTitle(canvas: Canvas) {
-        drawText("SWOOP", canvas,0.0, 0.0,
-            pen
+    private fun newGame() {
+        game.nextWave(
+            EndAttract(
+                game,
+                starField,
+                targets
+            )
         )
+    } // newGame
 
-        val margin = 40.0
-        val almostLeft = game.extent.left + margin
-        val almostRight = game.extent.right - margin
-        val justOffBottom = game.extent.bottom - margin
-        val justOffTop = game.extent.top + margin*2
-        drawText("Forest Road Game Krew", canvas, 0.0, justOffBottom,
-            smallPen
-        )
-        tinyPen.textAlign = Paint.Align.LEFT
-        drawText("Alright Bab!", canvas, almostLeft, justOffBottom,
-            tinyPen
-        )
-        tinyPen.textAlign = Paint.Align.RIGHT
-        drawText("Made in Birmingham", canvas, almostRight, justOffBottom,
-            tinyPen
-        )
+    private interface AttractMode {
+        fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode
+        fun draw(canvas: Canvas, attract: Attract)
+    } // AttractMode
 
-        if (game.highScore != 0)
-            drawText(
-                "High Score " + "${game.highScore}".padStart(6, '0'),
-                canvas,
-                0.0,
-                justOffTop,
-                scorePen
+    private class TitleScreen: AttractMode {
+        override fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode {
+            if (tappedOnInfo(event, attract))
+                return InfoScreen()
+            attract.newGame()
+            return this
+        } // onDown
+
+        override fun draw(canvas: Canvas, attract: Attract) {
+            drawText("SWOOP", canvas,0.0, 0.0, pen)
+
+            val margin = 40.0
+            val almostLeft = attract.extent.left + margin
+            val almostRight = attract.extent.right - margin
+            val justOffBottom = attract.extent.bottom - margin
+            val justOffTop = attract.extent.top + margin*2
+            drawText("Forest Road Game Krew", canvas, 0.0, justOffBottom, smallPen)
+            tinyPen.textAlign = Paint.Align.LEFT
+            drawText("Alright Bab!", canvas, almostLeft, justOffBottom, tinyPen)
+            tinyPen.textAlign = Paint.Align.RIGHT
+            drawText("Made in Birmingham", canvas, almostRight, justOffBottom, tinyPen)
+
+            if (attract.highScore != 0)
+                drawText(
+                        "High Score " + "${attract.highScore}".padStart(6, '0'),
+                        canvas,
+                        0.0,
+                        justOffTop,
+                        scorePen
+                )
+
+            val infoX = (attract.extent.right - 120).toFloat()
+            val infoY = (attract.extent.top + 120).toFloat()
+            canvas.drawCircle(infoX, infoY, 100f, infoBrush)
+            infoPen.style = Paint.Style.STROKE
+            infoPen.strokeWidth = 8f
+            canvas.drawCircle(infoX, infoY, 100f, infoPen)
+            infoPen.style = Paint.Style.FILL_AND_STROKE
+            infoPen.strokeWidth = 4f
+            canvas.drawText("i", infoX, infoY+30f, infoPen)
+        } // draw
+
+        private fun tappedOnInfo(event: MotionEvent, attract: Attract): Boolean {
+            val x = event.x
+            val y = event.y
+
+            val extent = attract.extent
+
+            val infoX = (extent.right - 120).toFloat()
+            val infoY = (extent.top + 120).toFloat()
+
+            return ((x >= infoX-120f && x <= infoX+120f) &&
+                    (y >= infoY-120f && y <= infoY+120f))
+        } // tappedOnInfo
+
+        private fun drawText(text: String, canvas: Canvas, x: Double, y: Double, pen: Paint) {
+            canvas.drawText(text, x.toFloat(), y.toFloat(), pen)
+        } // drawText
+    } // class TitleScreen
+
+    private class InfoScreen: AttractMode {
+        override fun onSingleTapUp(event: MotionEvent, attract: Attract) =
+                TitleScreen()
+
+        override fun draw(canvas: Canvas, attract: Attract) {
+            infoPen.style = Paint.Style.FILL_AND_STROKE
+            infoPen.strokeWidth = 4f
+
+            val info = listOf(
+                    "Swipe to steer. Tap to thrust.",
+                    "Shoot what you can. Avoid what you can't.",
+                    "Rescue those in peril."
             )
 
-        val infoX = (game.extent.right - 120).toFloat()
-        val infoY = (game.extent.top + 120).toFloat()
-        canvas.drawCircle(infoX, infoY, 100f,
-            infoBrush
-        )
-        infoPen.style = Paint.Style.STROKE
-        infoPen.strokeWidth = 8f
-        canvas.drawCircle(infoX, infoY, 100f,
-            infoPen
-        )
-        infoPen.style = Paint.Style.FILL_AND_STROKE
-        infoPen.strokeWidth = 4f
-        canvas.drawText("i", infoX, infoY+30f,
-            infoPen
-        )
-    } // drawTitle
-
-    private fun drawInfo(canvas: Canvas) {
-        infoPen.style = Paint.Style.FILL_AND_STROKE
-        infoPen.strokeWidth = 4f
-
-        val info = listOf(
-            "Swipe to steer. Tap to thrust.",
-            "Shoot what you can. Avoid what you can't.",
-            "Rescue those in peril."
-        )
-
-        for (i in 0 until info.size)
-            canvas.drawText(
-                info[i],
-                0f,
-                -120f + (120 * i),
-                infoPen
-            )
-    } // drawInfo
-
-    private fun drawText(text: String, canvas: Canvas, x: Double, y: Double, pen: Paint) {
-        canvas.drawText(text, x.toFloat(), y.toFloat(), pen)
-    } // drawText
+            for (i in 0 until info.size)
+                canvas.drawText(
+                        info[i],
+                        0f,
+                        -120f + (120 * i),
+                        infoPen
+                )
+        } // draw
+    } // class InfoScreen
 
     companion object {
         private val pen = Paint()
