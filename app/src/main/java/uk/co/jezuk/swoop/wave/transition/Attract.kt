@@ -4,7 +4,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
-import org.w3c.dom.Attr
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
@@ -18,6 +17,7 @@ class Attract(
 ) : WaveWithTargets() {
     private val extent = game.extent
     private val highScore = game.highScore
+    private val highWave = game.highWave
     private var starField = StarField(game.extent)
     val cometGun = Repeat(750, { Comet(game, this) })
     private var mode: AttractMode = TitleScreen()
@@ -65,17 +65,8 @@ class Attract(
         fun draw(canvas: Canvas, attract: Attract)
     } // AttractMode
 
-    private class TitleScreen: AttractMode {
-        override fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode {
-            if (tappedOnInfo(event, attract))
-                return InfoScreen()
-            attract.newGame()
-            return this
-        } // onDown
-
+    private abstract class TitleDressing: AttractMode {
         override fun draw(canvas: Canvas, attract: Attract) {
-            drawText("SWOOP", canvas,0.0, 0.0, pen)
-
             val margin = 40.0
             val almostLeft = attract.extent.left + margin
             val almostRight = attract.extent.right - margin
@@ -95,6 +86,24 @@ class Attract(
                         justOffTop,
                         scorePen
                 )
+        } // draw
+
+        protected fun drawText(text: String, canvas: Canvas, x: Double, y: Double, pen: Paint) {
+            canvas.drawText(text, x.toFloat(), y.toFloat(), pen)
+        } // drawText
+    } // class TitleScreen
+
+    private class TitleScreen: TitleDressing() {
+        override fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode {
+            if (tappedOnInfo(event, attract))
+                return InfoScreen()
+            return WaveStartScreen(attract)
+        } // onDown
+
+        override fun draw(canvas: Canvas, attract: Attract) {
+            super.draw(canvas, attract)
+
+            drawText("SWOOP", canvas,0.0, 0.0, pen)
 
             val infoX = (attract.extent.right - 120).toFloat()
             val infoY = (attract.extent.top + 120).toFloat()
@@ -119,11 +128,22 @@ class Attract(
             return ((x >= infoX-120f && x <= infoX+120f) &&
                     (y >= infoY-120f && y <= infoY+120f))
         } // tappedOnInfo
-
-        private fun drawText(text: String, canvas: Canvas, x: Double, y: Double, pen: Paint) {
-            canvas.drawText(text, x.toFloat(), y.toFloat(), pen)
-        } // drawText
     } // class TitleScreen
+
+    private class WaveStartScreen(attract: Attract): TitleDressing() {
+        init {
+            if(attract.highWave < 4)
+                attract.newGame()
+        }
+
+        override fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode {
+            return this
+        }
+
+        override fun draw(canvas: Canvas, attract: Attract) {
+            super.draw(canvas, attract)
+        }
+    } // AttractMode
 
     private class InfoScreen: AttractMode {
         override fun onSingleTapUp(event: MotionEvent, attract: Attract) =

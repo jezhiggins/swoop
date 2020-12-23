@@ -209,6 +209,9 @@ class Game(private val context: Context) {
         prefs.getInt("score${waveIndex}", 0)
     fun startLives(waveIndex: Int): Int =
         prefs.getInt("lives${waveIndex}", 3)
+    var highWave: Int
+        get() = prefs.getInt("maxwave", 0)
+        private set(value) = prefs.edit { putInt("maxwave", value) }
 
     companion object {
         private val scorePen = Paint()
