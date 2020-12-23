@@ -83,7 +83,8 @@ class Waves {
                 newStarField,
                 ship,
                 projectiles,
-                nextWave
+                nextWave,
+                wave
             )
         } // transition
     } // companionObject

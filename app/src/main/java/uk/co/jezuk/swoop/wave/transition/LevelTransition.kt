@@ -14,7 +14,8 @@ class LevelTransition(
     private val newStarField: StarField,
     private val ship: Ship,
     private val projectiles: Projectiles?,
-    private val nextWave: Wave
+    private val nextWave: Wave,
+    private val waveIndex: Int
 ): Wave {
     private var transition = Latch(180, { startNextWave() })
     private var currentStarField = starField
@@ -40,6 +41,7 @@ class LevelTransition(
 
     private fun startNextWave() {
         game.lifeGained()
+        game.checkpointScore(waveIndex)
         game.nextWave(nextWave)
     } // startNextWave
 } // Emptiness

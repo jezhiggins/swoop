@@ -18,6 +18,7 @@ import uk.co.jezuk.swoop.wave.*
 import uk.co.jezuk.swoop.wave.transition.Attract
 import uk.co.jezuk.swoop.wave.transition.Emptiness
 import uk.co.jezuk.swoop.wave.transition.GameOver
+import kotlin.math.max
 import kotlin.math.min
 
 class Game(private val context: Context) {
@@ -82,9 +83,9 @@ class Game(private val context: Context) {
         wave = Attract(this)
     } // attract
 
-    fun start() {
-        lives = 3
-        score = 0
+    fun start(startWave:Int = 0) {
+        lives = startLives(startWave)
+        score = startScore(startWave)
         newHighScore = false
     } // start
 
@@ -108,6 +109,7 @@ class Game(private val context: Context) {
     fun lifeGained() {
         lives = min(lives + 1, 9)
     } // livesGained
+
     fun scored(add: Int) {
         score += add
 
@@ -190,6 +192,23 @@ class Game(private val context: Context) {
     private var newHighScore: Boolean
         get() = prefs.getBoolean("newHighscore", false)
         set(value) = prefs.edit { putBoolean("newHighscore", value) }
+
+    fun checkpointScore(waveIndex: Int) {
+        if (score < startScore(waveIndex))
+            return
+
+        prefs.edit {
+            val highest = max(waveIndex, prefs.getInt("maxwave", 0))
+
+            putInt("score${waveIndex}", score)
+            putInt("lives${waveIndex}", lives)
+            putInt("maxwave", highest)
+        }
+    }
+    fun startScore(waveIndex: Int): Int =
+        prefs.getInt("score${waveIndex}", 0)
+    fun startLives(waveIndex: Int): Int =
+        prefs.getInt("lives${waveIndex}", 3)
 
     companion object {
         private val scorePen = Paint()
