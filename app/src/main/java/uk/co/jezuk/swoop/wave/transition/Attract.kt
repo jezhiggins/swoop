@@ -7,9 +7,11 @@ import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
+import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.StarField
 import uk.co.jezuk.swoop.wave.WaveWithTargets
+import kotlin.math.min
 import kotlin.random.Random
 
 class Attract(
@@ -18,6 +20,9 @@ class Attract(
     private val extent = game.extent
     private val highScore = game.highScore
     private val highWave = game.highWave
+    private fun startScore(waveIndex: Int): Int = game.startScore(waveIndex)
+    private fun startLives(waveIndex: Int): Int = game.startLives(waveIndex)
+
     private var starField = StarField(game.extent)
     val cometGun = Repeat(750, { Comet(game, this) })
     private var mode: AttractMode = TitleScreen()
@@ -132,7 +137,7 @@ class Attract(
 
     private class WaveStartScreen(attract: Attract): TitleDressing() {
         init {
-            if(attract.highWave < 4)
+            if(attract.highWave < 5)
                 attract.newGame()
         }
 
@@ -142,7 +147,42 @@ class Attract(
 
         override fun draw(canvas: Canvas, attract: Attract) {
             super.draw(canvas, attract)
-        }
+
+            drawText("Start from Wave", canvas,0.0, -100.0, infoPen)
+
+            val maxWave = attract.highWave;
+            val steps = maxWave/4
+            var x = (if (steps%2 != 0) -100.0 else 0.0) - (200.0 * ((maxWave-1) / 10))
+            for (i in 0 until maxWave step 4) {
+                drawText("${i+1}", canvas, x, 270.0, infoPen)
+                drawText("${attract.startScore(i)}", canvas, x, 165.0, scorePen)
+                drawTinyLives(attract.startLives(i), canvas, x)
+                x += 200.0
+            }
+        } // draw
+
+        private fun drawTinyLives(lives: Int, canvas: Canvas, x: Double) {
+            canvas.save()
+            canvas.translate(x.toFloat(), 0f)
+
+            val xoffset = 35f
+            val yoffset = 45f
+            canvas.translate(-xoffset, 75f)
+
+            for (r in 0 until (lives/3) + 1) {
+                for (c in (r * 3) until min(lives, (r * 3) + 3)) {
+                    canvas.save()
+                    canvas.rotate(-90f)
+                    canvas.scale(0.25f, 0.25f)
+                    canvas.drawLines(Ship.shape, Ship.shipBrush)
+                    canvas.restore()
+                    canvas.translate(xoffset, 0f)
+                } // for
+                canvas.translate(-xoffset*3, -yoffset)
+            }
+
+            canvas.restore()
+        } // drawTinyLives
     } // AttractMode
 
     private class InfoScreen: AttractMode {
