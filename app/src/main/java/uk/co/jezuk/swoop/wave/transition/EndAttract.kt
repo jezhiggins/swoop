@@ -12,18 +12,18 @@ import kotlin.random.Random
 class EndAttract(
     private val game: Game,
     private val starField: StarField,
-    targets: Targets
+    targets: Targets,
+    private val fromWave: Int
 ): WaveWithTargets(targets) {
     private val exploders = Repeat(120 / targets.size, { explodeOneTarget() })
 
     init {
-        game.start()
-        targets.onEliminated({ game.nextWave(
-            Waves.first(
-                game,
-                starField
+        game.start(fromWave)
+        targets.onEliminated {
+            game.nextWave(
+                Waves.from(game, fromWave, starField)
             )
-        ) })
+        }
     }
 
     /////

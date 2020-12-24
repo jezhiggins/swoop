@@ -56,8 +56,8 @@ class Waves {
 
         private var wave = 0
 
-        fun first(game: Game, starField: StarField): Wave {
-            wave = 0
+        fun from(game: Game, fromWave: Int, starField: StarField): Wave {
+            wave = fromWave
             return waves[wave](game, starField, null)
         } // first
 

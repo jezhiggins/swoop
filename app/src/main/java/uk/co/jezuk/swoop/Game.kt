@@ -83,7 +83,7 @@ class Game(private val context: Context) {
         wave = Attract(this)
     } // attract
 
-    fun start(startWave:Int = 0) {
+    fun start(startWave: Int) {
         lives = startLives(startWave)
         score = startScore(startWave)
         newHighScore = false

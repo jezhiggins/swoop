@@ -55,13 +55,9 @@ class Attract(
         mode.draw(canvas, this)
     } // draw
 
-    private fun newGame() {
+    private fun newGame(fromWave: Int) {
         game.nextWave(
-            EndAttract(
-                game,
-                starField,
-                targets
-            )
+            EndAttract(game, starField, targets, fromWave)
         )
     } // newGame
 
@@ -122,8 +118,7 @@ class Attract(
         } // draw
 
         private fun tappedOnInfo(event: MotionEvent, attract: Attract): Boolean {
-            val x = event.x
-            val y = event.y
+            val (x, y) = event
 
             val extent = attract.extent
 
@@ -136,12 +131,32 @@ class Attract(
     } // class TitleScreen
 
     private class WaveStartScreen(attract: Attract): TitleDressing() {
+        private val waveStride = 4
+        private val maxWave = attract.highWave;
+        private val pads = mutableMapOf<Int, Double>()
         init {
-            if(attract.highWave < 5)
-                attract.newGame()
+            if(attract.highWave <= waveStride)
+                attract.newGame(0)
+
+            val steps = maxWave/waveStride
+
+            var x = (if (steps%2 != 0) -100.0 else 0.0) - (200.0 * (steps-1))
+            for (i in 0 until maxWave step waveStride) {
+                pads.put(i, x)
+                x += 200.0
+            }
         }
 
         override fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode {
+            var (x, y) = event
+
+            if (y > 0 && y < 300) {
+                pads.forEach { i, padX ->
+                    if ((padX > x-75) && (padX < x+75))
+                        attract.newGame(i)
+                }
+            }
+
             return this
         }
 
@@ -150,14 +165,11 @@ class Attract(
 
             drawText("Start from Wave", canvas,0.0, -100.0, infoPen)
 
-            val maxWave = attract.highWave;
-            val steps = maxWave/4
-            var x = (if (steps%2 != 0) -100.0 else 0.0) - (200.0 * ((maxWave-1) / 10))
-            for (i in 0 until maxWave step 4) {
+            for (i in 0 until maxWave step waveStride) {
+                val x = pads[i]!!
                 drawText("${i+1}", canvas, x, 270.0, infoPen)
                 drawText("${attract.startScore(i)}", canvas, x, 165.0, scorePen)
                 drawTinyLives(attract.startLives(i), canvas, x)
-                x += 200.0
             }
         } // draw
 
@@ -250,3 +262,6 @@ class Attract(
         } // init
     } // companion object
 } // Attract
+
+private operator fun MotionEvent.component1(): Float = x
+private operator fun MotionEvent.component2(): Float = y
