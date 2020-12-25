@@ -135,12 +135,12 @@ class Attract(
         private val maxWave = attract.highWave;
         private val pads = mutableMapOf<Int, Double>()
         init {
-            if(attract.highWave <= waveStride)
+            if(maxWave <= waveStride)
                 attract.newGame(0)
 
-            val steps = maxWave/waveStride
+            val steps = (maxWave-1)/waveStride
 
-            var x = (if (steps%2 != 0) -100.0 else 0.0) - (200.0 * (steps-1))
+            var x = (if (steps%2 != 0) -100.0 else 0.0) - (200.0 * (steps/2))
             for (i in 0 until maxWave step waveStride) {
                 pads.put(i, x)
                 x += 200.0
