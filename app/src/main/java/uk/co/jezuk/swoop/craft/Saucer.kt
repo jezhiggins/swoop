@@ -14,17 +14,18 @@ import kotlin.random.Random
 class Saucer(
     private val game: Game,
     private val wave: Wave,
+    aggressiveness: Int,
     traverse: Array<Point> = game.extent.randomHorizontalTraverse()
 ): Target {
     override val position = Point(traverse[0])
     private val startPosition = Point(traverse[0])
     private val basePosition = Point(traverse[0])
-    private val velocity = Vector(Random.nextDouble(3.0, 7.0), position.angleTo(traverse[1]))
-    private val bounciness = Random.nextDouble(1.0, 5.0) * Math.PI
-    private val swinginess = Random.nextDouble(100.0, 300.0)
+    private val velocity = Vector(Random.nextDouble(3.0, 3.0 + aggressiveness), position.angleTo(traverse[1]))
+    private val bounciness = Random.nextDouble(1.0, (aggressiveness * 2.0)) * Math.PI
+    private val swinginess = Random.nextDouble(100.0, 100.0 + (50.0 * aggressiveness))
     private val traverseLength = startPosition.distance(traverse[1])
     private val skew = Rotation.random()
-    private val firedStep = if (wave.ship != null) Random.nextDouble(0.15, 0.4) else 1000.0
+    private val firedStep = if (wave.ship != null) Random.nextDouble(0.4 - (0.07 * aggressiveness), 0.4) else 1000.0
     private var fired = firedStep
 
     init {
@@ -69,7 +70,7 @@ class Saucer(
     } // shot
 
     override fun explode() {
-        Puff(wave, position)
+        BigPuff(wave, position)
         destroyed()
     } // explode
 

@@ -8,7 +8,8 @@ import uk.co.jezuk.swoop.wave.Wave
 
 class Puff(
     private val wave: Wave,
-    pos: Point
+    pos: Point,
+    private val maxSize: Float = 12f
 ) : Target {
     override val position = Point(pos)
     private val orientation = Rotation.random()
@@ -22,7 +23,7 @@ class Puff(
     /////
     override fun update(frameRateScale: Float) {
         size += 0.2f
-        if (size > 12f)
+        if (size > maxSize)
             wave.removeTarget(this)
     } // update
 
@@ -74,3 +75,9 @@ class Puff(
         } // init
     } // companion
 } // Pull
+
+fun BigPuff(wave: Wave, pos: Point) {
+    Puff(wave, pos, 20f)
+    Puff(wave, pos, 20f)
+    Puff(wave, pos, 20f)
+}

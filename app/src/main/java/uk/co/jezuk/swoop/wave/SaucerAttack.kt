@@ -15,9 +15,10 @@ class SaucerAttack(
     game: Game,
     starField: StarField,
     initialAsteroids: Int,
+    saucerAggressiveness: Int,
     g: Gun?
 ) : WaveWithShip(game, starField, g) {
-    private val saucerLaunch = RepeatN(500, initialAsteroids-2, ::launchSaucer)
+    private val saucerLaunch = RepeatN(500, saucerAggressiveness + 3, launchSaucer(saucerAggressiveness))
 
     init {
         StonyAsteroid.field(game, this, initialAsteroids)
@@ -31,8 +32,10 @@ class SaucerAttack(
         saucerLaunch.tick(frameRateScale)
     } // update
 
-    private fun launchSaucer() {
-        Saucer(game, this)
-        saucerLaunch.reset(Random.nextInt(300, 600))
+    private fun launchSaucer(saucerAggressiveness: Int): () -> Unit {
+        return {
+            Saucer(game, this, saucerAggressiveness)
+            saucerLaunch.reset(Random.nextInt(300, 700))
+        }
     } // launcherSaucer
 } // class SaucerAttack

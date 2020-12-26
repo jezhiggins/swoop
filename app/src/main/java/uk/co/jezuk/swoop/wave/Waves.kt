@@ -36,9 +36,9 @@ fun TholianWebMaker(game: Game, starField: StarField, gun: Gun?): Wave {
     return TholianWeb(game, starField, gun)
 } // TholianWebMaker
 
-fun SaucerAttackMaker(initialAsteroids: Int): WaveMaker {
+fun SaucerAttackMaker(initialAsteroids: Int, saucerAggressiveness: Int): WaveMaker {
     return { game: Game, starField: StarField, gun: Gun? ->
-        SaucerAttack(game, starField, initialAsteroids, gun)
+        SaucerAttack(game, starField, initialAsteroids, saucerAggressiveness, gun)
     }
 } // SaucerAttackMaker
 
@@ -57,10 +57,10 @@ class Waves {
             MinefieldMaker(300, 5),
             MinefieldMaker(250, 7),
             ::TholianWebMaker,
-            SaucerAttackMaker(6),
-            SaucerAttackMaker(7),
-            SaucerAttackMaker(8),
-            SaucerAttackMaker(8),
+            SaucerAttackMaker(5, 1),
+            SaucerAttackMaker(5, 2),
+            SaucerAttackMaker(6, 3),
+            SaucerAttackMaker(7, 4),
             IronAsteroidsMaker(4,8)
         )
 
