@@ -20,7 +20,8 @@ class Attract(
 ) : WaveWithTargets() {
     override val ship: Ship? = null
     private val extent = game.extent
-    private val highScore = game.highScore
+    private val pureHighScore = game.pureHighScore()
+    private val restartHighScore = game.restartHighScore()
     private val highWave = game.highWave
     private fun startScore(waveIndex: Int): Int = game.startScore(waveIndex)
     private fun startLives(waveIndex: Int): Int = game.startLives(waveIndex)
@@ -83,13 +84,21 @@ class Attract(
             tinyPen.textAlign = Paint.Align.RIGHT
             drawText("Made in Birmingham", canvas, almostRight, justOffBottom, tinyPen)
 
-            if (attract.highScore != 0)
+            if (attract.pureHighScore != 0)
                 drawText(
-                        "High Score " + "${attract.highScore}".padStart(6, '0'),
+                        "High Score " + "${attract.pureHighScore}".padStart(6, '0'),
                         canvas,
                         0.0,
                         justOffTop,
                         scorePen
+                )
+            if (attract.restartHighScore != 0)
+                drawText(
+                    "Jumpstart High Score " + "${attract.restartHighScore}".padStart(6, '0'),
+                    canvas,
+                    0.0,
+                    justOffTop + 50,
+                    scorePen
                 )
         } // draw
 

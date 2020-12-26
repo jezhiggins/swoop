@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
@@ -18,7 +19,7 @@ class Missile(
         wave.addTarget(this)
     }
 
-    override val killDist get() = 5f
+    override val killDist get() = 12f
 
     override fun update(frameRateScale: Float) {
         if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
@@ -38,6 +39,7 @@ class Missile(
 
     override fun shot(): Target.Impact {
         destroyed()
+        game.sound(R.raw.missileexplosion, position)
         return Target.Impact.HARD
     } // shot
 
@@ -52,7 +54,7 @@ class Missile(
         private val shape = floatArrayOf(
             15f, 0f,
             -10f, 10f,
-            -10f, -10f,
+            -10f, -10f
         )
         val missilePath = Path()
 

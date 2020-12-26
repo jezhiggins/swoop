@@ -30,6 +30,7 @@ class Game(private val context: Context) {
     private val sounds = Sounds(context)
     private var lives = 0
     private var score = -1
+    private var pure = false
 
     init {
         val soundIds = listOf(
@@ -49,7 +50,11 @@ class Game(private val context: Context) {
             R.raw.mineexplosion,
             R.raw.minelayershieldhit,
             R.raw.minelayerexplosion,
-            R.raw.minelayeralarm
+            R.raw.minelayeralarm,
+            R.raw.sauceralarm,
+            R.raw.saucerexplosion,
+            R.raw.saucerfire,
+            R.raw.missileexplosion
         )
         soundIds.forEach({ sounds.load(it) })
     }
@@ -87,6 +92,7 @@ class Game(private val context: Context) {
         lives = startLives(startWave)
         score = startScore(startWave)
         newHighScore = false
+        pure = (startWave == 0)
     } // start
 
     fun end() {
@@ -187,11 +193,15 @@ class Game(private val context: Context) {
         get() = context.getSharedPreferences("swoop", Context.MODE_PRIVATE)
 
     var highScore: Int
-        get() = prefs.getInt("highscore", 0)
-        private set(value) = prefs.edit { putInt("highscore", value) }
+        get() = prefs.getInt(highscoreTag(), 0)
+        private set(value) = prefs.edit { putInt(highscoreTag(), value) }
     private var newHighScore: Boolean
         get() = prefs.getBoolean("newHighscore", false)
         set(value) = prefs.edit { putBoolean("newHighscore", value) }
+
+    fun pureHighScore(): Int = prefs.getInt("purehighscore", 0)
+    fun restartHighScore(): Int = prefs.getInt("restarthighscore", 0)
+    private fun highscoreTag(): String = if (pure) "purehighscore" else "restarthighscore"
 
     fun checkpointScore(waveIndex: Int) {
         if (score < startScore(waveIndex))

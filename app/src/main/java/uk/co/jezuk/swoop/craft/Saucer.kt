@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
@@ -29,6 +30,7 @@ class Saucer(
     private var fired = firedStep
 
     init {
+        game.sound(R.raw.sauceralarm, position)
         wave.addTarget(this)
     } // init
 
@@ -49,6 +51,7 @@ class Saucer(
 
             val direction = position.angleTo(wave.ship!!.position)
 
+            game.sound(R.raw.saucerfire, position)
             for (offset in -30..30 step 30)
                 Missile(game, wave, Point(position), Vector(7.0, direction-offset))
         }
@@ -70,8 +73,9 @@ class Saucer(
     } // shot
 
     override fun explode() {
-        BigPuff(wave, position)
         destroyed()
+        game.sound(R.raw.saucerexplosion, position)
+        BigPuff(wave, position)
     } // explode
 
     override fun shipCollision(ship: Ship) = ship.hit()

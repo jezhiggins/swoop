@@ -6,7 +6,7 @@ import android.media.SoundPool
 
 class Sounds(private val context: Context) {
     private val pool = SoundPool.Builder()
-        .setMaxStreams(10)
+        .setMaxStreams(20)
         .setAudioAttributes(soundAttrs())
         .build()
     private val loadedSounds = mutableMapOf<Int, (Float) -> Unit>()
