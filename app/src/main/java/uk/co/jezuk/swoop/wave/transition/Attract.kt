@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
+import uk.co.jezuk.swoop.craft.Saucer
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.StarField
@@ -25,6 +26,7 @@ class Attract(
 
     private var starField = StarField(game.extent)
     val cometGun = Repeat(750, { Comet(game, this) })
+    val saucerGun = Repeat(2000, { Saucer(game, this) })
     private var mode: AttractMode = TitleScreen()
 
     init {
@@ -46,6 +48,7 @@ class Attract(
     override fun update(frameRateScale: Float) {
         updateTargets(frameRateScale)
         cometGun.tick(frameRateScale)
+        saucerGun.tick(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {
