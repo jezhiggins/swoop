@@ -19,11 +19,11 @@ class Saucer(
     override val position = Point(traverse[0])
     private val startPosition = Point(traverse[0])
     private val basePosition = Point(traverse[0])
-    private val velocity = Vector(2.0 + Random.nextDouble(5.0), position.angleTo(traverse[1]))
-    private val bounciness = 1.0 + Random.nextDouble(4.0) * Math.PI
-    private val swinginess = 100.0 + Random.nextDouble(250.0)
+    private val velocity = Vector(4.0 + Random.nextDouble(5.0), position.angleTo(traverse[1]))
+    private val bounciness = 1.0 + Random.nextDouble(7.0) * Math.PI
+    private val swinginess = 100.0 + (Random.nextDouble(250.0) * 2)
     private val traverseLength = startPosition.distance(traverse[1])
-    private val normal = Rotation(position.angleTo(traverse[1]) + 90)
+    private val skew = Rotation.random()
     private val shipBrush = Paint()
 
     init {
@@ -38,12 +38,14 @@ class Saucer(
     override val killDist get() = 50f
 
     override fun update(frameRateScale: Float) {
-        basePosition.move(velocity, frameRateScale, game.extent, killDist)
         val distance = basePosition.distance(startPosition)
         val sinusoid = sin((distance / traverseLength) * bounciness) * swinginess
 
         position.moveTo(basePosition)
-        position.move(Vector(sinusoid, normal), 1f, game.extent, killDist)
+        position.move(Vector(sinusoid, skew), 1f, game.extent, killDist)
+
+        if (!basePosition.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
+            destroyed();
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -61,10 +63,14 @@ class Saucer(
 
     override fun explode() {
         Puff(wave, position)
-        wave.removeTarget(this)
+        destroyed()
     } // explode
 
     override fun shipCollision(ship: Ship) = ship.hit()
+
+    private fun destroyed() {
+        wave.removeTarget(this)
+    }
 
     companion object {
         val shape = floatArrayOf(
