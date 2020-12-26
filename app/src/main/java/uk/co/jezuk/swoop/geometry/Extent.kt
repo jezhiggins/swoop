@@ -44,6 +44,13 @@ class Extent(
         }
     } // randomTraverse
 
+    fun randomHorizontalTraverse(): Array<Point> {
+        return when (rollD4()) {
+            0, 1 -> arrayOf(Point(left, randomY()), Point(right, randomY()))
+            else -> arrayOf(Point(right, randomY()), Point(left, randomY()))
+        }
+    }
+
     private fun randomX() = Random.nextDouble(left, right)
     private fun randomY() = Random.nextDouble(top, bottom)
     private fun rollD4() = Random.nextInt(4)

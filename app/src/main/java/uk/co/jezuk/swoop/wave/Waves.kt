@@ -30,11 +30,17 @@ fun MinefieldMaker(minelayerDelay: Int, minelayerCount: Int, gunReset: Boolean =
         val g = if (gunReset) null else gun
         Minefield(game, starField, minelayerDelay, minelayerCount, g)
     }
-} // AsteroidsAndCometsMaker
+} // MinefieldMaker
 
 fun TholianWebMaker(game: Game, starField: StarField, gun: Gun?): Wave {
     return TholianWeb(game, starField, gun)
 } // TholianWebMaker
+
+fun SaucerAttackMaker(initialAsteroids: Int): WaveMaker {
+    return { game: Game, starField: StarField, gun: Gun? ->
+        SaucerAttack(game, starField, initialAsteroids, gun)
+    }
+} // SaucerAttackMaker
 
 class Waves {
     companion object {
@@ -51,6 +57,10 @@ class Waves {
             MinefieldMaker(300, 5),
             MinefieldMaker(250, 7),
             ::TholianWebMaker,
+            SaucerAttackMaker(6),
+            SaucerAttackMaker(7),
+            SaucerAttackMaker(8),
+            SaucerAttackMaker(8),
             IronAsteroidsMaker(4,8)
         )
 

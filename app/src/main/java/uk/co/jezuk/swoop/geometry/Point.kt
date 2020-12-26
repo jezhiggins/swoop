@@ -41,6 +41,11 @@ data class Point(
                 && (y >= bounds.top) && (y <= bounds.bottom)
     } // moveNoWrap
 
+    fun moveTo(target: Point) {
+        x = target.x
+        y = target.y
+    } // moveTo
+
     fun distance(pos: Point): Float {
         val offsetX = distanceBetween(x, pos.x)
         val offsetY = distanceBetween(y, pos.y)
