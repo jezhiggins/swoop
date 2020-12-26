@@ -19,33 +19,37 @@ class Saucer(
     override val position = Point(traverse[0])
     private val startPosition = Point(traverse[0])
     private val basePosition = Point(traverse[0])
-    private val velocity = Vector(4.0 + Random.nextDouble(5.0), position.angleTo(traverse[1]))
-    private val bounciness = 1.0 + Random.nextDouble(7.0) * Math.PI
-    private val swinginess = 100.0 + (Random.nextDouble(250.0) * 2)
+    private val velocity = Vector(Random.nextDouble(3.0, 7.0), position.angleTo(traverse[1]))
+    private val bounciness = Random.nextDouble(1.0, 5.0) * Math.PI
+    private val swinginess = Random.nextDouble(100.0, 300.0)
     private val traverseLength = startPosition.distance(traverse[1])
     private val skew = Rotation.random()
-    private val shipBrush = Paint()
+    private var fired = if (wave.ship != null) Random.nextDouble() else 1000.0
 
     init {
         wave.addTarget(this)
-
-        shipBrush.color = Color.YELLOW
-        shipBrush.strokeWidth = 8f
-        shipBrush.strokeCap = Paint.Cap.ROUND
-        shipBrush.style = Paint.Style.STROKE
     } // init
 
     override val killDist get() = 50f
 
     override fun update(frameRateScale: Float) {
-        val distance = basePosition.distance(startPosition)
-        val sinusoid = sin((distance / traverseLength) * bounciness) * swinginess
+        val distance = basePosition.distance(startPosition) / traverseLength
+        val sinusoid = sin(distance  * bounciness) * swinginess
 
         position.moveTo(basePosition)
         position.move(Vector(sinusoid, skew), 1f, game.extent, killDist)
 
         if (!basePosition.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
             destroyed();
+
+        if (fired < distance) {
+            fired = 1000.0
+
+            val direction = position.angleTo(wave.ship!!.position)
+
+            for (offset in -30..30 step 30)
+                Missile(game, wave, Point(position), Vector(7.0, direction-offset))
+        }
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -58,6 +62,8 @@ class Saucer(
     } // draw
 
     override fun shot(): Target.Impact {
+        game.scored(1500)
+        explode()
         return Target.Impact.HARD
     } // shot
 
@@ -85,5 +91,14 @@ class Saucer(
             -25f, -35f, 25f, -35f,
             25f, -20f, 25f, -35f
         )
+
+        val shipBrush = Paint()
+
+        init {
+            shipBrush.color = Color.YELLOW
+            shipBrush.strokeWidth = 8f
+            shipBrush.strokeCap = Paint.Cap.ROUND
+            shipBrush.style = Paint.Style.STROKE
+        } // init
     }
 } // class Saucer
