@@ -24,7 +24,8 @@ class Saucer(
     private val swinginess = Random.nextDouble(100.0, 300.0)
     private val traverseLength = startPosition.distance(traverse[1])
     private val skew = Rotation.random()
-    private var fired = if (wave.ship != null) Random.nextDouble() else 1000.0
+    private val firedStep = if (wave.ship != null) Random.nextDouble(0.15, 0.4) else 1000.0
+    private var fired = firedStep
 
     init {
         wave.addTarget(this)
@@ -43,7 +44,7 @@ class Saucer(
             destroyed();
 
         if (fired < distance) {
-            fired = 1000.0
+            fired += firedStep
 
             val direction = position.angleTo(wave.ship!!.position)
 
