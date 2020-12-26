@@ -12,7 +12,7 @@ abstract class WaveWithShip(
     g: Gun? = null,
     private val activeGun: Boolean = true
 ): WaveWithTargets() {
-    protected val ship: Ship = Ship(game)
+    final override val ship: Ship = Ship(game)
     private val gun: Gun = Gun(game, this, ship, g)
     private val projectiles: Projectiles = Projectiles()
 

@@ -12,7 +12,7 @@ class LevelTransition(
     private val game: Game,
     private val starField: StarField,
     private val newStarField: StarField,
-    private val ship: Ship,
+    override val ship: Ship,
     private val projectiles: Projectiles?,
     private val nextWave: Wave,
     private val waveIndex: Int

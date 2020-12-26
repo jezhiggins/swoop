@@ -18,6 +18,7 @@ import kotlin.random.Random
 class Attract(
     private val game: Game
 ) : WaveWithTargets() {
+    override val ship: Ship? = null
     private val extent = game.extent
     private val highScore = game.highScore
     private val highWave = game.highWave

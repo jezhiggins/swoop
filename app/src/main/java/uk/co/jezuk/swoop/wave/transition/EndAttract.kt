@@ -2,6 +2,7 @@ package uk.co.jezuk.swoop.wave.transition
 
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Targets
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.StarField
@@ -15,6 +16,7 @@ class EndAttract(
     targets: Targets,
     private val fromWave: Int
 ): WaveWithTargets(targets) {
+    override val ship: Ship? = null
     private val exploders = Repeat(120 / targets.size, { explodeOneTarget() })
 
     init {
