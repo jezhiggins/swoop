@@ -161,7 +161,7 @@ class Attract(
         }
 
         override fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode {
-            var (x, y) = event
+            val (x, y) = event
 
             if (y > 0 && y < 300) {
                 pads.forEach { i, padX ->
