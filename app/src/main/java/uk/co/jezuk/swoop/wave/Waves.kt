@@ -36,9 +36,17 @@ fun TholianWebMaker(game: Game, starField: StarField, gun: Gun?): Wave {
     return TholianWeb(game, starField, gun)
 } // TholianWebMaker
 
-fun SaucerAttackMaker(initialAsteroids: Int, saucerAggressiveness: Int): WaveMaker {
+fun TumblersAttackMaker(initialAsteroids: Int, gunReset: Boolean = false): WaveMaker {
     return { game: Game, starField: StarField, gun: Gun? ->
-        SaucerAttack(game, starField, initialAsteroids, saucerAggressiveness, gun)
+        val g = if (gunReset) null else gun
+        TumblersAttack(game, starField, initialAsteroids, g)
+    }
+} // SaucerAttackMaker
+
+fun SaucerAttackMaker(initialAsteroids: Int, saucerAggressiveness: Int, gunReset: Boolean = false): WaveMaker {
+    return { game: Game, starField: StarField, gun: Gun? ->
+        val g = if (gunReset) null else gun
+        SaucerAttack(game, starField, initialAsteroids, saucerAggressiveness, g)
     }
 } // SaucerAttackMaker
 
@@ -57,7 +65,11 @@ class Waves {
             MinefieldMaker(300, 5),
             MinefieldMaker(250, 7),
             ::TholianWebMaker,
-            SaucerAttackMaker(5, 1),
+            TumblersAttackMaker(6, true),
+            TumblersAttackMaker(7),
+            TumblersAttackMaker(8),
+            TumblersAttackMaker(9),
+            SaucerAttackMaker(5, 1, true),
             SaucerAttackMaker(5, 2),
             SaucerAttackMaker(6, 3),
             SaucerAttackMaker(7, 4),

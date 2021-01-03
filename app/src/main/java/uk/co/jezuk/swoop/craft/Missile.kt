@@ -13,7 +13,8 @@ class Missile(
         private val game: Game,
         private val wave: Wave,
         override val position: Point,
-        private val velocity: Vector
+        private val velocity: Vector,
+        private val orientation: Float = velocity.angle.toFloat()
 ): Target {
     init {
         wave.addTarget(this)
@@ -31,13 +32,14 @@ class Missile(
 
         position.translate(canvas)
 
-        canvas.rotate(velocity.angle.toFloat())
+        canvas.rotate(orientation)
         canvas.drawPath(missilePath, brush)
 
         canvas.restore()
     } // draw
 
     override fun shot(): Target.Impact {
+        game.scored(100)
         destroyed()
         game.sound(R.raw.missileexplosion, position)
         return Target.Impact.HARD
