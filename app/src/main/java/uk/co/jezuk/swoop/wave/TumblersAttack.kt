@@ -13,7 +13,7 @@ class TumblersAttack(
 ) : WaveWithShip(game, starField, g) {
     private val tumblerLauncher = RepeatN(
         700 - (initialAsteroids * 50),
-        initialAsteroids
+        initialAsteroids - 1
     ) { Tumbler(game, this) }
 
     init {
