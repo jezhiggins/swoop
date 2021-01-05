@@ -10,6 +10,7 @@ import uk.co.jezuk.swoop.craft.asteroid.Asteroid
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
+import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.math.sin
@@ -25,7 +26,9 @@ class Tumbler(
     private val orientation = Rotation.random()
     private var rotation = Random.nextDouble(1.0, 2.5)
     private var shooter = Repeat(Random.nextInt(120, 180), { fire() })
-
+    private var alive = true
+    private val explodeShape = outerShape.copyOf()
+    private var explosion = Latch(70, { wave.removeTarget(this) })
 
     init {
         game.sound(R.raw.sauceralarm, position)
@@ -40,8 +43,64 @@ class Tumbler(
     override fun update(frameRateScale: Float) {
         position.move(velocity, frameRateScale, game.extent, killDist)
         orientation += rotation * frameRateScale
-        shooter.tick(frameRateScale)
+        if (alive)
+            shooter.tick(frameRateScale)
+        else
+            blowUpTumbler(frameRateScale)
     } // update
+
+    override fun draw(canvas: Canvas) {
+        canvas.save()
+
+        position.translate(canvas)
+        orientation.rotate(canvas)
+        if (alive)
+            canvas.drawPath(path, shipBrush)
+        else
+            canvas.drawLines(explodeShape, shipBrush)
+
+        canvas.restore()
+    } // draw
+
+    override fun shot(): Target.Impact {
+        if (alive) {
+            game.scored(1000)
+            explode()
+            return Target.Impact.HARD
+        }
+        return Target.Impact.NONE
+    } // shot
+
+    override fun explode() {
+        alive = false
+        game.sound(R.raw.saucerexplosion, position)
+        BigPuff(wave, position)
+    } // explode
+
+    override fun shipCollision(ship: Ship) {
+        if (alive)
+            ship.hit()
+    } // shipCollision
+
+    private fun blowUpTumbler(frameRateScale: Float) {
+        for (l in 0 until explodeShape.size step 4) {
+            val x = blowUpShift(explodeShape[l], frameRateScale)
+            val y = blowUpShift(explodeShape[l + 3], frameRateScale)
+
+            for (p in 0 until 4 step 2) {
+                explodeShape[l + p] += x
+                explodeShape[l + 1 + p] += y
+            }
+        }
+
+        explosion.tick(frameRateScale)
+    } // blowUpShip
+
+    private fun blowUpShift(p: Float, frameRateScale: Float): Float {
+        if (p < 0) return -5f * frameRateScale
+        if (p > 0) return 5f * frameRateScale
+        return 0f
+    } // blowUpShift
 
     private fun fire() {
         game.sound(R.raw.saucerfire, position)
@@ -53,35 +112,7 @@ class Tumbler(
             missileVelocity += Vector(7.0, direction)
             Missile(game, wave, initialPosition, missileVelocity, direction.toFloat())
         }
-    }
-
-    override fun draw(canvas: Canvas) {
-        canvas.save()
-
-        position.translate(canvas)
-        orientation.rotate(canvas)
-        canvas.drawPath(path, shipBrush)
-
-        canvas.restore()
-    } // draw
-
-    override fun shot(): Target.Impact {
-        game.scored(1000)
-        explode()
-        return Target.Impact.HARD
-    } // shot
-
-    override fun explode() {
-        destroyed()
-        game.sound(R.raw.saucerexplosion, position)
-        BigPuff(wave, position)
-    } // explode
-
-    override fun shipCollision(ship: Ship) = ship.hit()
-
-    private fun destroyed() {
-        wave.removeTarget(this)
-    }
+    } // fire
 
     companion object {
         private val outerShape = floatArrayOf(
@@ -140,4 +171,4 @@ class Tumbler(
             shipBrush.style = Paint.Style.STROKE
         } // init
     }
-} // class Saucer
+} // class Tumbler
