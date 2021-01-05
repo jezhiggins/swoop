@@ -77,7 +77,10 @@ class Puff(
 } // Pull
 
 fun BigPuff(wave: Wave, pos: Point) {
-    Puff(wave, pos, 20f)
+    Puff(wave, pos, 50f)
+    Puff(wave, pos, 30f)
+    Puff(wave, pos, 30f)
+    Puff(wave, pos, 30f)
     Puff(wave, pos, 20f)
     Puff(wave, pos, 20f)
 }
