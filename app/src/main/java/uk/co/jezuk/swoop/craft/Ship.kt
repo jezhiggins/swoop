@@ -207,40 +207,19 @@ class Ship(private val game: Game): Craft {
     } // Flying
 
     private class Exploding(private val ship: Ship): ShipState {
-        private val explodeShape = shape.copyOf()
-        private var explosion = Latch(50, { whatsNext() })
+        private val exploder = Exploder({ whatsNext() }, shape, explodeBrush, 50, false)
 
         init {
             ship.explosionSound()
         }
 
         override fun update(frameRateScale: Float) {
-            blowUpShip(frameRateScale)
+            exploder.update(frameRateScale)
         } // update
 
         override fun draw(canvas: Canvas) {
-            canvas.drawLines(explodeShape, explodeBrush)
+            exploder.draw(canvas)
         } // draw
-
-        private fun blowUpShip(frameRateScale: Float) {
-            for (l in 0 until explodeShape.size step 4) {
-                val x = blowUpShift(explodeShape[l], frameRateScale)
-                val y = blowUpShift(explodeShape[l + 3], frameRateScale)
-
-                for (p in 0 until 4 step 2) {
-                    explodeShape[l + p] += x
-                    explodeShape[l + 1 + p] += y
-                }
-            }
-
-            explosion.tick(frameRateScale)
-        } // blowUpShip
-
-        private fun blowUpShift(p: Float, frameRateScale: Float): Float {
-            if (p < 0) return -5f * frameRateScale
-            if (p > 0) return 5f * frameRateScale
-            return 0f
-        } // blowUpShift
 
         private fun whatsNext() {
             ship.state = if (ship.lifeLost() == Game.NextShip.Continue) {

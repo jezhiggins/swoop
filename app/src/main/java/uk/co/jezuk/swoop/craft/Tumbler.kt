@@ -1,19 +1,15 @@
 package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
-import uk.co.jezuk.swoop.craft.asteroid.Asteroid
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
-import kotlin.math.sin
 import kotlin.random.Random
 
 class Tumbler(
@@ -26,9 +22,9 @@ class Tumbler(
     private val orientation = Rotation.random()
     private var rotation = Random.nextDouble(1.0, 2.5)
     private var shooter = Repeat(Random.nextInt(120, 180), { fire() })
-    private var alive = true
-    private val explodeShape = outerShape.copyOf()
-    private var explosion = Latch(70, { wave.removeTarget(this) })
+    private var exploder: Exploder? = null
+
+    private val alive get() = (exploder == null)
 
     init {
         game.sound(R.raw.sauceralarm, position)
@@ -46,7 +42,7 @@ class Tumbler(
         if (alive)
             shooter.tick(frameRateScale)
         else
-            blowUpTumbler(frameRateScale)
+            exploder?.update(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -55,9 +51,9 @@ class Tumbler(
         position.translate(canvas)
         orientation.rotate(canvas)
         if (alive)
-            canvas.drawPath(path, shipBrush)
+            canvas.drawLines(tumblerShape, shipBrush)
         else
-            canvas.drawLines(explodeShape, shipBrush)
+            exploder?.draw(canvas)
 
         canvas.restore()
     } // draw
@@ -72,7 +68,7 @@ class Tumbler(
     } // shot
 
     override fun explode() {
-        alive = false
+        exploder = Exploder({ wave.removeTarget(this) }, outerShape, shipBrush, 70)
         game.sound(R.raw.saucerexplosion, position)
         BigPuff(wave, position)
     } // explode
@@ -81,26 +77,6 @@ class Tumbler(
         if (alive)
             ship.hit()
     } // shipCollision
-
-    private fun blowUpTumbler(frameRateScale: Float) {
-        for (l in 0 until explodeShape.size step 4) {
-            val x = blowUpShift(explodeShape[l], frameRateScale)
-            val y = blowUpShift(explodeShape[l + 3], frameRateScale)
-
-            for (p in 0 until 4 step 2) {
-                explodeShape[l + p] += x
-                explodeShape[l + 1 + p] += y
-            }
-        }
-
-        explosion.tick(frameRateScale)
-    } // blowUpShip
-
-    private fun blowUpShift(p: Float, frameRateScale: Float): Float {
-        if (p < 0) return -5f * frameRateScale
-        if (p > 0) return 5f * frameRateScale
-        return 0f
-    } // blowUpShift
 
     private fun fire() {
         game.sound(R.raw.saucerfire, position)
@@ -125,42 +101,27 @@ class Tumbler(
             -25f, -60f, 25f, -60f,
             25f, -60f, 60f, -25f
         )
-        private val upperRightCutout = floatArrayOf(
+
+        private val cutOuts = floatArrayOf(
+        // upperRightCutout
             48f, -20f, 20f, -48f,
             20f, -48f, 10f, -10f,
-            10f, -10f, 48f, -20f
-        )
-        private val upperLeftCutout = floatArrayOf(
+            10f, -10f, 48f, -20f,
+        // upperLeftCutout
             -48f, -20f, -20f, -48f,
             -20f, -48f, -10f, -10f,
-            -10f, -10f, -48f, -20f
-        )
-        private val lowerLeftCutout = floatArrayOf(
+            -10f, -10f, -48f, -20f,
+        // lowerLeftCutout
             -48f, 20f, -20f, 48f,
             -20f, 48f, -10f, 10f,
-            -10f, 10f, -48f, 20f
-        )
-        private val lowerRightCutout = floatArrayOf(
+            -10f, 10f, -48f, 20f,
+        // lowerRightCutout
             48f, 20f, 20f, 48f,
             20f, 48f, 10f, 10f,
             10f, 10f, 48f, 20f
         )
 
-        val path = Path()
-
-        init {
-            val shapes = listOf(
-                outerShape,
-                upperLeftCutout, upperRightCutout,
-                lowerLeftCutout, lowerRightCutout)
-
-            for (shape in shapes) {
-                path.moveTo(shape[0], shape[1])
-                for (i in shape.indices step 2)
-                    path.lineTo(shape[i], shape[i + 1])
-            }
-            path.close()
-        } // init
+        private val tumblerShape = outerShape + cutOuts
 
         val shipBrush = Paint()
 
