@@ -24,10 +24,14 @@ class Saucer(
     private val velocity = Vector(Random.nextDouble(3.0, 3.0 + aggressiveness), position.angleTo(traverse[1]))
     private val bounciness = Random.nextDouble(1.0, (aggressiveness * 2.0)) * Math.PI
     private val swinginess = Random.nextDouble(100.0, 100.0 + (50.0 * aggressiveness))
+    private var bounceOffset = 0.0
     private val traverseLength = startPosition.distance(traverse[1])
     private val skew = Rotation.random()
     private val firedStep = if (wave.ship != null) Random.nextDouble(0.4 - (0.07 * aggressiveness), 0.4) else 1000.0
     private var fired = firedStep
+    private var exploder: Exploder? = null
+
+    private val alive get() = (exploder == null)
 
     init {
         game.sound(R.raw.sauceralarm, position)
@@ -38,42 +42,57 @@ class Saucer(
 
     override fun update(frameRateScale: Float) {
         val distance = basePosition.distance(startPosition) / traverseLength
-        val sinusoid = sin(distance  * bounciness) * swinginess
+        if (alive)
+            bounceOffset = sin(distance  * bounciness) * swinginess
 
         position.moveTo(basePosition)
-        position.move(Vector(sinusoid, skew), 1f, game.extent, killDist)
+        position.move(Vector(bounceOffset, skew), 1f, game.extent, killDist)
 
         if (!basePosition.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
             destroyed();
 
-        if (fired < distance) {
-            fired += firedStep
+        fireIfReady(distance)
 
-            val direction = position.angleTo(wave.ship!!.position)
-
-            game.sound(R.raw.saucerfire, position)
-            for (offset in -30..30 step 30)
-                Missile(game, wave, Point(position), Vector(7.0, direction-offset))
-        }
+        if (!alive)
+            exploder?.update(frameRateScale)
     } // update
+
+    private fun fireIfReady(distance: Float) {
+        if (!alive) return
+        if (fired > distance) return
+
+        fired += firedStep
+
+        val direction = position.angleTo(wave.ship!!.position)
+
+        game.sound(R.raw.saucerfire, position)
+        for (offset in -30..30 step 30)
+            Missile(game, wave, Point(position), Vector(7.0, direction-offset))
+    }
 
     override fun draw(canvas: Canvas) {
         canvas.save()
 
         position.translate(canvas)
-        canvas.drawLines(shape, shipBrush)
+        if (alive)
+            canvas.drawLines(shape, shipBrush)
+        else
+            exploder?.draw(canvas)
 
         canvas.restore()
     } // draw
 
     override fun shot(): Target.Impact {
-        game.scored(1500)
-        explode()
-        return Target.Impact.HARD
+        if (alive) {
+            game.scored(1500)
+            explode()
+            return Target.Impact.HARD
+        }
+        return Target.Impact.NONE
     } // shot
 
     override fun explode() {
-        destroyed()
+        exploder = Exploder(::destroyed, shape, shipBrush, 70)
         game.sound(R.raw.saucerexplosion, position)
         BigPuff(wave, position)
     } // explode
