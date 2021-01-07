@@ -37,5 +37,6 @@ class Rotation(
 
     companion object {
         fun random() = Rotation(Random.nextDouble(360.0))
+        fun none() = Rotation(0.0)
     } // companion object
 } // Rotation

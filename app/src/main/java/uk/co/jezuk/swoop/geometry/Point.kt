@@ -46,6 +46,15 @@ data class Point(
         y = target.y
     } // moveTo
 
+    fun drift(
+        vec: Vector,
+        frameScaleRate: Float
+    ) {
+        val (deltaX, deltaY) = vec.offset(frameScaleRate)
+        x += deltaX.toFloat()
+        y += deltaY.toFloat()
+    }
+
     fun distance(pos: Point): Float {
         val offsetX = distanceBetween(x, pos.x)
         val offsetY = distanceBetween(y, pos.y)

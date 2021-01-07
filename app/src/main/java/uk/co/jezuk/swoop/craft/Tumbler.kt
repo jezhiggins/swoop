@@ -20,18 +20,12 @@ class Tumbler(
     override val position = Point(traverse[0])
     private val velocity = Vector(Random.nextDouble(2.0, 5.0), position.angleTo(traverse[1]))
     private val orientation = Rotation.random()
-    private var rotation = Random.nextDouble(1.0, 2.5)
-    private var shooter = Repeat(Random.nextInt(120, 180), { fire() })
-    private var exploder: Exploder? = null
-
-    private val alive get() = (exploder == null)
+    private val rotation = initialRotation()
+    private val shooter = Repeat(Random.nextInt(120, 180), { fire() })
 
     init {
         game.sound(R.raw.sauceralarm, position)
         wave.addTarget(this)
-
-        if (Random.nextDouble() < 0.5)
-            rotation = -rotation
     } // init
 
     override val killDist get() = 50f
@@ -39,10 +33,7 @@ class Tumbler(
     override fun update(frameRateScale: Float) {
         position.move(velocity, frameRateScale, game.extent, killDist)
         orientation += rotation * frameRateScale
-        if (alive)
-            shooter.tick(frameRateScale)
-        else
-            exploder?.update(frameRateScale)
+        shooter.tick(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -50,33 +41,33 @@ class Tumbler(
 
         position.translate(canvas)
         orientation.rotate(canvas)
-        if (alive)
-            canvas.drawLines(tumblerShape, shipBrush)
-        else
-            exploder?.draw(canvas)
+
+        canvas.drawLines(tumblerShape, shipBrush)
 
         canvas.restore()
     } // draw
 
     override fun shot(): Target.Impact {
-        if (alive) {
-            game.scored(1000)
-            explode()
-            return Target.Impact.HARD
-        }
-        return Target.Impact.NONE
+        game.scored(1000)
+        explode()
+        return Target.Impact.HARD
     } // shot
 
     override fun explode() {
-        exploder = Exploder({ wave.removeTarget(this) }, outerShape, shipBrush, 70)
         game.sound(R.raw.saucerexplosion, position)
         BigPuff(wave, position)
+        Explosion(
+            wave, position, velocity, orientation, rotation,
+            outerShape, shipBrush, 70
+        )
+        Explosion(
+            wave, position, velocity, orientation, rotation,
+            cutOuts, shipBrush, 50, expansion = 3f
+        )
+        wave.removeTarget(this)
     } // explode
 
-    override fun shipCollision(ship: Ship) {
-        if (alive)
-            ship.hit()
-    } // shipCollision
+    override fun shipCollision(ship: Ship) = ship.hit()
 
     private fun fire() {
         game.sound(R.raw.saucerfire, position)
@@ -91,6 +82,13 @@ class Tumbler(
     } // fire
 
     companion object {
+        private fun initialRotation(): Double {
+            var rotation = Random.nextDouble(1.0, 2.5)
+            if (Random.nextDouble() < 0.5)
+                rotation = -rotation
+            return rotation
+        } // initialRotation
+
         private val outerShape = floatArrayOf(
             60f, -25f, 60f, 25f,
             60f, 25f, 25f, 60f,
