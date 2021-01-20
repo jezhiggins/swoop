@@ -32,7 +32,7 @@ class Bullet(
     } // init
 
     override fun update(frameRateScale: Float) {
-        position.move(velocity, frameRateScale, game.extent)
+        position.move(velocity, frameRateScale, game.extent, Ship.Radius)
         if (++age > maxAge) wave.removeProjectile(this)
     } // update
 

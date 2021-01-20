@@ -29,7 +29,7 @@ class Ship(private val game: Game): Craft {
 
     /////////////////////////////////////
     override val position get() = state.position
-    override val killDist get() = shipRadius
+    override val killDist get() = Radius
 
     val velocity = Vector(0.0, 0.0)
     val armed get() = state.armed
@@ -123,7 +123,7 @@ class Ship(private val game: Game): Craft {
             -75f, 0f, -45f, -12f
         )
 
-        private val shipRadius: Float get() = 30f;
+        val Radius: Float get() = 30f;
 
         init {
             shipBrush.color = Color.GREEN
