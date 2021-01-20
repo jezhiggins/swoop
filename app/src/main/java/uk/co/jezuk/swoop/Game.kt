@@ -30,6 +30,7 @@ class Game(private val context: Context) {
     private val sounds = Sounds(context)
     private var lives = 0
     private var score = -1
+    private var targetScore = -1
     private var pure = false
 
     init {
@@ -91,6 +92,7 @@ class Game(private val context: Context) {
     fun start(startWave: Int) {
         lives = startLives(startWave)
         score = startScore(startWave)
+        targetScore = score;
         newHighScore = false
         pure = (startWave == 0)
     } // start
@@ -98,6 +100,7 @@ class Game(private val context: Context) {
     fun end() {
         lives = 0
         score = -1
+        targetScore = score;
     } // end
 
     fun endOfWave(starField: StarField, ship: Ship, projectiles: Projectiles? = null, gun: Gun? = null) {
@@ -117,6 +120,10 @@ class Game(private val context: Context) {
     } // livesGained
 
     fun scored(add: Int) {
+        targetScore += add
+    }
+
+    fun updateScore(add: Int) {
         score += add
 
         if (score > highScore) {
@@ -150,6 +157,8 @@ class Game(private val context: Context) {
 
     private fun drawScore(canvas: Canvas) {
         if (score == -1) return
+        if (targetScore != score)
+            updateScore(10);
 
         canvas.drawText(
             "${score}".padStart(6, '0'),
