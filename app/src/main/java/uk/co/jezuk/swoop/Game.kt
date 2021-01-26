@@ -213,13 +213,13 @@ class Game(private val context: Context) {
     private fun highscoreTag(): String = if (pure) "purehighscore" else "restarthighscore"
 
     fun checkpointScore(waveIndex: Int) {
-        if (score < startScore(waveIndex))
+        if (targetScore < startScore(waveIndex))
             return
 
         prefs.edit {
             val highest = max(waveIndex, prefs.getInt("maxwave", 0))
 
-            putInt("score${waveIndex}", score)
+            putInt("score${waveIndex}", targetScore)
             putInt("lives${waveIndex}", lives)
             putInt("maxwave", highest)
         }
