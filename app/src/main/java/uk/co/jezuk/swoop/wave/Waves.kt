@@ -18,10 +18,10 @@ fun CometStormMaker(game: Game, starField: StarField, gun: Gun?): Wave {
     return CometStorm(game, starField)
 } // CometStormMaker
 
-fun IronAsteroidsMaker(stonyAsteroid: Int, ironAsteroids: Int, gunReset: Boolean = false): WaveMaker {
+fun IronAsteroidsMaker(stonyAsteroids: Int, ironAsteroids: Int, gunReset: Boolean = false): WaveMaker {
     return { game: Game, starField: StarField, gun: Gun? ->
         val g = if (gunReset) null else gun
-        IronAsteroids(game, starField, stonyAsteroid, ironAsteroids, g)
+        IronAsteroids(game, starField, stonyAsteroids, ironAsteroids, g)
     }
 } // IronAsteroidsMaker
 
@@ -50,6 +50,13 @@ fun SaucerAttackMaker(initialAsteroids: Int, saucerAggressiveness: Int, gunReset
     }
 } // SaucerAttackMaker
 
+fun MagneticAsteroidsMaker(stonyAsteroids: Int, magneticAsteroids: Int, gunReset: Boolean = false): WaveMaker {
+    return { game: Game, starField: StarField, gun: Gun? ->
+        val g = if (gunReset) null else gun
+        MagneticAsteroids(game, starField, stonyAsteroids, magneticAsteroids, g)
+    }
+}
+
 class Waves {
     companion object {
         private val waves = listOf<WaveMaker>(
@@ -73,6 +80,10 @@ class Waves {
             SaucerAttackMaker(5, 2),
             SaucerAttackMaker(6, 3),
             SaucerAttackMaker(7, 4),
+            MagneticAsteroidsMaker(0, 2, true),
+            MagneticAsteroidsMaker(3, 2),
+            MagneticAsteroidsMaker(3, 3),
+            MagneticAsteroidsMaker(5, 3),
             IronAsteroidsMaker(4,8)
         )
 
