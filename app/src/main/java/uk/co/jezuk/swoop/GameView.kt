@@ -20,8 +20,6 @@ class GameView(
 
     private val game = Game(context)
 
-    private var debug = Debug()
-
     init {
         holder.addCallback(this)
 
@@ -68,16 +66,12 @@ class GameView(
 
     fun update(frameRateScale: Float) {
         game.update(frameRateScale)
-
-        debug.update(frameRateScale)
     } // update
 
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
         game.draw(canvas)
-
-        debug.draw(canvas)
     } // draw
 
     fun pause() {
