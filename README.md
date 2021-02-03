@@ -5,7 +5,7 @@ Swoop is an Asteroidsy retrogame for your Android phone.
 ![Swoop screenshot](https://github.com/jezhiggins/swoop/blob/main/images/swoop.png)
 
 Swoop is available on [Google Play](https://play.google.com/store/apps/details?id=uk.co.jezuk.swoop) 
-where it is currently in public beta. 
+where it available for free, without adverts.
 
 ### Thanks
 
