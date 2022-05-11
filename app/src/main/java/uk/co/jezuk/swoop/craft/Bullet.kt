@@ -28,6 +28,9 @@ class Bullet(
         velocity.maximum = 30.0
         velocity += Vector(10.0, orientation, 30.0)
 
+        val toPointyEndOfShop = Vector(Ship.Radius*2, orientation, Ship.Radius*2)
+        position.move(toPointyEndOfShop, 1f, game.extent, Ship.Radius);
+
         wave.addProjectile(this)
     } // init
 

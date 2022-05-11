@@ -15,6 +15,11 @@ class Vector(
         orientation: Rotation,
         maximum: Double = 20.0
     ) : this(magnitude, orientation.angle, maximum)
+    constructor(
+        magnitude: Float,
+        orientation: Rotation,
+        maximum: Float
+    ) : this(magnitude.toDouble(), orientation, maximum.toDouble())
 
     private var directionRad = Math.toRadians(direction)
 
