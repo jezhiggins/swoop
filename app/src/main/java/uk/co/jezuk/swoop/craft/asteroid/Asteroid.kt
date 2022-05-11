@@ -26,6 +26,9 @@ abstract class Asteroid(
     private val killRadius = 25f
     override val killDist get() = scale * killRadius
     protected val size get() = scale
+    private val outline = Random.nextInt(4)
+    protected val shape = shapes[outline]
+    protected val path = paths[outline]
 
     private val smallBang = { game.sound(R.raw.bangsmall, position) }
     private val midBang = { game.sound(R.raw.bangmedium, position) }
@@ -70,26 +73,72 @@ abstract class Asteroid(
         val Big: Float = 4f
         val Medium: Float = 2f
         val Small: Float = 1f
-        val shape = floatArrayOf(
-            0f, 12.5f, 12.5f, 25f,
-            12.5f, 25f, 25f, 12.5f,
-            25f, 12.5f, 18.75f, 0f,
-            18.75f, 0f, 25f, -12.5f,
-            25f, -12.5f, 6.25f, -25f,
-            6.25f, -25f, -12.5f, -25f,
-            -12.5f, -25f, -25f, -12.5f,
-            -25f, -12.5f, -25f, 12.5f,
-            -25f, 12.5f, -12.5f, 25f,
-            -12.5f, 25f, 0f, 12.5f
+        val shapes = listOf(
+            floatArrayOf(
+                0f, 12.5f, 12.5f, 25f,
+                12.5f, 25f, 25f, 12.5f,
+                25f, 12.5f, 18.75f, 0f,
+                18.75f, 0f, 25f, -12.5f,
+                25f, -12.5f, 6.25f, -25f,
+                6.25f, -25f, -12.5f, -25f,
+                -12.5f, -25f, -25f, -12.5f,
+                -25f, -12.5f, -25f, 12.5f,
+                -25f, 12.5f, -12.5f, 25f,
+                -12.5f, 25f, 0f, 12.5f
+            ),
+            floatArrayOf(
+                12.5f, 6.25f, 25f, 12.5f,
+                25f, 12.5f, 12.5f, 25f,
+                12.5f, 25f, 0f, 18.75f,
+                0f, 18.75f, -12.5f, 25f,
+                -12.5f, 25f, -25f, 12.5f,
+                -25f, 12.5f, -18.75f, 0f,
+                -18.75f, 0f, -25f, -12.5f,
+                -25f, -12.5f, -12.5f, -25f,
+                -12.5f, -25f, -6.25f, -18.75f,
+                -6.25f, -18.75f, 12.5f, -25f,
+                12.5f, -25f, 25f, -6.25f,
+                25f, -6.25f, 12.5f, 6.25f,
+            ),
+            floatArrayOf(
+                -12.5f, 0f, -25f, -6.25f,
+                -25f, -6.25f, -12.5f, -25f,
+                -12.5f, -25f, 0f, -6.25f,
+                0f, -6.25f, 0f, -25f,
+                0f, -25f, 12.5f, -25f,
+                12.5f, -25f, 25f, -6.25f,
+                25f, -6.25f, 25f, 6.25f,
+                25f, 6.25f, 12.5f, 25f,
+                12.5f, 25f, -6.25f, 25f,
+                -6.25f, 25f, -25f, 6.25f,
+                -25f, 6.25f, -12.5f, 0f
+            ),
+            floatArrayOf(
+                6.25f, 0f, 25f, 6.25f,
+                25f, 6.25f, 25f, 12.5f,
+                25f, 12.5f, 6.25f, 25f,
+                6.25f, 25f, -12.5f, 25f,
+                -12.5f, 25f, -6.25f, 12.5f,
+                -6.25f, 12.5f, -25f, 12.5f,
+                -25f, 12.5f, -25f, -6.25f,
+                -25f, -6.25f, -12.5f, -25f,
+                -12.5f, -25f, 6.25f, -18.75f,
+                6.25f, -18.75f, 12.5f, -25f,
+                12.5f, -25f, 25f, -12.5f,
+                25f, -12.5f, 6.25f, 0f
+            )
         )
 
-        val path = Path()
-
+        val paths = ArrayList<Path>(4)
         init {
-            path.moveTo(shape[0], shape[1])
-            for (i in 0 until shape.size step 2)
-                path.lineTo(shape[i], shape[i+1])
-            path.close()
+            for(shape in shapes) {
+                val path = Path()
+                path.moveTo(shape[0], shape[1])
+                for (i in 0 until shape.size step 2)
+                    path.lineTo(shape[i], shape[i + 1])
+                path.close()
+                paths.add(path)
+            }
         } // init
 
         fun field(
