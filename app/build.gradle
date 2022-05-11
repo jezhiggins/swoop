@@ -10,12 +10,12 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "uk.co.jezuk.swoop"
         minSdkVersion 28
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 21
         versionName "1.21"
 
