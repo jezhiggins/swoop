@@ -49,6 +49,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'uk.co.jezuk.swoop'
 }
 
 play {
