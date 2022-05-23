@@ -19,14 +19,14 @@ class Attract(
     private val game: Game
 ) : WaveWithTargets() {
     override val ship: Ship? = null
-    private val extent = game.extent
+    private val extent = Game.extent
     private val pureHighScore = game.pureHighScore()
     private val restartHighScore = game.restartHighScore()
     private val highWave = game.highWave
     private fun startScore(waveIndex: Int): Int = game.startScore(waveIndex)
     private fun startLives(waveIndex: Int): Int = game.startLives(waveIndex)
 
-    private var starField = StarField(game.extent)
+    private var starField = StarField(Game.extent)
     val cometGun = Repeat(750, { Comet(game, this) })
     val saucerGun = Repeat(2000, { Saucer(game, this, Random.nextInt(1, 4)) })
     private var mode: AttractMode = TitleScreen()
@@ -38,7 +38,7 @@ class Attract(
             Random.nextInt(2, 5),
             Random.nextInt(2, 7),
             Random.nextInt(2,6),
-            { game.extent.randomPoint() }
+            { Game.extent.randomPoint() }
         )
     }
 

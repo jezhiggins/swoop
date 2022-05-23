@@ -14,7 +14,7 @@ class Minelayer(
     private val game: Game,
     private val wave: Wave,
     private val onDestroyed: () -> Unit,
-    traverse: Array<Point> = game.extent.randomTraverse(),
+    traverse: Array<Point> = Game.extent.randomTraverse(),
     private val alwaysDrop: Boolean = false
 ): Target {
     override val position = traverse[0]
@@ -24,7 +24,7 @@ class Minelayer(
     private var shieldRadius = 75f
     private var dropAt = Point(position)
     private var trigger = RestartableLatch(25, ::dropMine)
-    private val minefield = game.extent.inflated(-30f)
+    private val minefield = Game.extent.inflated(-30f)
     private var dropping = Random.nextBoolean()
 
     init {
@@ -58,7 +58,7 @@ class Minelayer(
     override fun update(frameRateScale: Float) {
         trigger.tick(frameRateScale)
 
-        if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
+        if (!position.moveNoWrap(velocity, frameRateScale, Game.extent, killDist))
             destroyed()
     } // update
 

@@ -22,7 +22,6 @@ import kotlin.math.min
 class Game(private val context: Context) {
     enum class NextShip { Continue, End }
     private var wave: Wave = Emptiness()
-    val extent = Extent(1920, 1080)
     private var scaleMatrix = Matrix()
     private var touchMatrix = Matrix()
     private val sounds = Sounds(context)
@@ -143,7 +142,7 @@ class Game(private val context: Context) {
 
         wave.draw(canvas)
 
-        player.draw(canvas, extent, newHighScore)
+        player.draw(canvas, newHighScore)
 
         canvas.restore()
     } // draw
@@ -191,4 +190,8 @@ class Game(private val context: Context) {
     var highWave: Int
         get() = prefs.getInt("maxwave", 0)
         private set(value) = prefs.edit { putInt("maxwave", value) }
+
+    companion object {
+        val extent = Extent(1920, 1080)
+    }
 } // Game

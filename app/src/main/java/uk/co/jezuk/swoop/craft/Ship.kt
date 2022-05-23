@@ -98,7 +98,7 @@ class Ship(private val game: Game): Craft {
     } // rotateShip
 
     private fun applyThrust(frameRateScale: Float) {
-        pos.move(velocity, frameRateScale, game.extent, killDist)
+        pos.move(velocity, frameRateScale, Game.extent, killDist)
     } // applyThrust
 
     //////////////////////////
@@ -235,7 +235,7 @@ class Ship(private val game: Game): Craft {
         private var radius = 600f
 
         override fun rotateTowards(angle: Double) {
-            ship.pos.move(Vector(15.0, angle), 1f, ship.game.extent)
+            ship.pos.move(Vector(15.0, angle), 1f, Game.extent)
         }
         override fun update(frameRateScale: Float) {
             pause.tick(frameRateScale)

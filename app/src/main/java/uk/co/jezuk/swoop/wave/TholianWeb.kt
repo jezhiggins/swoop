@@ -28,49 +28,49 @@ class TholianWeb(
     )
 
     private fun verticalTraverse() {
-        val offsetX = game.extent.width / 6.0;
+        val offsetX = Game.extent.width / 6.0;
         val traverses = arrayOf(
-            arrayOf(Point(offsetX, game.extent.top), Point(offsetX, game.extent.bottom)),
-            arrayOf(Point(-offsetX, game.extent.bottom), Point(-offsetX, game.extent.top))
+            arrayOf(Point(offsetX, Game.extent.top), Point(offsetX, Game.extent.bottom)),
+            arrayOf(Point(-offsetX, Game.extent.bottom), Point(-offsetX, Game.extent.top))
         )
         traverses.forEach { t -> Minelayer(game, this, nothing, t, true) }
     } // verticalTraverse
 
     private fun horizontalTraverse() {
-        val offsetY = game.extent.height / 6.0;
+        val offsetY = Game.extent.height / 6.0;
         val traverses = arrayOf(
-            arrayOf(Point(game.extent.left, offsetY), Point(game.extent.right, offsetY)),
-            arrayOf(Point(game.extent.right, -offsetY), Point(game.extent.top, -offsetY))
+            arrayOf(Point(Game.extent.left, offsetY), Point(Game.extent.right, offsetY)),
+            arrayOf(Point(Game.extent.right, -offsetY), Point(Game.extent.top, -offsetY))
         )
         traverses.forEach { t -> Minelayer(game, this, nothing, t, true) }
     } // horizontalTraverse
 
     private fun cornerTraverse() {
-        val offsetX = game.extent.width / 6.0;
-        val offsetY = game.extent.height / 6.0;
+        val offsetX = Game.extent.width / 6.0;
+        val offsetY = Game.extent.height / 6.0;
         val traverses = arrayOf(
-            arrayOf(Point(game.extent.left, -offsetY), Point(-offsetX, game.extent.top)),
-            arrayOf(Point(game.extent.left, offsetY), Point(-offsetX, game.extent.bottom)),
-            arrayOf(Point(game.extent.right, -offsetY), Point(offsetX, game.extent.top)),
-            arrayOf(Point(game.extent.right, offsetY), Point(offsetX, game.extent.bottom))
+            arrayOf(Point(Game.extent.left, -offsetY), Point(-offsetX, Game.extent.top)),
+            arrayOf(Point(Game.extent.left, offsetY), Point(-offsetX, Game.extent.bottom)),
+            arrayOf(Point(Game.extent.right, -offsetY), Point(offsetX, Game.extent.top)),
+            arrayOf(Point(Game.extent.right, offsetY), Point(offsetX, Game.extent.bottom))
         )
         traverses.forEach { t -> Minelayer(game, this, nothing, t, true) }
     } // cornerTraverse
 
     private fun hereComeTheAsteroids() {
-        StonyAsteroid(game, this, Point(0.0, game.extent.top))
-        StonyAsteroid(game, this, Point(0.0, game.extent.bottom))
-        StonyAsteroid(game, this, Point(game.extent.left, 0.0))
-        StonyAsteroid(game, this, Point(game.extent.right, 0.0))
+        StonyAsteroid(game, this, Point(0.0, Game.extent.top))
+        StonyAsteroid(game, this, Point(0.0, Game.extent.bottom))
+        StonyAsteroid(game, this, Point(Game.extent.left, 0.0))
+        StonyAsteroid(game, this, Point(Game.extent.right, 0.0))
 
         targets.onEliminated { endOfLevel() }
     } // hereComeTheAsteroids
 
     private fun letsGoIron() {
-        IronAsteroid(game, this, Point(game.extent.left, game.extent.top))
-        IronAsteroid(game, this, Point(game.extent.left, game.extent.bottom))
-        IronAsteroid(game, this, Point(game.extent.right, game.extent.top))
-        IronAsteroid(game, this, Point(game.extent.right, game.extent.bottom))
+        IronAsteroid(game, this, Point(Game.extent.left, Game.extent.top))
+        IronAsteroid(game, this, Point(Game.extent.left, Game.extent.bottom))
+        IronAsteroid(game, this, Point(Game.extent.right, Game.extent.top))
+        IronAsteroid(game, this, Point(Game.extent.right, Game.extent.bottom))
     } // letsGoIron
 
     /////

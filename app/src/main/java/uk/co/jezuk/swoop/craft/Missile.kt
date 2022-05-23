@@ -23,7 +23,7 @@ class Missile(
     override val killDist get() = 12f
 
     override fun update(frameRateScale: Float) {
-        if (!position.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
+        if (!position.moveNoWrap(velocity, frameRateScale, Game.extent, killDist))
             destroyed()
     } // update
 

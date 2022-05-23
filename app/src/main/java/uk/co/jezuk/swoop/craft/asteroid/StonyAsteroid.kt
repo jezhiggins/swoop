@@ -70,7 +70,7 @@ class StonyAsteroid(
             big: Int,
             medium: Int = 0,
             small: Int = 0,
-            originFn: () -> Point = { game.extent.randomPointOnEdge() }
+            originFn: () -> Point = { Game.extent.randomPointOnEdge() }
         ) {
             field(
                 ::StonyAsteroid,

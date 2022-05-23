@@ -15,7 +15,7 @@ import kotlin.random.Random
 class Tumbler(
     private val game: Game,
     private val wave: Wave,
-    traverse: Array<Point> = game.extent.randomHorizontalTraverse()
+    traverse: Array<Point> = Game.extent.randomHorizontalTraverse()
 ): Target {
     override val position = Point(traverse[0])
     private val velocity = Vector(Random.nextDouble(2.0, 5.0), position.angleTo(traverse[1]))
@@ -31,7 +31,7 @@ class Tumbler(
     override val killDist get() = 50f
 
     override fun update(frameRateScale: Float) {
-        position.move(velocity, frameRateScale, game.extent, killDist)
+        position.move(velocity, frameRateScale, Game.extent, killDist)
         orientation += rotation * frameRateScale
         shooter.tick(frameRateScale)
     } // update
@@ -74,7 +74,7 @@ class Tumbler(
         for (offset in 0..360 step 90) {
             val initialPosition = Point(position)
             val direction = orientation.angle + offset
-            initialPosition.move(Vector(60.0, direction, 60.0), 1f, game.extent)
+            initialPosition.move(Vector(60.0, direction, 60.0), 1f, Game.extent)
             val missileVelocity = velocity.copy()
             missileVelocity += Vector(7.0, direction)
             Missile(game, wave, initialPosition, missileVelocity, direction.toFloat())

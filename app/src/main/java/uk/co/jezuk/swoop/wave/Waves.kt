@@ -107,7 +107,7 @@ class Waves {
             projectiles: Projectiles?,
             gun: Gun?
         ): Wave {
-            val newStarField = StarField(game.extent)
+            val newStarField = StarField(Game.extent)
             val nextWave = next(game, newStarField, gun)
 
             return LevelTransition(

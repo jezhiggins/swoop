@@ -16,7 +16,7 @@ class Saucer(
     private val game: Game,
     private val wave: Wave,
     aggressiveness: Int,
-    traverse: Array<Point> = game.extent.randomHorizontalTraverse()
+    traverse: Array<Point> = Game.extent.randomHorizontalTraverse()
 ): Target {
     override val position = Point(traverse[0])
     private val startPosition = Point(traverse[0])
@@ -41,9 +41,9 @@ class Saucer(
         val bounceOffset = sin(distance  * bounciness) * swinginess
 
         position.moveTo(basePosition)
-        position.move(Vector(bounceOffset, skew), 1f, game.extent, killDist)
+        position.move(Vector(bounceOffset, skew), 1f, Game.extent, killDist)
 
-        if (!basePosition.moveNoWrap(velocity, frameRateScale, game.extent, killDist))
+        if (!basePosition.moveNoWrap(velocity, frameRateScale, Game.extent, killDist))
             destroyed();
 
         fireIfReady(distance)

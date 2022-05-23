@@ -16,8 +16,8 @@ class Comet(
     private val game: Game,
     private val wave: Wave
 ): Target {
-    override val position = game.extent.randomPointOnEdge()
-    private val extentWithTail = game.extent.inflated(500f)
+    override val position = Game.extent.randomPointOnEdge()
+    private val extentWithTail = Game.extent.inflated(500f)
     private val velocity = CometVector(position)
     private val orientation = Rotation.random()
     private val rotation = Random.nextDouble(-5.0, 5.0)

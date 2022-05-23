@@ -29,13 +29,13 @@ class Bullet(
         velocity += Vector(10.0, orientation, 30.0)
 
         val toPointyEndOfShop = Vector(Ship.Radius*2, orientation, Ship.Radius*2)
-        position.move(toPointyEndOfShop, 1f, game.extent, Ship.Radius);
+        position.move(toPointyEndOfShop, 1f, Game.extent, Ship.Radius);
 
         wave.addProjectile(this)
     } // init
 
     override fun update(frameRateScale: Float) {
-        position.move(velocity, frameRateScale, game.extent, Ship.Radius)
+        position.move(velocity, frameRateScale, Game.extent, Ship.Radius)
         if (++age > maxAge) wave.removeProjectile(this)
     } // update
 

@@ -43,7 +43,7 @@ abstract class Spaceman(
 
     /////
     override fun update(frameRateScale: Float) {
-        position.move(velocity, frameRateScale, game.extent, killDist)
+        position.move(velocity, frameRateScale, Game.extent, killDist)
         matrix.postRotate(rotation.toFloat())
 
         age += frameRateScale

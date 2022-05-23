@@ -4,7 +4,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.craft.Ship
-import uk.co.jezuk.swoop.geometry.Extent
 import kotlin.math.min
 
 class Player {
@@ -41,20 +40,20 @@ class Player {
         currentScore += add
     }// scored
 
-    fun draw(canvas: Canvas, extent: Extent, newHighScore: Boolean) {
-        drawScore(canvas, extent, newHighScore)
-        drawLives(canvas, extent)
+    fun draw(canvas: Canvas, newHighScore: Boolean) {
+        drawScore(canvas, newHighScore)
+        drawLives(canvas)
     }
 
-    private fun drawScore(canvas: Canvas, extent: Extent, newHighScore: Boolean) {
+    private fun drawScore(canvas: Canvas, newHighScore: Boolean) {
         if (score == -1) return
         if (targetScore != currentScore)
             updateScore(10);
 
         canvas.drawText(
             "${score}".padStart(6, '0'),
-            -extent.canvasOffsetX + 50,
-            extent.canvasOffsetY - 50,
+            -Game.extent.canvasOffsetX + 50,
+            Game.extent.canvasOffsetY - 50,
             scorePen
         )
         if (!newHighScore) return
@@ -62,15 +61,15 @@ class Player {
         scorePen.textSize = 32f
         canvas.drawText(
             "High Score",
-            -extent.canvasOffsetX + 60,
-            extent.canvasOffsetY - 160,
+            -Game.extent.canvasOffsetX + 60,
+            Game.extent.canvasOffsetY - 160,
             scorePen
         )
         scorePen.textSize = 128f
     } // drawScore
 
-    private fun drawLives(canvas: Canvas, extent: Extent) {
-        canvas.translate(extent.canvasOffsetX - 50, extent.canvasOffsetY - 90)
+    private fun drawLives(canvas: Canvas) {
+        canvas.translate(Game.extent.canvasOffsetX - 50, Game.extent.canvasOffsetY - 90)
         canvas.rotate(-90f)
         canvas.scale(0.75f, 0.75f)
         for (l in 0 until currentLives) {

@@ -39,7 +39,7 @@ abstract class Asteroid(
     } // init
 
     override fun update(frameRateScale: Float) {
-        position.move(velocity, frameRateScale, game.extent, killDist)
+        position.move(velocity, frameRateScale, Game.extent, killDist)
         orientation += rotation * frameRateScale
     } // update
 
@@ -148,7 +148,7 @@ abstract class Asteroid(
             big: Int,
             medium: Int = 0,
             small: Int = 0,
-            originFn: () -> Point = { game.extent.randomPointOnEdge() }
+            originFn: () -> Point = { Game.extent.randomPointOnEdge() }
         ) {
             val sizes = mapOf(
                 Pair(big, Big),
