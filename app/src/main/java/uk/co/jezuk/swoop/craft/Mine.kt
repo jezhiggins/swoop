@@ -20,7 +20,7 @@ class Mine(
 
     init {
         wave.addTarget(this)
-        game.sound(R.raw.minedrop, position)
+        Game.sound(R.raw.minedrop, position)
 
         brush.color = Color.YELLOW
         brush.alpha = 180
@@ -61,7 +61,7 @@ class Mine(
     } // shot
 
     override fun explode() {
-        game.sound(R.raw.mineexplosion, position)
+        Game.sound(R.raw.mineexplosion, position)
         wave.removeTarget(this)
         Puff(wave, position)
     } // explode

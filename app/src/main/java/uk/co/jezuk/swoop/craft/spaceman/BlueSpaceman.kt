@@ -11,7 +11,7 @@ class BlueSpaceman(
     private val wave: Wave,
     pos: Point
 ) : Spaceman(game, wave, pos, R.drawable.bluespaceman) {
-    private val savedSound = { game.sound(R.raw.spacemansaved, position) }
+    private val savedSound = { Game.sound(R.raw.spacemansaved, position) }
 
     /////
     override fun shipCollision(ship: Ship) {

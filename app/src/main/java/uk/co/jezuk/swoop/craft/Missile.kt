@@ -41,7 +41,7 @@ class Missile(
     override fun shot(): Target.Impact {
         game.scored(100)
         destroyed()
-        game.sound(R.raw.missileexplosion, position)
+        Game.sound(R.raw.missileexplosion, position)
         return Target.Impact.HARD
     } // shot
 

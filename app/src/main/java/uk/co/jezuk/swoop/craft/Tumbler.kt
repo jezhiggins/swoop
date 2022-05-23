@@ -24,7 +24,7 @@ class Tumbler(
     private val shooter = Repeat(Random.nextInt(120, 180), { fire() })
 
     init {
-        game.sound(R.raw.sauceralarm, position)
+        Game.sound(R.raw.sauceralarm, position)
         wave.addTarget(this)
     } // init
 
@@ -54,7 +54,7 @@ class Tumbler(
     } // shot
 
     override fun explode() {
-        game.sound(R.raw.saucerexplosion, position)
+        Game.sound(R.raw.saucerexplosion, position)
         BigPuff(wave, position)
         Explosion(
             wave, position, velocity, orientation, rotation,
@@ -70,7 +70,7 @@ class Tumbler(
     override fun shipCollision(ship: Ship) = ship.hit()
 
     private fun fire() {
-        game.sound(R.raw.saucerfire, position)
+        Game.sound(R.raw.saucerfire, position)
         for (offset in 0..360 step 90) {
             val initialPosition = Point(position)
             val direction = orientation.angle + offset

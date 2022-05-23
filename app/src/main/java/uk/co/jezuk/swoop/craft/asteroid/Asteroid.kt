@@ -30,9 +30,9 @@ abstract class Asteroid(
     protected val shape = shapes[outline]
     protected val path = paths[outline]
 
-    private val smallBang = { game.sound(R.raw.bangsmall, position) }
-    private val midBang = { game.sound(R.raw.bangmedium, position) }
-    private val bigBang = { game.sound(R.raw.banglarge, position) }
+    private val smallBang = { Game.sound(R.raw.bangsmall, position) }
+    private val midBang = { Game.sound(R.raw.bangmedium, position) }
+    private val bigBang = { Game.sound(R.raw.banglarge, position) }
 
     init {
         wave.addTarget(this)

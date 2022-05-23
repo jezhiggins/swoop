@@ -19,7 +19,7 @@ class IronAsteroid(
     pos: Point,
     scale: Float = Big
 ): Asteroid(game, wave, pos, scale) {
-    private val ting = { game.sound(R.raw.ting, position) }
+    private val ting = { Game.sound(R.raw.ting, position) }
 
     private var spang = 0
     private fun resetSpang() {

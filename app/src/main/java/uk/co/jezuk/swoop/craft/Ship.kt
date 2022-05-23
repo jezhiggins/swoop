@@ -16,10 +16,10 @@ class Ship(private val game: Game): Craft {
     var orientation = Rotation(-90.0)
     private var targetOrientation = orientation.clone()
 
-    private val thrustSound = { game.sound(R.raw.thrust, position) }
-    private val explosionSound = { game.sound(R.raw.shipexplosion, position) }
-    private val rezInSound = { game.sound(R.raw.rezin, position) }
-    private val rezOutSound = { game.sound(R.raw.rezout, position) }
+    private val thrustSound = { Game.sound(R.raw.thrust, position) }
+    private val explosionSound = { Game.sound(R.raw.shipexplosion, position) }
+    private val rezInSound = { Game.sound(R.raw.rezin, position) }
+    private val rezOutSound = { Game.sound(R.raw.rezout, position) }
 
     private val pos = Point(0.0, 0.0)
     private var state: ShipState = RezIn(this)

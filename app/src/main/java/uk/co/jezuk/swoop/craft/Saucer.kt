@@ -30,7 +30,7 @@ class Saucer(
     private var fired = firedStep
 
     init {
-        game.sound(R.raw.sauceralarm, position)
+        Game.sound(R.raw.sauceralarm, position)
         wave.addTarget(this)
     } // init
 
@@ -56,7 +56,7 @@ class Saucer(
 
         val direction = position.angleTo(wave.ship!!.position)
 
-        game.sound(R.raw.saucerfire, position)
+        Game.sound(R.raw.saucerfire, position)
         for (offset in -30..30 step 30)
             Missile(game, wave, Point(position), Vector(7.0, direction-offset))
     }
@@ -78,7 +78,7 @@ class Saucer(
     } // shot
 
     override fun explode() {
-        game.sound(R.raw.saucerexplosion, position)
+        Game.sound(R.raw.saucerexplosion, position)
         BigPuff(wave, position)
         Explosion(
             wave, position, velocity, Rotation.none(), 0.0,

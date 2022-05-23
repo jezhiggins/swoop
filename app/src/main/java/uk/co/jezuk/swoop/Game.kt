@@ -24,36 +24,12 @@ class Game(private val context: Context) {
     private var wave: Wave = Emptiness()
     private var scaleMatrix = Matrix()
     private var touchMatrix = Matrix()
-    private val sounds = Sounds(context)
     private var pure = false
 
     private val player = Player()
 
     init {
-        val soundIds = listOf(
-            R.raw.banglarge,
-            R.raw.bangmedium,
-            R.raw.bangsmall,
-            R.raw.cometslap,
-            R.raw.rezin,
-            R.raw.rezout,
-            R.raw.shipexplosion,
-            R.raw.spaceman,
-            R.raw.spacemanfallen,
-            R.raw.spacemansaved,
-            R.raw.thrust,
-            R.raw.ting,
-            R.raw.minedrop,
-            R.raw.mineexplosion,
-            R.raw.minelayershieldhit,
-            R.raw.minelayerexplosion,
-            R.raw.minelayeralarm,
-            R.raw.sauceralarm,
-            R.raw.saucerexplosion,
-            R.raw.saucerfire,
-            R.raw.missileexplosion
-        )
-        soundIds.forEach({ sounds.load(it) })
+        loadSounds(context);
     }
 
     fun setExtent(width: Int, height: Int) {
@@ -148,12 +124,6 @@ class Game(private val context: Context) {
     } // draw
 
     /////
-    fun sound(soundResId: Int, position: Point) {
-        val soundFn = sounds.load(soundResId)
-        val pan = position.x.toFloat() / extent.canvasOffsetX
-        soundFn(pan)
-    } // sound
-
     fun loadBitmap(bitmapId: Int): BitmapDrawable =
         context.resources.getDrawable(bitmapId, null) as BitmapDrawable
 
@@ -193,5 +163,44 @@ class Game(private val context: Context) {
 
     companion object {
         val extent = Extent(1920, 1080)
+
+        fun sound(soundResId: Int, position: Point) {
+            val soundFn = sounds!!.load(soundResId)
+            val pan = position.x.toFloat() / extent.canvasOffsetX
+            soundFn(pan)
+        } // sound
+
+        private var sounds: Sounds? = null
+
+        private fun loadSounds(context: Context) {
+            if (sounds != null)
+                return
+
+            val soundIds = listOf(
+                R.raw.banglarge,
+                R.raw.bangmedium,
+                R.raw.bangsmall,
+                R.raw.cometslap,
+                R.raw.rezin,
+                R.raw.rezout,
+                R.raw.shipexplosion,
+                R.raw.spaceman,
+                R.raw.spacemanfallen,
+                R.raw.spacemansaved,
+                R.raw.thrust,
+                R.raw.ting,
+                R.raw.minedrop,
+                R.raw.mineexplosion,
+                R.raw.minelayershieldhit,
+                R.raw.minelayerexplosion,
+                R.raw.minelayeralarm,
+                R.raw.sauceralarm,
+                R.raw.saucerexplosion,
+                R.raw.saucerfire,
+                R.raw.missileexplosion
+            )
+            sounds = Sounds(context)
+            soundIds.forEach({ sounds!!.load(it) })
+        }
     }
 } // Game

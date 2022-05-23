@@ -24,9 +24,9 @@ abstract class Spaceman(
     private val rotation = Random.nextDouble(-1.5, 1.5)
     private val spaceman = game.loadBitmap(bitmapId).bitmap
     private val matrix = Matrix()
-    private val problemSound = { game.sound(R.raw.spaceman, position) }
-    private val fallenSound = { game.sound(R.raw.spacemanfallen, position) }
-    private val savedSound = { game.sound(R.raw.spacemansaved, position) }
+    private val problemSound = { Game.sound(R.raw.spaceman, position) }
+    private val fallenSound = { Game.sound(R.raw.spacemanfallen, position) }
+    private val savedSound = { Game.sound(R.raw.spacemansaved, position) }
     override val killDist = spaceman.width / 2f
     private var age = 0f
     private var falling = false

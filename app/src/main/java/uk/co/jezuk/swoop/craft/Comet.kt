@@ -21,7 +21,7 @@ class Comet(
     private val velocity = CometVector(position)
     private val orientation = Rotation.random()
     private val rotation = Random.nextDouble(-5.0, 5.0)
-    private val slap = { game.sound(R.raw.cometslap, position) }
+    private val slap = { Game.sound(R.raw.cometslap, position) }
 
     init {
         wave.addTarget(this)

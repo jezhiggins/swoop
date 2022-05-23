@@ -30,7 +30,7 @@ class Minelayer(
     init {
         trigger.start()
 
-        game.sound(R.raw.minelayeralarm, position)
+        Game.sound(R.raw.minelayeralarm, position)
         wave.addTarget(this)
 
         shipBrush.setARGB(225, 60, 255, 255)
@@ -81,14 +81,14 @@ class Minelayer(
             game.scored(500)
             explode()
         } else {
-            game.sound(R.raw.minelayershieldhit, position)
+            Game.sound(R.raw.minelayershieldhit, position)
         }
         return Target.Impact.HARD
     } // shot
 
     override fun explode() {
         destroyed()
-        game.sound(R.raw.minelayerexplosion, position)
+        Game.sound(R.raw.minelayerexplosion, position)
         Puff(wave, position)
     } // explode
 
