@@ -41,6 +41,7 @@ class Ship(private val player: Player) {
         targetOrientation = orientation.clone()
         velocity.reset()
         pos.reset()
+        state = RezIn(this)
     } // reset
 
     /////////////////////////////////////
@@ -66,7 +67,9 @@ class Ship(private val player: Player) {
     } // draw
 
     fun hit() = state.hit()
-    fun rezOut() { state = RezOut(this) }
+    fun rezOut() {
+        state = RezOut(this)
+    }
 
     ////////////////
     private fun rotateShip(frameRateScale: Float) {

@@ -21,6 +21,8 @@ class Player(val game: Game): Craft {
     private val callbacks = ArrayList<() -> Unit>()
     fun onLifeLost(callback: () -> Unit) = callbacks.add(callback)
 
+    fun newWave() = ship.reset()
+
     fun thrust() = ship.thrust()
     fun rotateTowards(angle: Double) = ship.rotateTowards(angle)
     fun rezOut() = ship.rezOut()
@@ -114,7 +116,7 @@ class Score {
 
     fun end() {
         currentScore = -1
-        targetScore = score;
+        targetScore = -1;
     }
 
     fun scored(add: Int) {
