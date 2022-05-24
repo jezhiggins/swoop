@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.craft.Nothing
-import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
 
@@ -14,7 +14,7 @@ class GameOver(
     private val game: Game,
     private val wave: Wave
 ) : Wave {
-    override val ship: Ship? = null
+    override val player: Player? = null
     private var brightener = Repeat(5, { brighten() })
 
     init {

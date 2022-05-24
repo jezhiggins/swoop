@@ -1,15 +1,17 @@
 package uk.co.jezuk.swoop.craft
 
+import uk.co.jezuk.swoop.Player
+
 interface Target: Craft {
     enum class Impact { HARD, SOFT, NONE }
 
-    fun shipCollision(ship: Ship)
+    fun playerCollision(player: Player)
     fun shot(): Impact
     fun explode()
 
-    fun checkShipCollision(ship: Ship) {
-        if (Craft.collision(this, ship))
-            shipCollision(ship)
+    fun checkShipCollision(player: Player) {
+        if (Craft.collision(this, player))
+            playerCollision(player)
     } // checkShipCollision
     fun checkProjectileCollision(projectiles: Projectiles) {
         val hitWith = projectiles.collision(this)

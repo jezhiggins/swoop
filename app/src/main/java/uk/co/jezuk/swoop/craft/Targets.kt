@@ -2,6 +2,7 @@ package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 
@@ -20,8 +21,8 @@ class Targets {
         iterator().forEach { t -> t.update(frameRateScale) }
     } // updateTargets
 
-    fun checkShipCollision(ship: Ship) {
-        iterator().forEach { t -> t.checkShipCollision(ship) }
+    fun checkPlayerCollision(player: Player) {
+        iterator().forEach { t -> t.checkShipCollision(player) }
     } // checkShipCollision
 
     fun draw(canvas: Canvas) {

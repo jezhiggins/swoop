@@ -4,8 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
-import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.spaceman.OrangeSpaceman
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.craft.spaceman.BlueSpaceman
@@ -44,9 +44,7 @@ class IronAsteroid(
         return Target.Impact.HARD
     } // shot
 
-    override fun shipCollision(ship: Ship) {
-        ship.hit()
-    } // shipCollision
+    override fun playerCollision(player: Player) = player.hit()
 
     private fun split() {
         val spacemanPops = Random.nextFloat()

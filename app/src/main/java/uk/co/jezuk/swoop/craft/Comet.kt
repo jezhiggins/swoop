@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
@@ -65,7 +66,7 @@ class Comet(
     } // shot
     override fun explode() { }
 
-    override fun shipCollision(ship: Ship) = ship.hit()
+    override fun playerCollision(player: Player) = player.hit()
 
     companion object {
         fun CometVector(position: Point) =

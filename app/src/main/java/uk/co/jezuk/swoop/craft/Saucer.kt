@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
@@ -26,7 +27,7 @@ class Saucer(
     private val swinginess = Random.nextDouble(100.0, 100.0 + (50.0 * aggressiveness))
     private val traverseLength = startPosition.distance(traverse[1])
     private val skew = Rotation.random()
-    private val firedStep = if (wave.ship != null) Random.nextDouble(0.4 - (0.07 * aggressiveness), 0.4) else 1000.0
+    private val firedStep = if (wave.player != null) Random.nextDouble(0.4 - (0.07 * aggressiveness), 0.4) else 1000.0
     private var fired = firedStep
 
     init {
@@ -54,7 +55,7 @@ class Saucer(
 
         fired += firedStep
 
-        val direction = position.angleTo(wave.ship!!.position)
+        val direction = position.angleTo(wave.player!!.position)
 
         Game.sound(R.raw.saucerfire, position)
         for (offset in -30..30 step 30)
@@ -87,7 +88,7 @@ class Saucer(
         destroyed()
     } // explode
 
-    override fun shipCollision(ship: Ship) = ship.hit()
+    override fun playerCollision(player: Player) = player.hit()
     private fun destroyed() = wave.removeTarget(this)
 
     companion object {

@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.utils.Repeat
@@ -66,8 +67,8 @@ class Mine(
         Puff(wave, position)
     } // explode
 
-    override fun shipCollision(ship: Ship) {
+    override fun playerCollision(player: Player) {
         explode()
-        ship.hit()
-    } // shipCollision
+        player.hit()
+    } // playerCollision
 } // class Minelayer

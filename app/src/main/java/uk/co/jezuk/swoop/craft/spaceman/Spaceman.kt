@@ -3,8 +3,8 @@ package uk.co.jezuk.swoop.craft.spaceman
 import android.graphics.Canvas
 import android.graphics.Matrix
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
-import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
@@ -74,12 +74,12 @@ abstract class Spaceman(
     } // draw
 
     /////
-    override fun shipCollision(ship: Ship) {
+    override fun playerCollision(player: Player) {
         savedSound()
         game.scored(1000)
         wave.upgrade()
         wave.removeTarget(this)
-    } // shipCollision
+    } // playerCollision
 
     override fun shot(): Target.Impact = Target.Impact.NONE
     override fun explode() = Unit

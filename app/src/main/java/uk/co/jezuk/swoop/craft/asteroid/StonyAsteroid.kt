@@ -3,7 +3,7 @@ package uk.co.jezuk.swoop.craft.asteroid
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.Ship
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.craft.spaceman.OrangeSpaceman
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.geometry.Point
@@ -29,10 +29,10 @@ class StonyAsteroid(
         return Target.Impact.SOFT
     } // shot
 
-    override fun shipCollision(ship: Ship) {
+    override fun playerCollision(player: Player) {
         split()
-        ship.hit()
-    } // shipCollision
+        player.hit()
+    } // playerCollision
 
     private fun split() {
         if (Random.nextFloat() < 0.1f)

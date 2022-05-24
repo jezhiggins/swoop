@@ -2,6 +2,7 @@ package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.wave.Wave
@@ -46,7 +47,7 @@ class Puff(
     } // draw
 
     /////
-    override fun shipCollision(ship: Ship) = Unit
+    override fun playerCollision(player: Player) = Unit
     override fun shot(): Target.Impact = Target.Impact.NONE
     override fun explode() = Unit
 

@@ -2,12 +2,12 @@ package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
 import android.view.MotionEvent
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.craft.Projectile
-import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.Target
 
 interface Wave {
-    val ship: Ship?
+    val player: Player?
 
     fun onSingleTapUp(event: MotionEvent) = Unit
     fun onScroll(offsetX: Float, offsetY: Float) = Unit

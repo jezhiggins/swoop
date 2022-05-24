@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
@@ -67,7 +68,7 @@ class Tumbler(
         wave.removeTarget(this)
     } // explode
 
-    override fun shipCollision(ship: Ship) = ship.hit()
+    override fun playerCollision(player: Player) = player.hit()
 
     private fun fire() {
         Game.sound(R.raw.saucerfire, position)

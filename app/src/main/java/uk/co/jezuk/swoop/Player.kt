@@ -3,33 +3,104 @@ package uk.co.jezuk.swoop
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import uk.co.jezuk.swoop.craft.Craft
 import uk.co.jezuk.swoop.craft.Ship
 import kotlin.math.min
 
-class Player {
-    private var currentLives = 0
-    private var currentScore = -1
-    private var targetScore = -1
+class Player(val game: Game): Craft {
+    private val ship = Ship(game)
+    private val lives_ = Lives()
+    private val score_ = Score()
 
-    val score get() = targetScore
+    override val position get() = ship.position
+    override val killDist get() = ship.killDist
+    val orientation get() = ship.orientation
+    val velocity get() = ship.velocity
+    val armed get() = ship.armed
+    fun onLifeLost(callback: () -> Unit) = ship.onLifeLost(callback)
+
+    fun thrust() = ship.thrust()
+    fun rotateTowards(angle: Double) = ship.rotateTowards(angle)
+    fun rezOut() = ship.rezOut()
+    fun hit() = ship.hit()
+
+    val score get() = score_.score
+    val lives get() = lives_.lives
+    val alive get() = lives_.alive
+
+    fun start(startLives: Int, startScore: Int) {
+        lives_.start(startLives)
+        score_.start(startScore)
+    }
+
+    fun end() {
+        lives_.end()
+        score_.end()
+    }
+
+    fun lifeLost() = lives_.lifeLost()
+    fun lifeGained() = lives_.lifeGained()
+
+    fun scored(add: Int) = score_.scored(add)
+
+    override fun update(frameRateScale: Float) {
+        ship.update(frameRateScale)
+    }
+    override fun draw(canvas: Canvas) {
+        ship.draw(canvas)
+    }
+
+    fun draw(canvas: Canvas, newHighScore: Boolean) {
+        score_.draw(canvas, newHighScore)
+        lives_.draw(canvas)
+    }
+
+}
+
+class Lives {
+    private var currentLives = 0
+
     val lives get() = currentLives
     val alive get() = currentLives > 0
 
-    fun start(startLives: Int, startScore: Int) {
+    fun start(startLives: Int) {
         currentLives = startLives
-        currentScore = startScore
-        targetScore = startScore
     }
 
     fun end() {
         currentLives = 0
-        currentScore = -1
-        targetScore = score;
     }
 
     fun lifeLost() = --currentLives
     fun lifeGained() {
         currentLives = min(currentLives + 1, 9)
+    }
+
+    fun draw(canvas: Canvas) {
+        canvas.translate(Game.extent.canvasOffsetX - 50, Game.extent.canvasOffsetY - 90)
+        canvas.rotate(-90f)
+        canvas.scale(0.75f, 0.75f)
+        for (l in 0 until currentLives) {
+            canvas.drawLines(Ship.shape, Ship.shipBrush)
+            canvas.translate(0f, -105f)
+        } // for
+    } // drawLives
+}
+
+class Score {
+    private var currentScore = -1
+    private var targetScore = -1
+
+    val score get() = targetScore
+
+    fun start(startScore: Int) {
+        currentScore = startScore
+        targetScore = startScore
+    }
+
+    fun end() {
+        currentScore = -1
+        targetScore = score;
     }
 
     fun scored(add: Int) {
@@ -41,11 +112,6 @@ class Player {
     }// scored
 
     fun draw(canvas: Canvas, newHighScore: Boolean) {
-        drawScore(canvas, newHighScore)
-        drawLives(canvas)
-    }
-
-    private fun drawScore(canvas: Canvas, newHighScore: Boolean) {
         if (score == -1) return
         if (targetScore != currentScore)
             updateScore(10);
@@ -67,16 +133,6 @@ class Player {
         )
         scorePen.textSize = 128f
     } // drawScore
-
-    private fun drawLives(canvas: Canvas) {
-        canvas.translate(Game.extent.canvasOffsetX - 50, Game.extent.canvasOffsetY - 90)
-        canvas.rotate(-90f)
-        canvas.scale(0.75f, 0.75f)
-        for (l in 0 until currentLives) {
-            canvas.drawLines(Ship.shape, Ship.shipBrush)
-            canvas.translate(0f, -105f)
-        } // for
-    } // drawLives
 
     companion object {
         private val scorePen = Paint()

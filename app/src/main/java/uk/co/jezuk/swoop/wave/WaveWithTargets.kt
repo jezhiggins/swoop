@@ -1,7 +1,7 @@
 package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
-import uk.co.jezuk.swoop.craft.Ship
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.craft.Target
 import uk.co.jezuk.swoop.craft.Targets
 
@@ -12,8 +12,8 @@ abstract class WaveWithTargets(
         targets.update(frameRateScale)
     } // updateTargets
 
-    protected fun checkShipCollision(ship: Ship) {
-        targets.checkShipCollision(ship)
+    protected fun checkPlayerCollision(player: Player) {
+        targets.checkPlayerCollision(player)
     } // checkShipCollision
 
     protected fun drawTargets(canvas: Canvas) {

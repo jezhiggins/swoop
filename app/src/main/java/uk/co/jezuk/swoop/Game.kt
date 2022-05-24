@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import androidx.core.content.edit
 import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Projectiles
-import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.wave.*
@@ -26,7 +25,7 @@ class Game(private val context: Context) {
     private var touchMatrix = Matrix()
     private var pure = false
 
-    private val player = Player()
+    val player = Player(this)
 
     init {
         loadSounds(context);
@@ -75,8 +74,8 @@ class Game(private val context: Context) {
         player.end()
     } // end
 
-    fun endOfWave(starField: StarField, ship: Ship, projectiles: Projectiles? = null, gun: Gun? = null) {
-        nextWave(Waves.transition(this, starField, ship, projectiles, gun))
+    fun endOfWave(starField: StarField, projectiles: Projectiles? = null, gun: Gun? = null) {
+        nextWave(Waves.transition(this, starField, projectiles, gun))
     } // endOfWave
     fun nextWave(w: Wave) { wave = w }
 

@@ -14,7 +14,7 @@ class CometStorm(
     private var cometGun: Latch = Latch(150, { launchComet() })
 
     init {
-        ship.onLifeLost { survivalBonus = false }
+        player.onLifeLost { survivalBonus = false }
     } // init
 
     private fun launchComet() {

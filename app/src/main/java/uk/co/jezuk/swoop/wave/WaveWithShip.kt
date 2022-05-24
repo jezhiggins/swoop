@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.wave
 import android.graphics.Canvas
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.craft.*
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 
@@ -12,29 +13,29 @@ abstract class WaveWithShip(
     g: Gun? = null,
     private val activeGun: Boolean = true
 ): WaveWithTargets() {
-    final override val ship: Ship = Ship(game)
-    private val gun: Gun = Gun(game, this, ship, g)
+    final override val player: Player = game.player
+    private val gun: Gun = Gun(game, this, g)
     private val projectiles: Projectiles = Projectiles()
 
     /////
-    override fun onSingleTapUp(event: MotionEvent) = ship.thrust()
+    override fun onSingleTapUp(event: MotionEvent) = player.thrust()
     override fun onScroll(offsetX: Float, offsetY: Float) {
-        ship.rotateTowards(
+        player.rotateTowards(
             angleFromOffsets(offsetX, offsetY)
         )
     } // onScroll
-    override fun onLongPress() = ship.thrust()
+    override fun onLongPress() = player.thrust()
 
     /////
     override fun update(frameRateScale: Float) {
         if (activeGun)
             gun.update(frameRateScale)
-        ship.update(frameRateScale)
+        player.update(frameRateScale)
 
         updateTargets(frameRateScale)
         updateProjectiles(frameRateScale)
 
-        checkCollisions(ship)
+        checkCollisions(player)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -43,7 +44,7 @@ abstract class WaveWithShip(
         drawTargets(canvas)
         drawProjectiles(canvas)
 
-        ship.draw(canvas)
+        player.draw(canvas)
     } // draw
 
     override fun upgrade() {
@@ -52,19 +53,19 @@ abstract class WaveWithShip(
 
     /////
     protected open fun endOfLevel() {
-        game.endOfWave(starField, ship, projectiles, gun)
+        game.endOfWave(starField, projectiles, gun)
     } // endOfLevel
 
     private fun updateProjectiles(frameRateScale: Float) {
         projectiles.update(frameRateScale)
     } // updateProjectiles
 
-    private fun checkCollisions(ship: Ship) {
+    private fun checkCollisions(player: Player) {
         targets.iterator().forEach {
             t -> t.checkProjectileCollision(projectiles)
         }
         targets.iterator().forEach {
-            t -> t.checkShipCollision(ship)
+            t -> t.checkShipCollision(player)
         }
     } // checkCollisions
 

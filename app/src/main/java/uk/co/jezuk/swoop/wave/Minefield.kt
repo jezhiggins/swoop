@@ -1,13 +1,9 @@
 package uk.co.jezuk.swoop.wave
 
-import android.graphics.Canvas
-import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Minelayer
-import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
-import uk.co.jezuk.swoop.geometry.angleFromOffsets
 import uk.co.jezuk.swoop.utils.RestartableLatch
 
 class Minefield(

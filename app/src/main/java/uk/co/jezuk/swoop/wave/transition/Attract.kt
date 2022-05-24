@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
 import uk.co.jezuk.swoop.craft.Saucer
@@ -18,7 +19,7 @@ import kotlin.random.Random
 class Attract(
     private val game: Game
 ) : WaveWithTargets() {
-    override val ship: Ship? = null
+    override val player: Player? = null
     private val extent = Game.extent
     private val pureHighScore = game.pureHighScore()
     private val restartHighScore = game.restartHighScore()

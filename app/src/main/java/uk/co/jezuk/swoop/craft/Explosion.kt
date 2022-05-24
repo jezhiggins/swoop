@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
@@ -52,7 +53,7 @@ class Explosion(
         canvas.restore()
     } // draw
 
-    override fun shipCollision(ship: Ship) { }
+    override fun playerCollision(player: Player) { }
     override fun shot(): Target.Impact = Target.Impact.NONE
     override fun explode() {}
 }
