@@ -8,7 +8,7 @@ import uk.co.jezuk.swoop.craft.Ship
 import kotlin.math.min
 
 class Player(val game: Game): Craft {
-    private val ship = Ship(game)
+    private val ship = Ship(this)
     private val lives_ = Lives()
     private val score_ = Score()
 
@@ -17,7 +17,9 @@ class Player(val game: Game): Craft {
     val orientation get() = ship.orientation
     val velocity get() = ship.velocity
     val armed get() = ship.armed
-    fun onLifeLost(callback: () -> Unit) = ship.onLifeLost(callback)
+
+    private val callbacks = ArrayList<() -> Unit>()
+    fun onLifeLost(callback: () -> Unit) = callbacks.add(callback)
 
     fun thrust() = ship.thrust()
     fun rotateTowards(angle: Double) = ship.rotateTowards(angle)
@@ -38,7 +40,19 @@ class Player(val game: Game): Craft {
         score_.end()
     }
 
-    fun lifeLost() = lives_.lifeLost()
+    fun lifeLost(): Game.NextShip {
+        ship.reset()
+        lives_.lifeLost()
+
+        callbacks.forEach { it() }
+
+        if (lives_.alive)
+            return Game.NextShip.Continue
+
+        game.gameOver()
+
+        return Game.NextShip.End
+    } // lifeLosts
     fun lifeGained() = lives_.lifeGained()
 
     fun scored(add: Int) = score_.scored(add)

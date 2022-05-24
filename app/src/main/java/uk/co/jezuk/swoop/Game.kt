@@ -79,14 +79,8 @@ class Game(private val context: Context) {
     } // endOfWave
     fun nextWave(w: Wave) { wave = w }
 
-    fun lifeLost(): NextShip {
-        player.lifeLost()
-        if (player.alive) return NextShip.Continue
+    fun gameOver() = nextWave(GameOver(this, wave))
 
-        nextWave(GameOver(this, wave))
-
-        return NextShip.End
-    } // lifeLost
     fun lifeGained() {
         player.lifeGained()
     } // livesGained

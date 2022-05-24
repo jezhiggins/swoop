@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
@@ -12,7 +13,7 @@ import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.RestartableLatch
 
-class Ship(private val game: Game): Craft {
+class Ship(private val player: Player) {
     var orientation = Rotation(-90.0)
     private var targetOrientation = orientation.clone()
 
@@ -23,13 +24,10 @@ class Ship(private val game: Game): Craft {
 
     private val pos = Point(0.0, 0.0)
     private var state: ShipState = RezIn(this)
-    private val callbacks = ArrayList<() -> Unit>()
-
-    fun onLifeLost(callback: () -> Unit) = callbacks.add(callback)
 
     /////////////////////////////////////
-    override val position get() = state.position
-    override val killDist get() = Radius
+    val position get() = state.position
+    val killDist get() = Radius
 
     val velocity = Vector(0.0, 0.0)
     val armed get() = state.armed
@@ -38,13 +36,7 @@ class Ship(private val game: Game): Craft {
         reset()
     } // init
 
-    private fun lifeLost(): Game.NextShip {
-        reset()
-        callbacks.forEach { it() }
-        return game.lifeLost()
-    } // lifeLost
-
-    private fun reset() {
+    fun reset() {
         orientation.reset(-90.0)
         targetOrientation = orientation.clone()
         velocity.reset()
@@ -55,14 +47,14 @@ class Ship(private val game: Game): Craft {
     fun thrust() = state.thrust()
     fun rotateTowards(angle: Double) = state.rotateTowards(angle)
 
-    override fun update(frameRateScale: Float) {
+    fun update(frameRateScale: Float) {
         rotateShip(frameRateScale)
         applyThrust(frameRateScale)
 
         state.update(frameRateScale)
     } // update
 
-    override fun draw(canvas: Canvas) {
+    fun draw(canvas: Canvas) {
         canvas.save()
 
         pos.translate(canvas)
@@ -222,7 +214,7 @@ class Ship(private val game: Game): Craft {
         } // draw
 
         private fun whatsNext() {
-            ship.state = if (ship.lifeLost() == Game.NextShip.Continue) {
+            ship.state = if (ship.player.lifeLost() == Game.NextShip.Continue) {
                 RezIn(ship)
             } else {
                 SpinningInTheVoid()
