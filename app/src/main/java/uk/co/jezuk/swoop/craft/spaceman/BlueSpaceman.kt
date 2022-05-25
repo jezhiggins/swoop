@@ -13,7 +13,7 @@ class BlueSpaceman(
 ) : Spaceman(game, wave, pos, R.drawable.bluespaceman) {
     /////
     override fun playerCollision(player: Player) {
-        game.scored(1500)
+        player.scored(1500)
         wave.upgrade()
 
         super.playerCollision(player)

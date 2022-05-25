@@ -35,7 +35,7 @@ class CometStorm(
 
     /////
     override fun endOfLevel() {
-        if (survivalBonus) game.scored(5000)
+        if (survivalBonus) player.scored(5000)
 
         super.endOfLevel()
     } // endOfLevel

@@ -88,11 +88,9 @@ class Game(private val context: Context) {
         player.lifeGained()
     } // livesGained
 
-    fun scored(add: Int) {
-        player.scored(add)
-
-        if (player.score > highScore) {
-            highScore = player.score
+    fun scored(score: Int) {
+        if (score > highScore) {
+            highScore = score
             newHighScore = true
         }
     }

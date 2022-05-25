@@ -60,7 +60,10 @@ class Player(val game: Game): Craft {
     } // lifeLost
     fun lifeGained() = lives_.lifeGained()
 
-    fun scored(add: Int) = score_.scored(add)
+    fun scored(add: Int) {
+        score_.scored(add)
+        game.scored(score)
+    }
 
     override fun update(frameRateScale: Float) {
         ship.update(frameRateScale)
