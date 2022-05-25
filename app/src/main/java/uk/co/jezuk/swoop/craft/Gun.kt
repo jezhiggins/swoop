@@ -24,11 +24,8 @@ class Gun(
         if (!player.armed) return
 
         Bullet(
-            game,
             wave,
-            player.position,
-            player.orientation,
-            player.velocity,
+            player,
             bulletMaxAge
         )
     } // fire

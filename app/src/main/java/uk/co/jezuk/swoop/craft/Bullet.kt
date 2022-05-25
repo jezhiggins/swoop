@@ -4,31 +4,27 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.geometry.Point
-import uk.co.jezuk.swoop.geometry.Rotation
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
 
 //////////////////////
 class Bullet(
-    private val game: Game,
     private val wave: Wave,
-    pos: Point,
-    orientation: Rotation,
-    initVel: Vector,
+    private val player: Player,
     private val maxAge: Int
 ): Projectile {
-    override val position = pos.copy()
+    override val position = player.position.copy()
     override val killDist = 1f
 
-    private val velocity = initVel.copy()
+    private val velocity = player.velocity.copy()
     private var age = 0
 
     init {
         velocity.maximum = 30.0
-        velocity += Vector(10.0, orientation, 30.0)
+        velocity += Vector(10.0, player.orientation, 30.0)
 
-        val toPointyEndOfShop = Vector(Ship.Radius*2, orientation, Ship.Radius*2)
+        val toPointyEndOfShop = Vector(Ship.Radius*2, player.orientation, Ship.Radius*2)
         position.move(toPointyEndOfShop, 1f, Game.extent, Ship.Radius);
 
         wave.addProjectile(this)
@@ -44,7 +40,7 @@ class Bullet(
     } // draw
 
     override fun hit(effect: Target.Effect) {
-        game.scored(effect.score)
+        player.scored(effect.score)
         when (effect.impact) {
             Target.Impact.HARD -> age = 100
             Target.Impact.SOFT -> age += 20
