@@ -1,17 +1,16 @@
 package uk.co.jezuk.swoop.craft
 
-import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.math.max
 import kotlin.math.min
 
 class Gun(
-    private val game: Game,
+    private val player: Player,
     private val wave: Wave,
     oldGun: Gun? = null
 ) {
-    private val player = game.player
     private var repeatDelay: Int = oldGun?.repeatDelay ?: 12
     private var trigger = Repeat(repeatDelay, { fire() })
     private var bulletMaxAge:Int = oldGun?.bulletMaxAge ?: 75
