@@ -35,13 +35,15 @@ class IronAsteroid(
         canvas.drawLines(shape, outline)
     } // drawAsteroid
 
-    override fun shot(): Target.Impact {
+    override fun shot(): Target.Effect {
         ting()
+
         if (--spang == 0) {
-            game.scored(400 / size.toInt())
             split()
+            return Target.Hard(400 / size.toInt())
         }
-        return Target.Impact.HARD
+
+        return Target.Hard()
     } // shot
 
     override fun playerCollision(player: Player) = player.hit()

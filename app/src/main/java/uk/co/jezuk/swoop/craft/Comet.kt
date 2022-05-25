@@ -60,9 +60,9 @@ class Comet(
         canvas.restore()
     } // draw
 
-    override fun shot(): Target.Impact {
+    override fun shot(): Target.Effect {
         slap()
-        return Target.Impact.HARD
+        return Target.Hard()
     } // shot
     override fun explode() { }
 

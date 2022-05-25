@@ -1,5 +1,5 @@
 package uk.co.jezuk.swoop.craft
 
 interface Projectile: Craft {
-    fun hit(impact: Target.Impact)
+    fun hit(effect: Target.Effect)
 } // Projectile

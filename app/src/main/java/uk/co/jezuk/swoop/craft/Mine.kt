@@ -55,10 +55,9 @@ class Mine(
         canvas.restore()
     } // draw
 
-    override fun shot(): Target.Impact {
-        game.scored(50)
+    override fun shot(): Target.Effect {
         explode()
-        return Target.Impact.HARD
+        return Target.Hard(50)
     } // shot
 
     override fun explode() {

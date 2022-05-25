@@ -72,10 +72,9 @@ class Saucer(
         canvas.restore()
     } // draw
 
-    override fun shot(): Target.Impact {
-        game.scored(1500)
+    override fun shot(): Target.Effect {
         explode()
-        return Target.Impact.HARD
+        return Target.Hard(1500)
     } // shot
 
     override fun explode() {

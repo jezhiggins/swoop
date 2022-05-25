@@ -81,7 +81,7 @@ abstract class Spaceman(
         wave.removeTarget(this)
     } // playerCollision
 
-    override fun shot(): Target.Impact = Target.Impact.NONE
+    override fun shot(): Target.Effect = Target.NoEffect
     override fun explode() = Unit
 
     companion object {

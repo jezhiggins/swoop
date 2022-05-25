@@ -54,6 +54,6 @@ class Explosion(
     } // draw
 
     override fun playerCollision(player: Player) { }
-    override fun shot(): Target.Impact = Target.Impact.NONE
+    override fun shot(): Target.Effect = Target.NoEffect
     override fun explode() {}
 }

@@ -48,10 +48,9 @@ class Tumbler(
         canvas.restore()
     } // draw
 
-    override fun shot(): Target.Impact {
-        game.scored(1000)
+    override fun shot(): Target.Effect {
         explode()
-        return Target.Impact.HARD
+        return Target.Hard(1000)
     } // shot
 
     override fun explode() {

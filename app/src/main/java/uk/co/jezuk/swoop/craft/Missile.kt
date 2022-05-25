@@ -39,11 +39,10 @@ class Missile(
         canvas.restore()
     } // draw
 
-    override fun shot(): Target.Impact {
-        game.scored(100)
+    override fun shot(): Target.Effect {
         destroyed()
         Game.sound(R.raw.missileexplosion, position)
-        return Target.Impact.HARD
+        return Target.Hard(100)
     } // shot
 
     override fun explode() { }

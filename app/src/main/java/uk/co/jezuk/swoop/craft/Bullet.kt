@@ -43,8 +43,9 @@ class Bullet(
         position.draw(canvas, brush)
     } // draw
 
-    override fun hit(impact: Target.Impact) {
-        when (impact) {
+    override fun hit(effect: Target.Effect) {
+        game.scored(effect.score)
+        when (effect.impact) {
             Target.Impact.HARD -> age = 100
             Target.Impact.SOFT -> age += 20
             Target.Impact.NONE -> Unit

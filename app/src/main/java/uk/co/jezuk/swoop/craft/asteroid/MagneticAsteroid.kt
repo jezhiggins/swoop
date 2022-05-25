@@ -36,10 +36,9 @@ class MagneticAsteroid(
         canvas.drawLines(shape, outline)
     } // drawAsteroid
 
-    override fun shot(): Target.Impact {
-        game.scored(600 / size.toInt())
+    override fun shot(): Target.Effect {
         split()
-        return Target.Impact.HARD
+        return Target.Hard(600 / size.toInt())
     } // shot
 
     override fun playerCollision(player: Player) = player.hit()

@@ -23,10 +23,9 @@ class StonyAsteroid(
        )
    } // drawAsteroid
 
-    override fun shot(): Target.Impact {
-        game.scored(400/size.toInt())
+    override fun shot(): Target.Effect {
         split()
-        return Target.Impact.SOFT
+        return Target.Soft(400 / size.toInt())
     } // shot
 
     override fun playerCollision(player: Player) {

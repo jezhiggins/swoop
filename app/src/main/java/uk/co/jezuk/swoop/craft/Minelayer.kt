@@ -75,16 +75,16 @@ class Minelayer(
         canvas.restore()
     } // draw
 
-    override fun shot(): Target.Impact {
+    override fun shot(): Target.Effect {
         shieldRadius -= 7f
 
         if (shieldRadius < 42f) {
-            game.scored(500)
             explode()
-        } else {
-            Game.sound(R.raw.minelayershieldhit, position)
+            return Target.Hard(500)
         }
-        return Target.Impact.HARD
+
+        Game.sound(R.raw.minelayershieldhit, position)
+        return Target.Hard()
     } // shot
 
     override fun explode() {

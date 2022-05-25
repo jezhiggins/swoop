@@ -12,6 +12,6 @@ class Nothing(): Target {
     override fun draw(canvas: Canvas) = Unit
 
     override fun playerCollision(player: Player) = Unit
-    override fun shot(): Target.Impact = Target.Impact.NONE
+    override fun shot(): Target.Effect = Target.NoEffect
     override fun explode() = Unit
 }

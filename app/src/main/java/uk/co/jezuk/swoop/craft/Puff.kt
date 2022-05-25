@@ -48,7 +48,7 @@ class Puff(
 
     /////
     override fun playerCollision(player: Player) = Unit
-    override fun shot(): Target.Impact = Target.Impact.NONE
+    override fun shot(): Target.Effect = Target.NoEffect
     override fun explode() = Unit
 
     companion object {
