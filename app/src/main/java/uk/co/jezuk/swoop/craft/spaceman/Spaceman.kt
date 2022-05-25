@@ -13,7 +13,6 @@ import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
 
 abstract class Spaceman(
-    private val game: Game,
     private val wave: Wave,
     pos: Point,
     bitmapId: Int
@@ -22,7 +21,7 @@ abstract class Spaceman(
     private val velocity = SpacemanVector()
     private val orientation = Rotation.random()
     private val rotation = Random.nextDouble(-1.5, 1.5)
-    private val spaceman = game.loadBitmap(bitmapId).bitmap
+    private val spaceman = Game.loadBitmap(bitmapId)
     private val matrix = Matrix()
     private val problemSound = { Game.sound(R.raw.spaceman, position) }
     private val fallenSound = { Game.sound(R.raw.spacemanfallen, position) }

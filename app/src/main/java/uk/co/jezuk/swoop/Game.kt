@@ -2,6 +2,7 @@ package uk.co.jezuk.swoop
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
@@ -118,9 +119,6 @@ class Game(private val context: Context) {
     } // draw
 
     /////
-    fun loadBitmap(bitmapId: Int): BitmapDrawable =
-        context.resources.getDrawable(bitmapId, null) as BitmapDrawable
-
     private val prefs: SharedPreferences
         get() = context.getSharedPreferences("swoop", Context.MODE_PRIVATE)
 
@@ -158,6 +156,9 @@ class Game(private val context: Context) {
     companion object {
         val extent = Extent(1920, 1080)
 
+        fun loadBitmap(bitmapId: Int): Bitmap =
+            (context?.resources?.getDrawable(bitmapId, null) as BitmapDrawable).bitmap
+
         fun sound(soundResId: Int, position: Point) {
             val soundFn = sounds!!.load(soundResId)
             val pan = position.x.toFloat() / extent.canvasOffsetX
@@ -165,10 +166,13 @@ class Game(private val context: Context) {
         } // sound
 
         private var sounds: Sounds? = null
+        private var context: Context? = null
 
-        private fun loadSounds(context: Context) {
+        private fun loadSounds(ctxt: Context) {
             if (sounds != null)
                 return
+
+            context = ctxt
 
             val soundIds = listOf(
                 R.raw.banglarge,
@@ -193,7 +197,7 @@ class Game(private val context: Context) {
                 R.raw.saucerfire,
                 R.raw.missileexplosion
             )
-            sounds = Sounds(context)
+            sounds = Sounds(ctxt)
             soundIds.forEach({ sounds!!.load(it) })
         }
     }

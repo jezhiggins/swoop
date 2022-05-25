@@ -35,7 +35,7 @@ class StonyAsteroid(
 
     private fun split() {
         if (Random.nextFloat() < 0.1f)
-            OrangeSpaceman(game, wave, position)
+            OrangeSpaceman(wave, position)
         explode()
 
         if (size != Small) {

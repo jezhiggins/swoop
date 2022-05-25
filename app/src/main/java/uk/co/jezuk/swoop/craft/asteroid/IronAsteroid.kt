@@ -52,9 +52,9 @@ class IronAsteroid(
         val spacemanPops = Random.nextFloat()
         if (spacemanPops < 0.12f) {
             if (spacemanPops < 0.05f)
-                BlueSpaceman(game, wave, position)
+                BlueSpaceman(wave, position)
             else
-                OrangeSpaceman(game, wave, position)
+                OrangeSpaceman(wave, position)
         }
         explode()
 

@@ -7,10 +7,9 @@ import uk.co.jezuk.swoop.wave.Wave
 import uk.co.jezuk.swoop.R
 
 class BlueSpaceman(
-    private val game: Game,
     private val wave: Wave,
     pos: Point
-) : Spaceman(game, wave, pos, R.drawable.bluespaceman) {
+) : Spaceman(wave, pos, R.drawable.bluespaceman) {
     /////
     override fun playerCollision(player: Player) {
         player.scored(1500)
