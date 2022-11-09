@@ -33,7 +33,6 @@ class Player(val game: Game): Craft {
 
     val score get() = score_.score
     val lives get() = lives_.lives
-    val alive get() = lives_.alive
 
     fun start(startLives: Int, startScore: Int) {
         lives_.start(startLives)
