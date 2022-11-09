@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.media.AudioManager
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.view.WindowCompat
@@ -42,7 +43,7 @@ class Swoop : AppCompatActivity() {
         hideHandler.postDelayed(hideRunnable, 100)
     } // onResume
 
-    private val hideHandler = Handler()
+    private val hideHandler = Handler(Looper.getMainLooper())
     @SuppressLint("InlinedApi")
     private val hideRunnable = Runnable {
         hideSystemUI();
