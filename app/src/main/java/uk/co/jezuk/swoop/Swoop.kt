@@ -7,31 +7,26 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import uk.co.jezuk.swoop.databinding.ActivityFullscreenBinding
 
 class Swoop : AppCompatActivity() {
-    private val fullScreenNoNav = View.SYSTEM_UI_FLAG_LOW_PROFILE or
-            View.SYSTEM_UI_FLAG_FULLSCREEN or
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-
-    private lateinit var binding: ActivityFullscreenBinding
     private lateinit var gameView: GameView
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityFullscreenBinding.inflate(layoutInflater)
+        val binding = ActivityFullscreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         volumeControlStream = AudioManager.STREAM_MUSIC
 
         gameView = binding.fullscreenContent
 
-        binding.root.systemUiVisibility = fullScreenNoNav
+        hideSystemUI();
     } // onCreate
 
     override fun onPause() {
@@ -50,6 +45,15 @@ class Swoop : AppCompatActivity() {
     private val hideHandler = Handler()
     @SuppressLint("InlinedApi")
     private val hideRunnable = Runnable {
-        binding.root.systemUiVisibility = fullScreenNoNav
+        hideSystemUI();
     } // hideRunnable
+
+    private fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, gameView).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+
+    }
 } // class Swoop
