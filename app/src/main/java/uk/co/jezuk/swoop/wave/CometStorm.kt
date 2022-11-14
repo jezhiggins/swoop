@@ -11,7 +11,7 @@ class CometStorm(
     private var comets = 0
     private var survivalBonus = true
 
-    private var cometGun: Latch = Latch(150, { launchComet() })
+    private var cometGun: Latch = Latch(150) { launchComet() }
 
     init {
         player.onLifeLost { survivalBonus = false }
@@ -21,7 +21,7 @@ class CometStorm(
         Comet(game, this)
         ++comets
         if (comets != 15)
-            cometGun = Latch(70, { launchComet() })
+            cometGun = Latch(70) { launchComet() }
         else
             targets.onEliminated { endOfLevel() }
     } // launchComet

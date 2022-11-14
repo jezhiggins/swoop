@@ -25,7 +25,7 @@ class Debug {
     } // update
 
     fun draw(canvas: Canvas) {
-        canvas.drawText("FPS: ${avg}", 100f, 100f, textPen)
+        canvas.drawText("FPS: $avg", 100f, 100f, textPen)
         canvas.drawText("Accel: ${canvas.isHardwareAccelerated}", 100f, 130f, textPen)
     }
 }

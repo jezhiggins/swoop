@@ -1,7 +1,6 @@
 package uk.co.jezuk.swoop.wave
 
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.wave.transition.LevelTransition
 
@@ -53,7 +52,7 @@ fun MagneticAsteroidsMaker(stonyAsteroids: Int, magneticAsteroids: Int, gunReset
 
 class Waves {
     companion object {
-        private val waves = listOf<WaveMaker>(
+        private val waves = listOf(
             AsteroidsAndCometsMaker(5),
             AsteroidsAndCometsMaker(6),
             AsteroidsAndCometsMaker(7),

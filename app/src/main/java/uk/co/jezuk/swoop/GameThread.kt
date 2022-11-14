@@ -15,7 +15,7 @@ class GameThread(
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun run() {
-        val targetFps = 50f;
+        val targetFps = 50f
         var fps: Long = 50
 
         while(!surfaceHolder.surface.isValid) {

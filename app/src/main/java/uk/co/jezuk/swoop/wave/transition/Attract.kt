@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
 import uk.co.jezuk.swoop.craft.Saucer
@@ -27,8 +26,8 @@ class Attract(
     private fun startLives(waveIndex: Int): Int = game.startLives(waveIndex)
 
     private var starField = StarField(Game.extent)
-    val cometGun = Repeat(750, { Comet(game, this) })
-    val saucerGun = Repeat(2000, { Saucer(game, this, Random.nextInt(1, 4)) })
+    private val cometGun = Repeat(750) { Comet(game, this) }
+    private val saucerGun = Repeat(2000) { Saucer(game, this, Random.nextInt(1, 4)) }
     private var mode: AttractMode = TitleScreen()
 
     init {
@@ -37,9 +36,8 @@ class Attract(
             this,
             Random.nextInt(2, 5),
             Random.nextInt(2, 7),
-            Random.nextInt(2,6),
-            { Game.extent.randomPoint() }
-        )
+            Random.nextInt(2,6)
+        ) { Game.extent.randomPoint() }
     }
 
     override fun onSingleTapUp(event: MotionEvent) {
@@ -145,7 +143,7 @@ class Attract(
 
     private class WaveStartScreen(attract: Attract): TitleDressing() {
         private val waveStride = 4
-        private val maxWave = attract.highWave;
+        private val maxWave = attract.highWave
         private val pads = mutableMapOf<Int, Double>()
         init {
             if(maxWave <= waveStride)
@@ -155,7 +153,7 @@ class Attract(
 
             var x = (if (steps%2 != 0) -100.0 else 0.0) - (200.0 * (steps/2))
             for (i in 0 until maxWave step waveStride) {
-                pads.put(i, x)
+                pads[i] = x
                 x += 200.0
             }
         }
@@ -164,7 +162,7 @@ class Attract(
             val (x, y) = event
 
             if (y > 0 && y < 300) {
-                pads.forEach { i, padX ->
+                pads.forEach { (i, padX) ->
                     if ((padX > x-75) && (padX < x+75))
                         attract.newGame(i)
                 }
@@ -224,7 +222,7 @@ class Attract(
                     "Rescue those in peril."
             )
 
-            for (i in 0 until info.size)
+            for (i in info.indices)
                 canvas.drawText(
                         info[i],
                         0f,

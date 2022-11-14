@@ -17,7 +17,7 @@ class Score {
 
     fun end() {
         currentScore = -1
-        targetScore = -1;
+        targetScore = -1
     }
 
     fun scored(add: Int) {
@@ -31,10 +31,10 @@ class Score {
     fun draw(canvas: Canvas, newHighScore: Boolean) {
         if (score == -1) return
         if (targetScore != currentScore)
-            updateScore(10);
+            updateScore(10)
 
         canvas.drawText(
-            "${score}".padStart(6, '0'),
+            "$score".padStart(6, '0'),
             -Game.extent.canvasOffsetX + 50,
             Game.extent.canvasOffsetY - 50,
             scorePen

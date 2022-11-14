@@ -1,7 +1,6 @@
 package uk.co.jezuk.swoop.wave
 
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Minelayer
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.utils.RestartableLatch

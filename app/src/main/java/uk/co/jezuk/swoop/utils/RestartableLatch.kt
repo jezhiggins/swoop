@@ -7,7 +7,7 @@ class RestartableLatch(
     private val action: () -> Unit = { }
 ) {
     private var count = 0f
-    val done get() = count <= 0f
+    private val done get() = count <= 0f
     val running get() = !done
 
     fun tick(frameRateScale: Float): Int {

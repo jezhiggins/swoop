@@ -9,7 +9,7 @@ class StarField (extent: Extent, count: Int = 400) {
     private val stars = FloatArray(count)
 
     init {
-        for (i in 0 until stars.size step 2) {
+        for (i in stars.indices step 2) {
             val p = extent.randomPoint()
             stars[i] = p.x.toFloat()
             stars[i+1] = p.y.toFloat()

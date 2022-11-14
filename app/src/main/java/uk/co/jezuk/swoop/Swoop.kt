@@ -6,8 +6,6 @@ import android.media.AudioManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.MotionEvent
-import android.view.View
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -27,7 +25,7 @@ class Swoop : AppCompatActivity() {
 
         gameView = binding.fullscreenContent
 
-        hideSystemUI();
+        hideSystemUI()
     } // onCreate
 
     override fun onPause() {
@@ -46,7 +44,7 @@ class Swoop : AppCompatActivity() {
     private val hideHandler = Handler(Looper.getMainLooper())
     @SuppressLint("InlinedApi")
     private val hideRunnable = Runnable {
-        hideSystemUI();
+        hideSystemUI()
     } // hideRunnable
 
     private fun hideSystemUI() {

@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
+import kotlin.math.abs
 
 class Sounds(private val context: Context) {
     private val pool = SoundPool.Builder()
@@ -16,12 +17,12 @@ class Sounds(private val context: Context) {
             return loadedSounds[soundResId]!!
         val loadedId = pool.load(context, soundResId, 1)
         val playFn = { balance: Float -> play(loadedId, balance) }
-        loadedSounds.put(soundResId, playFn)
+        loadedSounds[soundResId] = playFn
         return playFn
     } // load
 
-    fun play(soundId: Int, balance: Float) {
-        val shift = 1f - Math.abs(balance)
+    private fun play(soundId: Int, balance: Float) {
+        val shift = 1f - abs(balance)
         val leftVolume = if (balance < 0) 1f else shift
         val rightVolume = if (balance > 0) 1f else shift
 

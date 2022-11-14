@@ -1,7 +1,6 @@
 package uk.co.jezuk.swoop.wave
 
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Minelayer
 import uk.co.jezuk.swoop.craft.asteroid.IronAsteroid
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
@@ -23,7 +22,7 @@ class TholianWeb(
     )
 
     private fun verticalTraverse() {
-        val offsetX = Game.extent.width / 6.0;
+        val offsetX = Game.extent.width / 6.0
         val traverses = arrayOf(
             arrayOf(Point(offsetX, Game.extent.top), Point(offsetX, Game.extent.bottom)),
             arrayOf(Point(-offsetX, Game.extent.bottom), Point(-offsetX, Game.extent.top))
@@ -32,7 +31,7 @@ class TholianWeb(
     } // verticalTraverse
 
     private fun horizontalTraverse() {
-        val offsetY = Game.extent.height / 6.0;
+        val offsetY = Game.extent.height / 6.0
         val traverses = arrayOf(
             arrayOf(Point(Game.extent.left, offsetY), Point(Game.extent.right, offsetY)),
             arrayOf(Point(Game.extent.right, -offsetY), Point(Game.extent.top, -offsetY))
@@ -41,8 +40,8 @@ class TholianWeb(
     } // horizontalTraverse
 
     private fun cornerTraverse() {
-        val offsetX = Game.extent.width / 6.0;
-        val offsetY = Game.extent.height / 6.0;
+        val offsetX = Game.extent.width / 6.0
+        val offsetY = Game.extent.height / 6.0
         val traverses = arrayOf(
             arrayOf(Point(Game.extent.left, -offsetY), Point(-offsetX, Game.extent.top)),
             arrayOf(Point(Game.extent.left, offsetY), Point(-offsetX, Game.extent.bottom)),

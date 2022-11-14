@@ -1,8 +1,6 @@
 package uk.co.jezuk.swoop.wave
 
 import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.craft.*
-import uk.co.jezuk.swoop.craft.asteroid.IronAsteroid
 import uk.co.jezuk.swoop.craft.asteroid.MagneticAsteroid
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 

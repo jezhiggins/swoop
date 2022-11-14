@@ -8,7 +8,6 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.view.MotionEvent
 import androidx.core.content.edit
-import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
@@ -29,7 +28,7 @@ class Game(private val context: Context) {
     val player = Player(this)
 
     init {
-        loadSounds(context);
+        loadSounds(context)
     }
 
     fun setExtent(width: Int, height: Int) {
@@ -118,7 +117,7 @@ class Game(private val context: Context) {
     private val prefs: SharedPreferences
         get() = context.getSharedPreferences("swoop", Context.MODE_PRIVATE)
 
-    var highScore: Int
+    private var highScore: Int
         get() = prefs.getInt(highscoreTag(), 0)
         private set(value) = prefs.edit { putInt(highscoreTag(), value) }
     private var newHighScore: Boolean
@@ -194,7 +193,7 @@ class Game(private val context: Context) {
                 R.raw.missileexplosion
             )
             sounds = Sounds(ctxt)
-            soundIds.forEach({ sounds!!.load(it) })
+            soundIds.forEach { sounds!!.load(it) }
         }
     }
 } // Game

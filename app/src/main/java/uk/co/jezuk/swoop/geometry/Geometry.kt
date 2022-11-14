@@ -1,5 +1,7 @@
 package uk.co.jezuk.swoop.geometry
 
+import kotlin.math.*
+
 fun angleFromOffsets(offsetX: Float, offsetY: Float): Double {
     return angleFromOffsets(
         offsetX.toDouble(),
@@ -9,7 +11,7 @@ fun angleFromOffsets(offsetX: Float, offsetY: Float): Double {
 
 fun angleFromOffsets(offsetX: Double, offsetY: Double): Double {
     val desiredAngle = Math.toDegrees(
-        Math.atan(Math.abs(offsetY)/Math.abs(offsetX))
+        atan(abs(offsetY) / abs(offsetX))
     )
 
     //if (offsetX <= 0 && offsetY <= 0)
@@ -28,8 +30,8 @@ fun angleFromOffsets(offsetX: Double, offsetY: Double): Double {
 } // angleFromOffsets
 
 fun magnitudeFromOffsets(offsetX: Double, offsetY: Double): Double {
-    return Math.sqrt(
-       Math.pow(offsetX, 2.0) + Math.pow(offsetY, 2.0)
+    return sqrt(
+       offsetX.pow(2.0) + offsetY.pow(2.0)
    )
 } // magnitudeFromOffsets
 
@@ -39,8 +41,8 @@ fun invertAngle(angle: Double): Double {
 } // invertAngle
 
 fun distanceBetween(a: Float, b: Float): Float {
-    return Math.max(a, b) - Math.min(a, b)
+    return max(a, b) - min(a, b)
 }
 fun distanceBetween(a: Double, b: Double): Double {
-    return Math.max(a, b) - Math.min(a, b)
+    return max(a, b) - min(a, b)
 }

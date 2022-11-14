@@ -1,8 +1,7 @@
 package uk.co.jezuk.swoop.geometry
 
-import java.lang.Math.cos
-import java.lang.Math.sin
-import kotlin.math.max
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.math.min
 
 class Vector(

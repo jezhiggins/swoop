@@ -1,13 +1,10 @@
 package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import uk.co.jezuk.swoop.craft.Craft
 import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.wave.Wave
-import kotlin.math.min
 
 class Player(val game: Game): Craft {
     private val ship = Ship(this)
@@ -21,7 +18,7 @@ class Player(val game: Game): Craft {
     val velocity get() = ship.velocity
     val wave get() = currentWave!!
 
-    var gunActive: Boolean = true;
+    var gunActive: Boolean = true
     private var currentWave: Wave? = null
     private val callbacks = ArrayList<() -> Unit>()
     private val armed get() = ship.armed && gunActive
