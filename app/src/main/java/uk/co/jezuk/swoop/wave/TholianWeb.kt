@@ -10,9 +10,8 @@ import uk.co.jezuk.swoop.utils.Latch
 
 class TholianWeb(
     game: Game,
-    starField: StarField,
-    g: Gun?
-): WaveWithShip(game, starField, g) {
+    starField: StarField
+): WaveWithShip(game, starField, false) {
     private val nothing = { }
 
     private val latches = arrayListOf(

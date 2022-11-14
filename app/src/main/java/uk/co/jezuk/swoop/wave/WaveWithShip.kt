@@ -10,12 +10,17 @@ import uk.co.jezuk.swoop.geometry.angleFromOffsets
 abstract class WaveWithShip(
     protected val game: Game,
     private val starField: StarField,
-    g: Gun? = null,
-    private val activeGun: Boolean = true
+    val gunReset: Boolean = false,
+    val gunActive: Boolean = true
 ): WaveWithTargets() {
     final override val player: Player = game.player
-    private val gun: Gun = Gun(player, this, g)
     private val projectiles: Projectiles = Projectiles()
+
+    init {
+        if (gunReset)
+            player.gunReset()
+        player.gunActive = gunActive
+    }
 
     /////
     override fun onSingleTapUp(event: MotionEvent) = player.thrust()
@@ -28,8 +33,6 @@ abstract class WaveWithShip(
 
     /////
     override fun update(frameRateScale: Float) {
-        if (activeGun)
-            gun.update(frameRateScale)
         player.update(frameRateScale)
 
         updateTargets(frameRateScale)
@@ -47,13 +50,9 @@ abstract class WaveWithShip(
         player.draw(canvas)
     } // draw
 
-    override fun upgrade() {
-        gun.upgrade()
-    } // upgrade
-
     /////
     protected open fun endOfLevel() {
-        game.endOfWave(starField, projectiles, gun)
+        game.endOfWave(starField, projectiles)
     } // endOfLevel
 
     private fun updateProjectiles(frameRateScale: Float) {

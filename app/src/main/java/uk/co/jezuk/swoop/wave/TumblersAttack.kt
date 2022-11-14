@@ -9,8 +9,8 @@ class TumblersAttack(
     game: Game,
     starField: StarField,
     initialAsteroids: Int,
-    g: Gun?
-) : WaveWithShip(game, starField, g) {
+    gunReset: Boolean = false
+) : WaveWithShip(game, starField, gunReset) {
     private val tumblerLauncher = RepeatN(
         700 - (initialAsteroids * 50),
         initialAsteroids - 1

@@ -7,7 +7,7 @@ import uk.co.jezuk.swoop.utils.Latch
 class CometStorm(
     game: Game,
     starField: StarField
-) : WaveWithShip(game, starField, null, false) {
+) : WaveWithShip(game, starField, false, false) {
     private var comets = 0
     private var survivalBonus = true
 

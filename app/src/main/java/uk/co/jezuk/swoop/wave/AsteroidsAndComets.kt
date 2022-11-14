@@ -8,9 +8,8 @@ import uk.co.jezuk.swoop.utils.Latch
 class AsteroidsAndComets(
     game: Game,
     starField: StarField,
-    initialAsteroids: Int = 5,
-    g: Gun? = null
-) : WaveWithShip(game, starField, g) {
+    initialAsteroids: Int = 5
+) : WaveWithShip(game, starField) {
     private var cometGun: Latch? = null
 
     init {

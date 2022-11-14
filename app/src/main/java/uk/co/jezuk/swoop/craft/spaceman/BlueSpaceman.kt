@@ -13,7 +13,7 @@ class BlueSpaceman(
     /////
     override fun playerCollision(player: Player) {
         player.scored(1500)
-        wave.upgrade()
+        player.upgrade()
 
         super.playerCollision(player)
     } // playerCollision

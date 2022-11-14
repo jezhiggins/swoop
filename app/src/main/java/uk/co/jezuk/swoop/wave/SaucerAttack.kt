@@ -12,8 +12,8 @@ class SaucerAttack(
     starField: StarField,
     initialAsteroids: Int,
     saucerAggressiveness: Int,
-    g: Gun?
-) : WaveWithShip(game, starField, g) {
+    gunReset: Boolean = false
+) : WaveWithShip(game, starField, gunReset) {
     private val saucerLaunch = RepeatN(500, saucerAggressiveness + 3, launchSaucer(saucerAggressiveness))
 
     init {

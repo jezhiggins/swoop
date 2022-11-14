@@ -76,7 +76,7 @@ abstract class Spaceman(
     override fun playerCollision(player: Player) {
         savedSound()
         player.scored(1000)
-        wave.upgrade()
+        player.upgrade()
         wave.removeTarget(this)
     } // playerCollision
 

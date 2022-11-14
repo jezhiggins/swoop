@@ -75,11 +75,11 @@ class Game(private val context: Context) {
         player.end()
     } // end
 
-    fun endOfWave(starField: StarField, projectiles: Projectiles? = null, gun: Gun? = null) {
-        wave = Waves.transition(this, starField, projectiles, gun)
+    fun endOfWave(starField: StarField, projectiles: Projectiles? = null) {
+        wave = Waves.transition(this, starField, projectiles)
     } // endOfWave
     fun nextWave(w: Wave) {
-        player.newWave()
+        player.newWave(w)
         wave = w
     }
 

@@ -11,8 +11,8 @@ class Minefield(
     starField: StarField,
     minelayerDelay: Int,
     private val minelayerCount: Int,
-    g: Gun?
-): WaveWithShip(game, starField, g) {
+    gunReset: Boolean = false
+): WaveWithShip(game, starField, gunReset) {
     private val launcher = RestartableLatch(minelayerDelay, ::launchMinelayer)
     private var layerCount = 0
 

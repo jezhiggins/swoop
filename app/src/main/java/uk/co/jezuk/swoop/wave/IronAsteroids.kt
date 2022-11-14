@@ -10,8 +10,8 @@ class IronAsteroids (
     starField: StarField,
     stonyAsteroids: Int = 5,
     ironAsteroids: Int = 1,
-    g: Gun? = null
-) : WaveWithShip(game, starField, g) {
+    gunReset: Boolean = false
+) : WaveWithShip(game, starField, gunReset) {
     init {
         IronAsteroid.field(game, this, ironAsteroids)
         StonyAsteroid.field(game, this, stonyAsteroids)

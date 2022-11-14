@@ -24,7 +24,4 @@ interface Wave {
     /////
     fun addProjectile(projectile: Projectile) = Unit
     fun removeProjectile(projectile: Projectile) = Unit
-
-    ////
-    fun upgrade() = Unit
 } // Wave

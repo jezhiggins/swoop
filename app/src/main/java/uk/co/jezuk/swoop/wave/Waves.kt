@@ -5,54 +5,49 @@ import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.wave.transition.LevelTransition
 
-typealias WaveMaker = (Game, StarField, Gun?) -> Wave
+typealias WaveMaker = (Game, StarField) -> Wave
 
 fun AsteroidsAndCometsMaker(initialAsteroids: Int): WaveMaker {
-    return { game: Game, starField: StarField, gun: Gun? ->
-        AsteroidsAndComets(game, starField, initialAsteroids, gun)
+    return { game: Game, starField: StarField ->
+        AsteroidsAndComets(game, starField, initialAsteroids)
     }
 } // AsteroidsAndCometsMaker
 
-fun CometStormMaker(game: Game, starField: StarField, gun: Gun?): Wave {
+fun CometStormMaker(game: Game, starField: StarField): Wave {
     return CometStorm(game, starField)
 } // CometStormMaker
 
 fun IronAsteroidsMaker(stonyAsteroids: Int, ironAsteroids: Int, gunReset: Boolean = false): WaveMaker {
-    return { game: Game, starField: StarField, gun: Gun? ->
-        val g = if (gunReset) null else gun
-        IronAsteroids(game, starField, stonyAsteroids, ironAsteroids, g)
+    return { game: Game, starField: StarField ->
+        IronAsteroids(game, starField, stonyAsteroids, ironAsteroids, gunReset)
     }
 } // IronAsteroidsMaker
 
 fun MinefieldMaker(minelayerDelay: Int, minelayerCount: Int, gunReset: Boolean = false): WaveMaker {
-    return { game: Game, starField: StarField, gun: Gun? ->
-        val g = if (gunReset) null else gun
-        Minefield(game, starField, minelayerDelay, minelayerCount, g)
+    return { game: Game, starField: StarField ->
+        Minefield(game, starField, minelayerDelay, minelayerCount, gunReset)
     }
 } // MinefieldMaker
 
-fun TholianWebMaker(game: Game, starField: StarField, gun: Gun?): Wave {
-    return TholianWeb(game, starField, gun)
+fun TholianWebMaker(game: Game, starField: StarField): Wave {
+    return TholianWeb(game, starField)
 } // TholianWebMaker
 
 fun TumblersAttackMaker(initialAsteroids: Int, gunReset: Boolean = false): WaveMaker {
-    return { game: Game, starField: StarField, gun: Gun? ->
-        val g = if (gunReset) null else gun
-        TumblersAttack(game, starField, initialAsteroids, g)
+    return { game: Game, starField: StarField ->
+        TumblersAttack(game, starField, initialAsteroids, gunReset)
     }
 } // SaucerAttackMaker
 
 fun SaucerAttackMaker(initialAsteroids: Int, saucerAggressiveness: Int, gunReset: Boolean = false): WaveMaker {
-    return { game: Game, starField: StarField, gun: Gun? ->
-        val g = if (gunReset) null else gun
-        SaucerAttack(game, starField, initialAsteroids, saucerAggressiveness, g)
+    return { game: Game, starField: StarField ->
+        SaucerAttack(game, starField, initialAsteroids, saucerAggressiveness, gunReset)
     }
 } // SaucerAttackMaker
 
 fun MagneticAsteroidsMaker(stonyAsteroids: Int, magneticAsteroids: Int, gunReset: Boolean = false): WaveMaker {
-    return { game: Game, starField: StarField, gun: Gun? ->
-        val g = if (gunReset) null else gun
-        MagneticAsteroids(game, starField, stonyAsteroids, magneticAsteroids, g)
+    return { game: Game, starField: StarField ->
+        MagneticAsteroids(game, starField, stonyAsteroids, magneticAsteroids, gunReset)
     }
 }
 
@@ -90,23 +85,22 @@ class Waves {
 
         fun from(game: Game, fromWave: Int, starField: StarField): Wave {
             wave = fromWave
-            return waves[wave](game, starField, null)
+            return waves[wave](game, starField)
         } // first
 
-        fun next(game: Game, starField: StarField, gun: Gun?): Wave {
+        fun next(game: Game, starField: StarField): Wave {
             ++wave
             if (wave == waves.size) wave = waves.size-1
-            return waves[wave](game, starField, gun)
+            return waves[wave](game, starField)
         } // next
 
         fun transition(
             game: Game,
             starField: StarField,
-            projectiles: Projectiles?,
-            gun: Gun?
+            projectiles: Projectiles?
         ): Wave {
             val newStarField = StarField(Game.extent)
-            val nextWave = next(game, newStarField, gun)
+            val nextWave = next(game, newStarField)
 
             return LevelTransition(
                 game,
