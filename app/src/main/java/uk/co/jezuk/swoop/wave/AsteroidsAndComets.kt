@@ -16,7 +16,7 @@ class AsteroidsAndComets(
         StonyAsteroid.field(game, this, initialAsteroids)
 
         if (initialAsteroids > 5)
-            cometGun = Latch(500 + (100 * (11-initialAsteroids))) { Comet(game, this) }
+            cometGun = Latch(500 + (100 * (11-initialAsteroids))) { Comet(this) }
 
         targets.onEliminated { endOfLevel() }
     } // init

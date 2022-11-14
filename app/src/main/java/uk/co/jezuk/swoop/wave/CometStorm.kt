@@ -18,7 +18,7 @@ class CometStorm(
     } // init
 
     private fun launchComet() {
-        Comet(game, this)
+        Comet(this)
         ++comets
         if (comets != 15)
             cometGun = Latch(70) { launchComet() }

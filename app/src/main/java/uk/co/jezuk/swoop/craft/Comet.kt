@@ -14,7 +14,6 @@ import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
 
 class Comet(
-    private val game: Game,
     private val wave: Wave
 ): Target {
     override val position = Game.extent.randomPointOnEdge()
