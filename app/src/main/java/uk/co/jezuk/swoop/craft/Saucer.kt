@@ -14,7 +14,6 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 class Saucer(
-    private val game: Game,
     private val wave: Wave,
     aggressiveness: Int,
     traverse: Array<Point> = Game.extent.randomHorizontalTraverse()
@@ -45,7 +44,7 @@ class Saucer(
         position.move(Vector(bounceOffset, skew), 1f, Game.extent, killDist)
 
         if (!basePosition.moveNoWrap(velocity, frameRateScale, Game.extent, killDist))
-            destroyed();
+            destroyed()
 
         fireIfReady(distance)
     } // update
@@ -59,7 +58,7 @@ class Saucer(
 
         Game.sound(R.raw.saucerfire, position)
         for (offset in -30..30 step 30)
-            Missile(game, wave, Point(position), Vector(7.0, direction-offset))
+            Missile(wave, Point(position), Vector(7.0, direction-offset))
     }
 
     override fun draw(canvas: Canvas) {

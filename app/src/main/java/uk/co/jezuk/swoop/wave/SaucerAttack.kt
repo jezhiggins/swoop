@@ -29,7 +29,7 @@ class SaucerAttack(
 
     private fun launchSaucer(saucerAggressiveness: Int): () -> Unit {
         return {
-            Saucer(game, this, saucerAggressiveness)
+            Saucer(this, saucerAggressiveness)
             saucerLaunch.reset(Random.nextInt(300, 700))
         }
     } // launcherSaucer

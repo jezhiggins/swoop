@@ -14,7 +14,6 @@ import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
 
 class Tumbler(
-    private val game: Game,
     private val wave: Wave,
     traverse: Array<Point> = Game.extent.randomHorizontalTraverse()
 ): Target {
@@ -77,7 +76,7 @@ class Tumbler(
             initialPosition.move(Vector(60.0, direction, 60.0), 1f, Game.extent)
             val missileVelocity = velocity.copy()
             missileVelocity += Vector(7.0, direction)
-            Missile(game, wave, initialPosition, missileVelocity, direction.toFloat())
+            Missile(wave, initialPosition, missileVelocity, direction.toFloat())
         }
     } // fire
 

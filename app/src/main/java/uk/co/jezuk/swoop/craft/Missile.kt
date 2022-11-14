@@ -11,7 +11,6 @@ import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
 
 class Missile(
-        private val game: Game,
         private val wave: Wave,
         override val position: Point,
         private val velocity: Vector,

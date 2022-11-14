@@ -27,7 +27,7 @@ class Attract(
 
     private var starField = StarField(Game.extent)
     private val cometGun = Repeat(750) { Comet(this) }
-    private val saucerGun = Repeat(2000) { Saucer(game, this, Random.nextInt(1, 4)) }
+    private val saucerGun = Repeat(2000) { Saucer(this, Random.nextInt(1, 4)) }
     private var mode: AttractMode = TitleScreen()
 
     init {

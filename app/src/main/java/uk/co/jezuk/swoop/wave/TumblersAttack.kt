@@ -14,7 +14,7 @@ class TumblersAttack(
     private val tumblerLauncher = RepeatN(
         700 - (initialAsteroids * 50),
         initialAsteroids - 1
-    ) { Tumbler(game, this) }
+    ) { Tumbler(this) }
 
     init {
         StonyAsteroid.field(game, this, initialAsteroids)
