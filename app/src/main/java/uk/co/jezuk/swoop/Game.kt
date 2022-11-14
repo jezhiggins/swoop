@@ -85,10 +85,6 @@ class Game(private val context: Context) {
 
     fun gameOver() = nextWave(GameOver(this, wave))
 
-    fun lifeGained() {
-        player.lifeGained()
-    } // livesGained
-
     fun scored(score: Int) {
         if (score > highScore) {
             highScore = score

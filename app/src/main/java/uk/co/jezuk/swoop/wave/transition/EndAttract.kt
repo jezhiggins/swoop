@@ -16,7 +16,6 @@ class EndAttract(
     targets: Targets,
     private val fromWave: Int
 ): WaveWithTargets(targets) {
-    override val player: Player? = null
     private val exploders = Repeat(120 / targets.size, { explodeOneTarget() })
 
     init {

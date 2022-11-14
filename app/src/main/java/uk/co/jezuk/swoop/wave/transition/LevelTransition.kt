@@ -19,6 +19,10 @@ class LevelTransition(
     private var transition = Latch(180, { startNextWave() })
     private var currentStarField = starField
 
+    init {
+        player.gunActive = false
+    }
+
     override fun update(frameRateScale: Float) {
         player.update(frameRateScale)
         projectiles?.update(frameRateScale)
@@ -39,7 +43,7 @@ class LevelTransition(
     } // draw
 
     private fun startNextWave() {
-        game.lifeGained()
+        player.lifeGained()
         game.checkpointScore(waveIndex)
         game.nextWave(nextWave)
     } // startNextWave

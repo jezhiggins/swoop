@@ -19,7 +19,6 @@ import kotlin.random.Random
 class Attract(
     private val game: Game
 ) : WaveWithTargets() {
-    override val player: Player? = null
     private val extent = Game.extent
     private val pureHighScore = game.pureHighScore()
     private val restartHighScore = game.restartHighScore()
