@@ -7,13 +7,14 @@ import uk.co.jezuk.swoop.utils.Latch
 class CometStorm(
     game: Game,
     starField: StarField
-) : WaveWithShip(game, starField, false, false) {
+) : WaveWithShip(game, starField, false) {
     private var comets = 0
     private var survivalBonus = true
 
     private var cometGun: Latch = Latch(150) { launchComet() }
 
     init {
+        player.gunOff()
         player.onLifeLost { survivalBonus = false }
     } // init
 
@@ -36,6 +37,7 @@ class CometStorm(
     /////
     override fun endOfLevel() {
         if (survivalBonus) player.scored(5000)
+        player.gunOn()
 
         super.endOfLevel()
     } // endOfLevel

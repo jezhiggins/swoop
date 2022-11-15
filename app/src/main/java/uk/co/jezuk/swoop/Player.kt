@@ -18,7 +18,7 @@ class Player(val game: Game): Craft {
     val velocity get() = ship.velocity
     val wave get() = currentWave!!
 
-    var gunActive: Boolean = true
+    private var gunActive: Boolean = true
     private var currentWave: Wave? = null
     private val callbacks = ArrayList<() -> Unit>()
     private val armed get() = ship.armed && gunActive
@@ -70,9 +70,9 @@ class Player(val game: Game): Craft {
         game.scored(score)
     }
 
-    fun upgrade() {
-        gun.upgrade()
-    }
+    fun gunOff() { gunActive = false }
+    fun gunOn() { gunActive = true }
+    fun upgrade() = gun.upgrade()
 
     override fun update(frameRateScale: Float) {
         ship.update(frameRateScale)

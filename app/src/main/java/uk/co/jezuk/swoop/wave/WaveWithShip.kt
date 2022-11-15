@@ -10,8 +10,7 @@ import uk.co.jezuk.swoop.geometry.angleFromOffsets
 abstract class WaveWithShip(
     protected val game: Game,
     private val starField: StarField,
-    gunReset: Boolean = false,
-    gunActive: Boolean = true
+    gunReset: Boolean = false
 ): WaveWithTargets() {
     final override val player: Player = game.player
     private val projectiles: Projectiles = Projectiles()
@@ -19,7 +18,6 @@ abstract class WaveWithShip(
     init {
         if (gunReset)
             player.gunReset()
-        player.gunActive = gunActive
     }
 
     /////

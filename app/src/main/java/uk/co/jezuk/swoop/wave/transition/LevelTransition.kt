@@ -20,7 +20,7 @@ class LevelTransition(
     private var currentStarField = starField
 
     init {
-        player.gunActive = false
+        player.gunOff()
     }
 
     override fun update(frameRateScale: Float) {
@@ -44,6 +44,7 @@ class LevelTransition(
 
     private fun startNextWave() {
         player.lifeGained()
+        player.gunOn()
         game.checkpointScore(waveIndex)
         game.nextWave(nextWave)
     } // startNextWave
