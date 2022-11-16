@@ -26,7 +26,7 @@ class Exploder(
     }
 
     private fun expand(frameRateScale: Float) {
-        for (l in 0 until explodingShape.size step 4) {
+        for (l in explodingShape.indices step 4) {
             val x = blowUpShift(explodingShape[l], explodingShape[l + offset2nd], frameRateScale)
             val y = blowUpShift(explodingShape[l + 3], explodingShape[l + 3 - offset2nd], frameRateScale)
 

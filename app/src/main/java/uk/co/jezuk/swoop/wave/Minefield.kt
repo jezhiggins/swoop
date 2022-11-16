@@ -24,7 +24,7 @@ class Minefield(
 
     private fun launchMinelayer() {
         ++layerCount
-        Minelayer(game, this, { if (layerCount < minelayerCount) launcher.start() })
+        Minelayer(this, { if (layerCount < minelayerCount) launcher.start() })
     } // launchMinelayer
 
     /////

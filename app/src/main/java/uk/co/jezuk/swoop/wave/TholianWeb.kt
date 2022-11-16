@@ -27,7 +27,7 @@ class TholianWeb(
             arrayOf(Point(offsetX, Game.extent.top), Point(offsetX, Game.extent.bottom)),
             arrayOf(Point(-offsetX, Game.extent.bottom), Point(-offsetX, Game.extent.top))
         )
-        traverses.forEach { t -> Minelayer(game, this, nothing, t, true) }
+        traverses.forEach { t -> Minelayer(this, nothing, t, true) }
     } // verticalTraverse
 
     private fun horizontalTraverse() {
@@ -36,7 +36,7 @@ class TholianWeb(
             arrayOf(Point(Game.extent.left, offsetY), Point(Game.extent.right, offsetY)),
             arrayOf(Point(Game.extent.right, -offsetY), Point(Game.extent.top, -offsetY))
         )
-        traverses.forEach { t -> Minelayer(game, this, nothing, t, true) }
+        traverses.forEach { t -> Minelayer(this, nothing, t, true) }
     } // horizontalTraverse
 
     private fun cornerTraverse() {
@@ -48,7 +48,7 @@ class TholianWeb(
             arrayOf(Point(Game.extent.right, -offsetY), Point(offsetX, Game.extent.top)),
             arrayOf(Point(Game.extent.right, offsetY), Point(offsetX, Game.extent.bottom))
         )
-        traverses.forEach { t -> Minelayer(game, this, nothing, t, true) }
+        traverses.forEach { t -> Minelayer(this, nothing, t, true) }
     } // cornerTraverse
 
     private fun hereComeTheAsteroids() {

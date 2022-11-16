@@ -34,7 +34,7 @@ class Puff(
         position.translate(canvas)
         orientation.rotate(canvas)
 
-        for (i in 0 until splots.size step 2) {
+        for (i in splots.indices step 2) {
             canvas.drawCircle(
                 splots[i] * size,
                 splots[i+1] * size,

@@ -69,9 +69,9 @@ abstract class Asteroid(
     } // bang
 
     companion object {
-        val Big: Float = 4f
-        val Medium: Float = 2f
-        val Small: Float = 1f
+        const val Big: Float = 4f
+        const val Medium: Float = 2f
+        const val Small: Float = 1f
         val shapes = listOf(
             floatArrayOf(
                 0f, 12.5f, 12.5f, 25f,
@@ -133,7 +133,8 @@ abstract class Asteroid(
             for(shape in shapes) {
                 val path = Path()
                 path.moveTo(shape[0], shape[1])
-                for (i in 0 until shape.size step 2)
+                @Suppress("LeakingThis")
+                for (i in shape.indices step 2)
                     path.lineTo(shape[i], shape[i + 1])
                 path.close()
                 paths.add(path)

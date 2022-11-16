@@ -2,7 +2,6 @@ package uk.co.jezuk.swoop.craft
 
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.utils.Repeat
-import uk.co.jezuk.swoop.wave.Wave
 import kotlin.math.max
 import kotlin.math.min
 
@@ -11,7 +10,7 @@ class Gun(
 ) {
     private var repeatDelay: Int = initialRepeatDelay
     private var bulletMaxAge:Int = initialBulletMaxAge
-    private var trigger = Repeat(repeatDelay, { fire() })
+    private var trigger = Repeat(repeatDelay) { fire() }
 
     private fun fire() {
         Bullet(
@@ -42,10 +41,10 @@ class Gun(
     } // update
 
     companion object {
-        private val initialRepeatDelay: Int = 12
-        private val initialBulletMaxAge: Int = 75
+        private const val initialRepeatDelay: Int = 12
+        private const val initialBulletMaxAge: Int = 75
 
-        private val shortestRepeatDelay: Int = 7
-        private val highestBulletMaxAge: Int = 140
+        private const val shortestRepeatDelay: Int = 7
+        private const val highestBulletMaxAge: Int = 140
     }
 } // Gun

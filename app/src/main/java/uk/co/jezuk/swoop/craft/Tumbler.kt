@@ -8,7 +8,6 @@ import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
-import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
@@ -21,7 +20,7 @@ class Tumbler(
     private val velocity = Vector(Random.nextDouble(2.0, 5.0), position.angleTo(traverse[1]))
     private val orientation = Rotation.random()
     private val rotation = initialRotation()
-    private val shooter = Repeat(Random.nextInt(120, 180), { fire() })
+    private val shooter = Repeat(Random.nextInt(120, 180)) { fire() }
 
     init {
         Game.sound(R.raw.sauceralarm, position)

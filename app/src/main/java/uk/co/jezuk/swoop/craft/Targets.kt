@@ -1,10 +1,7 @@
 package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
-import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
-import uk.co.jezuk.swoop.R
-import uk.co.jezuk.swoop.geometry.Point
 
 class Targets {
     private val targets = ArrayList<Target>()

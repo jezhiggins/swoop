@@ -16,7 +16,7 @@ class LevelTransition(
     private val waveIndex: Int
 ): Wave {
     override val player = game.player
-    private var transition = Latch(180, { startNextWave() })
+    private var transition = Latch(180) { startNextWave() }
     private var currentStarField = starField
 
     init {

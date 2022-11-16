@@ -12,6 +12,7 @@ import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.RestartableLatch
+import kotlin.math.abs
 
 class Ship(private val player: Player) {
     var orientation = Rotation(-90.0)
@@ -76,7 +77,7 @@ class Ship(private val player: Player) {
         val angleOffset = targetOrientation - orientation
 
         val direction = if (angleOffset.angle >= 0) 1.0 else -1.0
-        val magnitude = Math.abs(angleOffset.angle)
+        val magnitude = abs(angleOffset.angle)
         val rotationDelta = if (magnitude > 90) {
             direction * 5
         } else if (magnitude > 45) {
@@ -118,7 +119,7 @@ class Ship(private val player: Player) {
             -75f, 0f, -45f, -12f
         )
 
-        val Radius: Float get() = 30f;
+        val Radius: Float get() = 30f
 
         init {
             shipBrush.color = Color.GREEN
@@ -146,7 +147,7 @@ class Ship(private val player: Player) {
             redBrush.style = Paint.Style.STROKE
 
             shipPath.moveTo(shape[0], shape[1])
-            for (i in 0 until shape.size step 2)
+            for (i in shape.indices step 2)
                 shipPath.lineTo(shape[i], shape[i+1])
             shipPath.close()
         } // init
@@ -226,7 +227,7 @@ class Ship(private val player: Player) {
     } // Exploding
 
     private class RezIn(private val ship: Ship): ShipState {
-        private val pause = Latch(60, { ship.rezInSound() })
+        private val pause = Latch(60) { ship.rezInSound() }
         private var radius = 600f
 
         override fun rotateTowards(angle: Double) {
@@ -251,7 +252,7 @@ class Ship(private val player: Player) {
         } // draw
     } // RezIn
 
-    private class RezOut(private val ship: Ship): ShipState {
+    private class RezOut(ship: Ship): ShipState {
         private val rezOutShape = shape.copyOf()
         private var r = 0
 
@@ -262,7 +263,7 @@ class Ship(private val player: Player) {
         override fun update(frameRateScale: Float) {
             ++r
 
-            for (i in 0 until rezOutShape.size) {
+            for (i in rezOutShape.indices) {
                 var v = rezOutShape[i]
                 if (v < 0) v -= r
                 if (v > 0) v += r

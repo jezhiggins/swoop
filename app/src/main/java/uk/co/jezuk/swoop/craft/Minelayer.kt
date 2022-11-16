@@ -12,7 +12,6 @@ import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
 
 class Minelayer(
-    private val game: Game,
     private val wave: Wave,
     private val onDestroyed: () -> Unit,
     traverse: Array<Point> = Game.extent.randomTraverse(),
@@ -49,7 +48,7 @@ class Minelayer(
         if (Random.nextFloat() < 0.2) dropping = !dropping
 
         if (minefield.within(dropAt) && (dropping || alwaysDrop))
-            Mine(game, wave, dropAt)
+            Mine(wave, dropAt)
         dropAt = Point(position)
         trigger.start()
     } // dropMine

@@ -11,13 +11,12 @@ import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
 
 class Mine(
-    private val game: Game,
     private val wave: Wave,
     override val position: Point
 ): Target {
     private val brush = Paint()
     private val throbber = Repeat(11, ::throb)
-    private var radius = 4f;
+    private var radius = 4f
 
     init {
         wave.addTarget(this)
