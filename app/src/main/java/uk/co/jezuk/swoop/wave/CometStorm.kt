@@ -14,7 +14,6 @@ class CometStorm(
     private var cometGun: Latch = Latch(150) { launchComet() }
 
     init {
-        player.gunOff()
         player.onLifeLost { survivalBonus = false }
     } // init
 
@@ -29,6 +28,7 @@ class CometStorm(
 
     /////
     override fun update(frameRateScale: Float) {
+        player.gunOff()
         cometGun.tick(frameRateScale)
 
         super.update(frameRateScale)
