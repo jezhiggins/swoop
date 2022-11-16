@@ -39,9 +39,9 @@ class Player(val game: Game): Craft {
     val score get() = score_.score
     val lives get() = lives_.lives
 
-    fun start(startLives: Int, startScore: Int) {
+    fun start(startLives: Int, startScore: Int, tracker: HighScore.Tracker) {
         lives_.start(startLives)
-        score_.start(startScore)
+        score_.start(startScore, tracker)
     }
 
     fun end() {
@@ -67,7 +67,6 @@ class Player(val game: Game): Craft {
 
     fun scored(add: Int) {
         score_.scored(add)
-        game.scored(score)
     }
 
     fun gunOff() { gunActive = false }
@@ -81,10 +80,8 @@ class Player(val game: Game): Craft {
     }
     override fun draw(canvas: Canvas) {
         ship.draw(canvas)
-    }
 
-    fun draw(canvas: Canvas, newHighScore: Boolean) {
-        score_.draw(canvas, newHighScore)
+        score_.draw(canvas)
         lives_.draw(canvas)
     }
 

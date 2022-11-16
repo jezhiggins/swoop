@@ -7,12 +7,14 @@ import android.graphics.Paint
 class Score {
     private var currentScore = -1
     private var targetScore = -1
+    private var tracker: HighScore.Tracker? = null
 
     val score get() = targetScore
 
-    fun start(startScore: Int) {
+    fun start(startScore: Int, hst: HighScore.Tracker) {
         currentScore = startScore
         targetScore = startScore
+        tracker = hst
     }
 
     fun end() {
@@ -28,18 +30,18 @@ class Score {
         currentScore += add
     }// scored
 
-    fun draw(canvas: Canvas, newHighScore: Boolean) {
+    fun draw(canvas: Canvas) {
         if (score == -1) return
         if (targetScore != currentScore)
             updateScore(10)
 
         canvas.drawText(
-            "$score".padStart(6, '0'),
+            "$currentScore".padStart(6, '0'),
             -Game.extent.canvasOffsetX + 50,
             Game.extent.canvasOffsetY - 50,
             scorePen
         )
-        if (!newHighScore) return
+        if (tracker?.isHighScore(targetScore) != true) return
 
         scorePen.textSize = 32f
         canvas.drawText(

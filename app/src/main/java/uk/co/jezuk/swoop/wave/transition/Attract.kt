@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
+import uk.co.jezuk.swoop.HighScore
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
 import uk.co.jezuk.swoop.craft.Saucer
@@ -16,11 +17,12 @@ import kotlin.math.min
 import kotlin.random.Random
 
 class Attract(
-    private val game: Game
+    private val game: Game,
+    private val highscore: HighScore
 ) : WaveWithTargets() {
     private val extent = Game.extent
-    private val pureHighScore = game.pureHighScore()
-    private val restartHighScore = game.restartHighScore()
+    private val pureHighScore = highscore.pure()
+    private val restartHighScore = highscore.restart()
     private val highWave = game.highWave
     private fun startScore(waveIndex: Int): Int = game.startScore(waveIndex)
     private fun startLives(waveIndex: Int): Int = game.startLives(waveIndex)

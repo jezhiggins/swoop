@@ -23,7 +23,8 @@ class Game(private val context: Context) {
     private var wave: Wave = Emptiness()
     private var scaleMatrix = Matrix()
     private var touchMatrix = Matrix()
-    private var pure = false
+
+    private val highscorer = HighScore(context)
 
     val player = Player(this)
 
@@ -57,17 +58,15 @@ class Game(private val context: Context) {
     } // setExtent
 
     fun attract() {
-        wave = Attract(this)
+        wave = Attract(this, highscorer)
     } // attract
 
     fun start(startWave: Int) {
         player.start(
             startLives(startWave),
-            startScore(startWave)
+            startScore(startWave),
+            highscorer.tracker(if(startWave == 0) HighScore.Mode.Pure else HighScore.Mode.Restart)
         )
-
-        newHighScore = false
-        pure = (startWave == 0)
     } // start
 
     fun end() {
@@ -83,13 +82,6 @@ class Game(private val context: Context) {
     }
 
     fun gameOver() = nextWave(GameOver(this, wave))
-
-    fun scored(score: Int) {
-        if (score > highScore) {
-            highScore = score
-            newHighScore = true
-        }
-    }
 
     /////
     fun onSingleTapUp(ev: MotionEvent) {
@@ -108,25 +100,12 @@ class Game(private val context: Context) {
 
         wave.draw(canvas)
 
-        player.draw(canvas, newHighScore)
-
         canvas.restore()
     } // draw
 
     /////
     private val prefs: SharedPreferences
         get() = context.getSharedPreferences("swoop", Context.MODE_PRIVATE)
-
-    private var highScore: Int
-        get() = prefs.getInt(highscoreTag(), 0)
-        private set(value) = prefs.edit { putInt(highscoreTag(), value) }
-    private var newHighScore: Boolean
-        get() = prefs.getBoolean("newHighscore", false)
-        set(value) = prefs.edit { putBoolean("newHighscore", value) }
-
-    fun pureHighScore(): Int = prefs.getInt("purehighscore", 0)
-    fun restartHighScore(): Int = prefs.getInt("restarthighscore", 0)
-    private fun highscoreTag(): String = if (pure) "purehighscore" else "restarthighscore"
 
     fun checkpointScore(waveIndex: Int) {
         if (player.score < startScore(waveIndex))
