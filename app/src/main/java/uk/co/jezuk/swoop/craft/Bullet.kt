@@ -6,10 +6,12 @@ import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.geometry.Vector
+import uk.co.jezuk.swoop.wave.Wave
 
 //////////////////////
 class Bullet(
     private val player: Player,
+    private val wave: Wave,
     private val maxAge: Int
 ): Projectile {
     override val position = player.position.copy()
@@ -25,12 +27,12 @@ class Bullet(
         val toPointyEndOfShop = Vector(Ship.Radius*2, player.orientation, Ship.Radius*2)
         position.move(toPointyEndOfShop, 1f, Game.extent, Ship.Radius)
 
-        player.wave.addProjectile(this)
+        wave.addProjectile(this)
     } // init
 
     override fun update(frameRateScale: Float) {
         position.move(velocity, frameRateScale, Game.extent, Ship.Radius)
-        if (++age > maxAge) player.wave.removeProjectile(this)
+        if (++age > maxAge) wave.removeProjectile(this)
     } // update
 
     override fun draw(canvas: Canvas) {

@@ -15,6 +15,7 @@ class Gun(
     private fun fire() {
         Bullet(
             player,
+            player.wave,
             bulletMaxAge
         )
     } // fire
