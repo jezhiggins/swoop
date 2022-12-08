@@ -14,8 +14,12 @@ import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.RestartableLatch
 import kotlin.math.abs
 
-class Ship(private val player: Player) {
-    var orientation = Rotation(-90.0)
+class Ship(
+    private val player: Player,
+    private val origin: Point,
+    private val initialRotation: Rotation)
+{
+    var orientation = initialRotation
     private var targetOrientation = orientation.clone()
 
     private val thrustSound = { Game.sound(R.raw.thrust, position) }
@@ -23,7 +27,7 @@ class Ship(private val player: Player) {
     private val rezInSound = { Game.sound(R.raw.rezin, position) }
     private val rezOutSound = { Game.sound(R.raw.rezout, position) }
 
-    private val pos = Point(0.0, 0.0)
+    private val pos = origin;
     private var state: ShipState = RezIn(this)
 
     /////////////////////////////////////
@@ -38,10 +42,10 @@ class Ship(private val player: Player) {
     } // init
 
     fun reset() {
-        orientation.reset(-90.0)
+        orientation.reset(initialRotation)
         targetOrientation = orientation.clone()
         velocity.reset()
-        pos.reset()
+        pos.reset(origin)
         state = RezIn(this)
     } // reset
 

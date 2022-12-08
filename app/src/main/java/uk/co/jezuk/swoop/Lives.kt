@@ -24,6 +24,7 @@ class Lives {
     }
 
     fun draw(canvas: Canvas) {
+        canvas.save()
         canvas.translate(Game.extent.canvasOffsetX - 50, Game.extent.canvasOffsetY - 90)
         canvas.rotate(-90f)
         canvas.scale(0.75f, 0.75f)
@@ -31,5 +32,6 @@ class Lives {
             canvas.drawLines(Ship.shape, Ship.shipBrush)
             canvas.translate(0f, -105f)
         } // for
+        canvas.restore()
     } // drawLives
 }

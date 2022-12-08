@@ -75,9 +75,9 @@ data class Point(
     fun draw(canvas: Canvas, brush: Paint) =
         canvas.drawPoint(x.toFloat(), y.toFloat(), brush)
 
-    fun reset() {
-        x = 0.0
-        y = 0.0
+    fun reset(origin: Point) {
+        x = origin.x
+        y = origin.y
     } // reset
 
     companion object {

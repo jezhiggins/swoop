@@ -1,5 +1,6 @@
 package uk.co.jezuk.swoop.craft
 
+import android.graphics.Paint
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.utils.Repeat
 import kotlin.math.max
@@ -7,6 +8,7 @@ import kotlin.math.min
 
 class Gun(
     private val player: Player,
+    private val brush: Paint
 ) {
     private var repeatDelay: Int = initialRepeatDelay
     private var bulletMaxAge:Int = initialBulletMaxAge
@@ -15,6 +17,7 @@ class Gun(
     private fun fire() {
         Bullet(
             player,
+            brush,
             player.wave,
             bulletMaxAge
         )

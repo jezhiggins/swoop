@@ -6,9 +6,12 @@ import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.wave.Wave
 
-class Player(private val onDied: () -> Unit): Craft {
-    private val ship = Ship(this)
-    private val gun = Gun(this)
+class Player(
+    private val onDied: () -> Unit,
+    mode: Mode
+): Craft {
+    private val ship = Ship(this, mode.rezPoint, mode.initialRotation)
+    private val gun = Gun(this, mode.bulletColor)
     private val lives_ = Lives()
     private val score_ = Score()
 
@@ -81,10 +84,14 @@ class Player(private val onDied: () -> Unit): Craft {
             gun.update(frameRateScale)
     }
     override fun draw(canvas: Canvas) {
+        canvas.save()
+
         ship.draw(canvas)
 
         score_.draw(canvas)
         lives_.draw(canvas)
+
+        canvas.restore()
     }
 
 }

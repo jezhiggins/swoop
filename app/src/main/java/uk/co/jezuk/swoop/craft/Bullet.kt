@@ -11,6 +11,7 @@ import uk.co.jezuk.swoop.wave.Wave
 //////////////////////
 class Bullet(
     private val player: Player,
+    private val brush: Paint,
     private val wave: Wave,
     private val maxAge: Int
 ): Projectile {
@@ -49,13 +50,13 @@ class Bullet(
     } // hit
 
     companion object {
-        val brush = Paint()
-
-        init {
-            brush.color = Color.MAGENTA
+        fun Brush(color: Int): Paint {
+            val brush = Paint()
+            brush.color = color
             brush.alpha = 255
             brush.strokeWidth = 10f
             brush.strokeCap = Paint.Cap.ROUND
+            return brush
         }
     } // companion object
 } // Bullet

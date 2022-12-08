@@ -11,6 +11,7 @@ import androidx.core.content.edit
 import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
+import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.wave.*
 import uk.co.jezuk.swoop.wave.transition.Attract
 import uk.co.jezuk.swoop.wave.transition.Emptiness
@@ -61,8 +62,11 @@ class Game(private val context: Context) {
         wave = Attract(this, highscorer)
     } // attract
 
-    fun start(startWave: Int) {
-        players.add(Player { this.onPlayerDied() })
+    fun start(startWave: Int, mode: GameMode = TwoPlayer) {
+        players.clear()
+        mode.forEach {
+            players.add(Player({ this.onPlayerDied() }, it))
+        }
         players.forEach {
             it.start(
                 startLives(startWave),
@@ -88,8 +92,7 @@ class Game(private val context: Context) {
     }
 
     private fun onPlayerDied() {
-        players.retainAll { it.alive }
-        if (players.isEmpty())
+        if (players.none { it.alive })
             gameOver()
     }
     private fun gameOver() = nextWave(GameOver(this, wave))

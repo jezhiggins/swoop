@@ -8,8 +8,8 @@ class Rotation(
 ) {
     var angle: Double = wraparound(initial)
 
-    fun reset(a: Double) {
-        angle = a
+    fun reset(a: Rotation) {
+        angle = a.angle
     } // reset
 
     operator fun plusAssign(delta: Double) {

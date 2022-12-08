@@ -31,6 +31,11 @@ class Score {
     }// scored
 
     fun draw(canvas: Canvas) {
+        canvas.save()
+        doDraw(canvas)
+        canvas.restore()
+    }
+    private fun doDraw(canvas: Canvas) {
         if (score == -1) return
         if (targetScore != currentScore)
             updateScore(10)
