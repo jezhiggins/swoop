@@ -10,9 +10,9 @@ class Player(
     private val onDied: () -> Unit,
     mode: Mode
 ): Craft {
-    private val ship = Ship(this, mode.rezPoint, mode.initialRotation)
+    private val ship = Ship(this, mode.shipShape, mode.rezPoint, mode.initialRotation)
     private val gun = Gun(this, mode.bulletColor)
-    private val lives_ = Lives()
+    private val lives_ = Lives(mode.shipShape)
     private val score_ = Score()
 
     override val position get() = ship.position

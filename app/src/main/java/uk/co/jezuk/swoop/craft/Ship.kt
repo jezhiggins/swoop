@@ -16,10 +16,13 @@ import kotlin.math.abs
 
 class Ship(
     private val player: Player,
+    shape: FloatArray,
     private val origin: Point,
     private val initialRotation: Rotation)
 {
-    var orientation = initialRotation
+    var orientation = initialRotation.clone()
+    val shipOutline: FloatArray = shape
+    val shipFill = ShipFill(shape)
     private var targetOrientation = orientation.clone()
 
     private val thrustSound = { Game.sound(R.raw.thrust, position) }
@@ -27,7 +30,7 @@ class Ship(
     private val rezInSound = { Game.sound(R.raw.rezin, position) }
     private val rezOutSound = { Game.sound(R.raw.rezout, position) }
 
-    private val pos = origin;
+    private val pos = Point(origin)
     private var state: ShipState = RezIn(this)
 
     /////////////////////////////////////
@@ -103,19 +106,26 @@ class Ship(
 
     //////////////////////////
     companion object {
+        val Dart = floatArrayOf(
+            50f, 0f, -50f, 25f,
+            -30f, 0f, -50f, 25f,
+            -30f, 0f, -50f, -25f,
+            50f, 0f, -50f, -25f
+        )
+        val Speeder = floatArrayOf(
+            50f, 0f, -50f, 18f,
+            -35f, 25f, -50f, 18f,
+            -35f, 25f, -35f, -25f,
+            -35f, -25f, -50f, -18f,
+            50f, 0f, -50f, -18f,
+        )
+
         val shipBrush = Paint()
         private val shipFillBrush = Paint()
         private val thrustBrush = Paint()
         private val explodeBrush = Paint()
         private val redBrush = Paint()
 
-        private val shipPath = Path()
-        val shape = floatArrayOf(
-            50f, 0f, -50f, 25f,
-            -30f, 0f, -50f, 25f,
-            -30f, 0f, -50f, -25f,
-            50f, 0f, -50f, -25f
-        )
         private val thruster = floatArrayOf(
             -40f, 15f, -70f, 0f,
             -70f, 0f, -40f, -15f,
@@ -149,12 +159,16 @@ class Ship(
             redBrush.setARGB(255, 255, 0, 0)
             redBrush.strokeWidth = 10f
             redBrush.style = Paint.Style.STROKE
-
-            shipPath.moveTo(shape[0], shape[1])
-            for (i in shape.indices step 2)
-                shipPath.lineTo(shape[i], shape[i+1])
-            shipPath.close()
         } // init
+
+        private fun ShipFill(points: FloatArray): Path {
+            val shape = Path()
+            shape.moveTo(points[0], points[1])
+            for (i in points.indices step 2)
+                shape.lineTo(points[i], points[i+1])
+            shape.close()
+            return shape
+        }
     } // companion object
 
     //////////////////////////
@@ -194,8 +208,8 @@ class Ship(
         } // update
 
         override fun draw(canvas: Canvas) {
-            canvas.drawPath(shipPath, shipFillBrush)
-            canvas.drawLines(shape, shipBrush)
+            canvas.drawPath(ship.shipFill, shipFillBrush)
+            canvas.drawLines(ship.shipOutline, shipBrush)
 
             if (thrustFrames.running)
                 canvas.drawLines(thruster, thrustBrush)
@@ -207,7 +221,7 @@ class Ship(
     } // Flying
 
     private class Exploding(private val ship: Ship): ShipState {
-        private val exploder = Exploder({ whatsNext() }, shape, explodeBrush, 50, false)
+        private val exploder = Exploder({ whatsNext() }, ship.shipOutline, explodeBrush, 50, false)
 
         init {
             ship.explosionSound()
@@ -257,7 +271,7 @@ class Ship(
     } // RezIn
 
     private class RezOut(ship: Ship): ShipState {
-        private val rezOutShape = shape.copyOf()
+        private val rezOutShape = ship.shipOutline.copyOf()
         private var r = 0
 
         init {

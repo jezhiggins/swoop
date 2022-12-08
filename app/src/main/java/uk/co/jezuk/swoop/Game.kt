@@ -87,7 +87,7 @@ class Game(private val context: Context) {
         if (waveIndex >= 0)
             checkpointScore(waveIndex)
 
-        players.forEach { it.newWave(w) }
+        players.forEach { if (it.alive) it.newWave(w) }
         wave = w
     }
 

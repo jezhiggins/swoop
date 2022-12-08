@@ -43,8 +43,10 @@ class LevelTransition(
     } // draw
 
     private fun startNextWave() {
-        players.forEach { it.lifeGained() }
-        players.forEach { it.gunOn() }
+        players.forEach { if (it.alive) {
+            it.lifeGained()
+            it.gunOn()
+        } }
 
         game.nextWave(nextWave, waveIndex)
     } // startNextWave
