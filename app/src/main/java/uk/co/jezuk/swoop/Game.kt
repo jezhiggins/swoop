@@ -26,7 +26,7 @@ class Game(private val context: Context) {
 
     private val highscorer = HighScore(context)
 
-    val player = Player(this)
+    val players = mutableListOf<Player>()
 
     init {
         loadSounds(context)
@@ -62,15 +62,18 @@ class Game(private val context: Context) {
     } // attract
 
     fun start(startWave: Int) {
-        player.start(
-            startLives(startWave),
-            startScore(startWave),
-            highscorer.tracker(if(startWave == 0) HighScore.Mode.Pure else HighScore.Mode.Restart)
-        )
+        players.add(Player { this.onPlayerDied() })
+        players.forEach {
+            it.start(
+                startLives(startWave),
+                startScore(startWave),
+                highscorer.tracker(if (startWave == 0) HighScore.Mode.Pure else HighScore.Mode.Restart)
+            )
+        }
     } // start
 
     fun end() {
-        player.end()
+        players.forEach { it.end() }
     } // end
 
     fun endOfWave(starField: StarField, projectiles: Projectiles? = null) {
@@ -80,11 +83,16 @@ class Game(private val context: Context) {
         if (waveIndex >= 0)
             checkpointScore(waveIndex)
 
-        player.newWave(w)
+        players.forEach { it.newWave(w) }
         wave = w
     }
 
-    fun gameOver() = nextWave(GameOver(this, wave))
+    private fun onPlayerDied() {
+        players.retainAll { it.alive }
+        if (players.isEmpty())
+            gameOver()
+    }
+    private fun gameOver() = nextWave(GameOver(this, wave))
 
     /////
     fun onSingleTapUp(ev: MotionEvent) {
@@ -110,7 +118,9 @@ class Game(private val context: Context) {
     private val prefs: SharedPreferences
         get() = context.getSharedPreferences("swoop", Context.MODE_PRIVATE)
 
-    private fun checkpointScore(waveIndex: Int) {
+    private fun checkpointScore(waveIndex: Int) =
+        players.forEach { checkpointScore(waveIndex, it) }
+    private fun checkpointScore(waveIndex: Int, player: Player) {
         if (player.score < startScore(waveIndex))
             return
 

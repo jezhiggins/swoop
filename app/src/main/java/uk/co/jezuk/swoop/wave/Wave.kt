@@ -7,7 +7,7 @@ import uk.co.jezuk.swoop.craft.Projectile
 import uk.co.jezuk.swoop.craft.Target
 
 interface Wave {
-    val player: Player? get() = null
+    val players: List<Player> get() = emptyList()
 
     fun onSingleTapUp(event: MotionEvent) = Unit
     fun onScroll(offsetX: Float, offsetY: Float) = Unit

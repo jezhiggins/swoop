@@ -14,7 +14,7 @@ class CometStorm(
     private var cometGun: Latch = Latch(150) { launchComet() }
 
     init {
-        player.onLifeLost { survivalBonus = false }
+        players.forEach { it.onLifeLost { survivalBonus = false } }
     } // init
 
     private fun launchComet() {
@@ -28,7 +28,7 @@ class CometStorm(
 
     /////
     override fun update(frameRateScale: Float) {
-        player.gunOff()
+        players.forEach { it.gunOff() }
         cometGun.tick(frameRateScale)
 
         super.update(frameRateScale)
@@ -36,8 +36,8 @@ class CometStorm(
 
     /////
     override fun endOfLevel() {
-        if (survivalBonus) player.scored(5000)
-        player.gunOn()
+        if (survivalBonus) players.forEach { it.scored(5000) }
+        players.forEach { it.gunOn() }
 
         super.endOfLevel()
     } // endOfLevel

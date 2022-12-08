@@ -6,7 +6,7 @@ import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.wave.Wave
 
-class Player(private val game: Game): Craft {
+class Player(private val onDied: () -> Unit): Craft {
     private val ship = Ship(this)
     private val gun = Gun(this)
     private val lives_ = Lives()
@@ -38,6 +38,8 @@ class Player(private val game: Game): Craft {
 
     val score get() = score_.score
     val lives get() = lives_.lives
+    val alive get() = lives_.alive
+
 
     fun start(startLives: Int, startScore: Int, tracker: HighScore.Tracker) {
         lives_.start(startLives)
@@ -59,7 +61,7 @@ class Player(private val game: Game): Craft {
         if (lives_.alive)
             return Game.NextShip.Continue
 
-        game.gameOver()
+        onDied();
 
         return Game.NextShip.End
     } // lifeLost

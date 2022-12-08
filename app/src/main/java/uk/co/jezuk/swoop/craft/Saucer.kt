@@ -26,7 +26,7 @@ class Saucer(
     private val swinginess = Random.nextDouble(100.0, 100.0 + (50.0 * aggressiveness))
     private val traverseLength = startPosition.distance(traverse[1])
     private val skew = Rotation.random()
-    private val firedStep = if (wave.player != null) Random.nextDouble(0.4 - (0.07 * aggressiveness), 0.4) else 1000.0
+    private val firedStep = if (wave.players.isNotEmpty()) Random.nextDouble(0.4 - (0.07 * aggressiveness), 0.4) else 1000.0
     private var fired = firedStep
 
     init {
@@ -54,7 +54,7 @@ class Saucer(
 
         fired += firedStep
 
-        val direction = position.angleTo(wave.player!!.position)
+        val direction = position.angleTo(wave.players[Random.nextInt(0, wave.players.size)].position)
 
         Game.sound(R.raw.saucerfire, position)
         for (offset in -30..30 step 30)

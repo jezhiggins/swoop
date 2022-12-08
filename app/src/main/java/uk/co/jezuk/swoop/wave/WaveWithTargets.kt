@@ -12,10 +12,6 @@ abstract class WaveWithTargets(
         targets.update(frameRateScale)
     } // updateTargets
 
-    protected fun checkPlayerCollision(player: Player) {
-        targets.checkPlayerCollision(player)
-    } // checkShipCollision
-
     protected fun drawTargets(canvas: Canvas) {
         targets.draw(canvas)
     } // drawTargets

@@ -10,10 +10,12 @@ interface Target: Craft {
     fun shot(): Effect
     fun explode()
 
-    fun checkShipCollision(player: Player) {
-        if (Craft.collision(this, player))
-            playerCollision(player)
-    } // checkShipCollision
+    fun checkPlayerCollision(players: List<Player>) {
+        players.forEach {
+            if (Craft.collision(this, it))
+                playerCollision(it)
+        }
+    } // checkPlayerCollision
     fun checkProjectileCollision(projectiles: Projectiles) {
         val hitWith = projectiles.collision(this)
         hitWith?.hit(shot())

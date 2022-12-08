@@ -19,7 +19,7 @@ class MagneticAsteroid(
     scale: Float = Big
 ): Asteroid(game, wave, pos, scale) {
     override fun update(frameRateScale: Float) {
-        wave.player?.let {
+        wave.players.forEach {
             val shipDistance = position.distance(it.position)
             val shipAngle = position.angleTo(it.position)
 

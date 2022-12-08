@@ -12,31 +12,31 @@ abstract class WaveWithShip(
     private val starField: StarField,
     gunReset: Boolean = false
 ): WaveWithTargets() {
-    final override val player: Player = game.player
+    final override val players: List<Player> = game.players
     private val projectiles: Projectiles = Projectiles()
 
     init {
         if (gunReset)
-            player.gunReset()
+            players.forEach { it.gunReset() }
     }
 
     /////
-    override fun onSingleTapUp(event: MotionEvent) = player.thrust()
+    override fun onSingleTapUp(event: MotionEvent) = players.forEach { it.thrust() }
     override fun onScroll(offsetX: Float, offsetY: Float) {
-        player.rotateTowards(
+        players.forEach { it.rotateTowards(
             angleFromOffsets(offsetX, offsetY)
-        )
+        ) }
     } // onScroll
-    override fun onLongPress() = player.thrust()
+    override fun onLongPress() = players.forEach { it.thrust() }
 
     /////
     override fun update(frameRateScale: Float) {
-        player.update(frameRateScale)
+        players.forEach { it.update(frameRateScale) }
 
         updateTargets(frameRateScale)
         updateProjectiles(frameRateScale)
 
-        checkCollisions(player)
+        checkCollisions(players)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -45,7 +45,7 @@ abstract class WaveWithShip(
         drawTargets(canvas)
         drawProjectiles(canvas)
 
-        player.draw(canvas)
+        players.forEach { it.draw(canvas) }
     } // draw
 
     /////
@@ -57,12 +57,12 @@ abstract class WaveWithShip(
         projectiles.update(frameRateScale)
     } // updateProjectiles
 
-    private fun checkCollisions(player: Player) {
+    private fun checkCollisions(players: List<Player>) {
         targets.iterator().forEach {
-            t -> t.checkProjectileCollision(projectiles)
+            it.checkProjectileCollision(projectiles)
         }
         targets.iterator().forEach {
-            t -> t.checkShipCollision(player)
+            it.checkPlayerCollision(players)
         }
     } // checkCollisions
 

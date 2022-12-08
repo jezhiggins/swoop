@@ -15,20 +15,20 @@ class LevelTransition(
     private val nextWave: Wave,
     private val waveIndex: Int
 ): Wave {
-    override val player = game.player
+    override val players = game.players
     private var transition = Latch(180) { startNextWave() }
     private var currentStarField = starField
 
     init {
-        player.gunOff()
+        players.forEach { it.gunOff() }
     }
 
     override fun update(frameRateScale: Float) {
-        player.update(frameRateScale)
+        players.forEach { it.update(frameRateScale) }
         projectiles?.update(frameRateScale)
 
         when (transition.tick(frameRateScale)) {
-            120 -> player.rezOut()
+            120 -> players.forEach { it.rezOut() }
             40, 60, 100 -> currentStarField = newStarField
             50, 75 -> currentStarField = starField
         }
@@ -39,12 +39,12 @@ class LevelTransition(
         if (currentStarField == starField)
           projectiles?.draw(canvas)
 
-        player.draw(canvas)
+        players.forEach { it.draw(canvas) }
     } // draw
 
     private fun startNextWave() {
-        player.lifeGained()
-        player.gunOn()
+        players.forEach { it.lifeGained() }
+        players.forEach { it.gunOn() }
 
         game.nextWave(nextWave, waveIndex)
     } // startNextWave

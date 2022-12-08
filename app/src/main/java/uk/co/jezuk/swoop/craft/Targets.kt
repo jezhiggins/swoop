@@ -18,9 +18,9 @@ class Targets {
         iterator().forEach { t -> t.update(frameRateScale) }
     } // updateTargets
 
-    fun checkPlayerCollision(player: Player) {
-        iterator().forEach { t -> t.checkShipCollision(player) }
-    } // checkShipCollision
+    fun checkPlayerCollision(players: List<Player>) {
+        iterator().forEach { t -> t.checkPlayerCollision(players) }
+    } // checkPlayerCollision
 
     fun draw(canvas: Canvas) {
         targets.forEach { t -> t.draw(canvas) }
