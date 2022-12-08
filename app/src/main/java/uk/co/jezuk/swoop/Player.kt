@@ -21,6 +21,7 @@ class Player(
     private val lives_ = Lives(mode.shipShape, mode.shipColor, mode.livesDisplayPosition)
     private val score_ = Score(mode.scoreDisplayPosition)
 
+    val touchArea = mode.touchArea
     override val position get() = ship.position
     override val killDist get() = ship.killDist
     val orientation get() = ship.orientation

@@ -59,4 +59,8 @@ class Extent(
         val doubleDist = (dist * 2).toInt()
         return Extent(width + doubleDist, height + doubleDist)
     }
+
+    val WholeArea = bounds
+    val LeftHalf = Rect(left.toInt(), top.toInt(), 0, bottom.toInt())
+    val RightHalf = Rect(0, top.toInt(), right.toInt(), bottom.toInt())
 }

@@ -42,8 +42,8 @@ class Attract(
         ) { Game.extent.randomPoint() }
     }
 
-    override fun onSingleTapUp(event: MotionEvent) {
-        mode = mode.onSingleTapUp(event, this)
+    override fun onSingleTapUp(x: Float, y: Float) {
+        mode = mode.onSingleTapUp(x, y, this)
     } // onDown
 
     /////
@@ -67,7 +67,7 @@ class Attract(
     } // newGame
 
     private interface AttractMode {
-        fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode
+        fun onSingleTapUp(x: Float, y: Float, attract: Attract): AttractMode
         fun draw(canvas: Canvas, attract: Attract)
     } // AttractMode
 
@@ -108,8 +108,8 @@ class Attract(
     } // class TitleScreen
 
     private class TitleScreen: TitleDressing() {
-        override fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode {
-            if (tappedOnInfo(event, attract))
+        override fun onSingleTapUp(x: Float, y: Float, attract: Attract): AttractMode {
+            if (tappedOnInfo(x, y, attract))
                 return InfoScreen()
             return WaveStartScreen(attract)
         } // onDown
@@ -130,9 +130,7 @@ class Attract(
             canvas.drawText("i", infoX, infoY+30f, infoPen)
         } // draw
 
-        private fun tappedOnInfo(event: MotionEvent, attract: Attract): Boolean {
-            val (x, y) = event
-
+        private fun tappedOnInfo(x: Float, y: Float, attract: Attract): Boolean {
             val extent = attract.extent
 
             val infoX = (extent.right - 120).toFloat()
@@ -160,9 +158,7 @@ class Attract(
             }
         }
 
-        override fun onSingleTapUp(event: MotionEvent, attract: Attract): AttractMode {
-            val (x, y) = event
-
+        override fun onSingleTapUp(x: Float, y: Float, attract: Attract): AttractMode {
             if (y > 0 && y < 300) {
                 pads.forEach { (i, padX) ->
                     if ((padX > x-75) && (padX < x+75))
@@ -211,7 +207,7 @@ class Attract(
     } // AttractMode
 
     private class InfoScreen: AttractMode {
-        override fun onSingleTapUp(event: MotionEvent, attract: Attract) =
+        override fun onSingleTapUp(x: Float, y: Float, attract: Attract) =
                 TitleScreen()
 
         override fun draw(canvas: Canvas, attract: Attract) {
@@ -276,5 +272,3 @@ class Attract(
     } // companion object
 } // Attract
 
-private operator fun MotionEvent.component1(): Float = x
-private operator fun MotionEvent.component2(): Float = y

@@ -59,10 +59,10 @@ class GameView(
         return true
     } // onSingleTapUp
     override fun onScroll(ev1: MotionEvent, ev2: MotionEvent, offsetX: Float, offsetY: Float): Boolean {
-        game.onScroll(offsetX, offsetY)
+        game.onScroll(ev1, offsetX, offsetY)
         return true
     } // onScroll
-    override fun onLongPress(ev: MotionEvent) = game.onLongPress()
+    override fun onLongPress(ev: MotionEvent) = game.onLongPress(ev)
 
     fun update(frameRateScale: Float) {
         game.update(frameRateScale)

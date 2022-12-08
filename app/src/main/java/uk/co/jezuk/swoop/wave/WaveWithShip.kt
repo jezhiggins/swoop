@@ -21,13 +21,13 @@ abstract class WaveWithShip(
     }
 
     /////
-    override fun onSingleTapUp(event: MotionEvent) = players.forEach { it.thrust() }
-    override fun onScroll(offsetX: Float, offsetY: Float) {
+    override fun onSingleTapUp(x: Float, y: Float) = players.forEach { it.thrust() }
+    override fun onScroll(x: Float, y: Float, offsetX: Float, offsetY: Float) {
         players.forEach { it.rotateTowards(
             angleFromOffsets(offsetX, offsetY)
         ) }
     } // onScroll
-    override fun onLongPress() = players.forEach { it.thrust() }
+    override fun onLongPress(x: Float, y: Float) = onSingleTapUp(x, y)
 
     /////
     override fun update(frameRateScale: Float) {

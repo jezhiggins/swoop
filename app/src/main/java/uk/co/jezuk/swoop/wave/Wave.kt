@@ -9,9 +9,9 @@ import uk.co.jezuk.swoop.craft.Target
 interface Wave {
     val players: List<Player> get() = emptyList()
 
-    fun onSingleTapUp(event: MotionEvent) = Unit
-    fun onScroll(offsetX: Float, offsetY: Float) = Unit
-    fun onLongPress() = Unit
+    fun onSingleTapUp(x: Float, y: Float) = Unit
+    fun onScroll(x: Float, y: Float, offsetX: Float, offsetY: Float) = Unit
+    fun onLongPress(x: Float, y: Float) = Unit
 
     /////
     fun update(frameRateScale: Float)
