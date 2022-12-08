@@ -76,7 +76,10 @@ class Game(private val context: Context) {
     fun endOfWave(starField: StarField, projectiles: Projectiles? = null) {
         wave = Waves.transition(this, starField, projectiles)
     } // endOfWave
-    fun nextWave(w: Wave) {
+    fun nextWave(w: Wave, waveIndex: Int = -1) {
+        if (waveIndex >= 0)
+            checkpointScore(waveIndex)
+
         player.newWave(w)
         wave = w
     }
@@ -107,7 +110,7 @@ class Game(private val context: Context) {
     private val prefs: SharedPreferences
         get() = context.getSharedPreferences("swoop", Context.MODE_PRIVATE)
 
-    fun checkpointScore(waveIndex: Int) {
+    private fun checkpointScore(waveIndex: Int) {
         if (player.score < startScore(waveIndex))
             return
 

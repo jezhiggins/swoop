@@ -45,7 +45,7 @@ class LevelTransition(
     private fun startNextWave() {
         player.lifeGained()
         player.gunOn()
-        game.checkpointScore(waveIndex)
-        game.nextWave(nextWave)
+
+        game.nextWave(nextWave, waveIndex)
     } // startNextWave
 } // Emptiness
