@@ -76,14 +76,22 @@ class Score(
             canvas.translate(-Game.extent.canvasOffsetX + 50, Game.extent.canvasOffsetY - 50)
         }
 
+        private val twoPlayerXOffset = 100f;
+        private val twoPlayerYOffset = 270f;
         fun PlayerOne(canvas: Canvas) {
-            canvas.translate(Game.extent.canvasOffsetX - 100, -Game.extent.canvasOffsetY + 270)
+            canvas.translate(
+                Game.extent.canvasOffsetX - twoPlayerXOffset,
+                -Game.extent.canvasOffsetY + twoPlayerYOffset
+            )
             canvas.rotate(270f)
             canvas.scale(0.5f, 0.5f)
         }
 
         fun PlayerTwo(canvas: Canvas) {
-            canvas.translate(-Game.extent.canvasOffsetX + 100, Game.extent.canvasOffsetY - 270)
+            canvas.translate(
+                -Game.extent.canvasOffsetX + twoPlayerXOffset,
+                Game.extent.canvasOffsetY - twoPlayerYOffset
+            )
             canvas.rotate(90f)
             canvas.scale(0.5f, 0.5f)
         }
