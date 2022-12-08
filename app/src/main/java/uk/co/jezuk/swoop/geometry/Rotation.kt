@@ -36,6 +36,11 @@ class Rotation(
     } // wraparound
 
     companion object {
+        val Left get() = Rotation(0.0)
+        val Down get() = Rotation(90.0)
+        val Right get() = Rotation(180.0)
+        val Up get() = Rotation(270.0)
+
         fun random() = Rotation(Random.nextDouble(360.0))
         fun none() = Rotation(0.0)
     } // companion object

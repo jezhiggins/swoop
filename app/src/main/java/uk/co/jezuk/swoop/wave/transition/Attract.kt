@@ -199,7 +199,7 @@ class Attract(
                     canvas.save()
                     canvas.rotate(-90f)
                     canvas.scale(0.25f, 0.25f)
-                    canvas.drawLines(Ship.Dart, Ship.shipBrush)
+                    canvas.drawLines(Ship.Dart, Ship.GreenBrush)
                     canvas.restore()
                     canvas.translate(xoffset, 0f)
                 } // for

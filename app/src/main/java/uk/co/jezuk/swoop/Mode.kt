@@ -11,13 +11,14 @@ data class Mode(
     val rezPoint: Point,
     val initialRotation: Rotation,
     val shipShape: FloatArray,
+    val shipColor: Paint,
     val bulletColor: Paint
 )
 
 typealias GameMode = List<Mode>
 
-val OnePlayer = listOf(Mode(Point(0.0, 0.0), Rotation(-90.0), Ship.Dart, Bullet.Brush(Color.MAGENTA)))
+val OnePlayer = listOf(Mode(Point(0.0, 0.0), Rotation.Up, Ship.Dart, Ship.GreenBrush, Bullet.MagentaBrush))
 val TwoPlayer = listOf(
-    Mode(Point(200.0, 0.0), Rotation(180.0), Ship.Dart, Bullet.Brush(Color.MAGENTA)),
-    Mode(Point(-200.0, 0.0), Rotation(0.0), Ship.Speeder, Bullet.Brush(Color.rgb(173, 255, 47)))
+    Mode(Point(200.0, 0.0), Rotation.Right, Ship.Dart, Ship.GreenBrush, Bullet.MagentaBrush),
+    Mode(Point(-200.0, 0.0), Rotation.Left, Ship.Speeder, Ship.PinkBrush, Bullet.GreenBrush)
 )

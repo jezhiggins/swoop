@@ -1,10 +1,14 @@
 package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
+import android.graphics.Paint
 import uk.co.jezuk.swoop.craft.Ship
 import kotlin.math.min
 
-class Lives(private val shipShape: FloatArray) {
+class Lives(
+    private val shipShape: FloatArray,
+    private val shipBrush: Paint
+) {
     private var currentLives = 0
 
     val lives get() = currentLives
@@ -29,7 +33,7 @@ class Lives(private val shipShape: FloatArray) {
         canvas.rotate(-90f)
         canvas.scale(0.75f, 0.75f)
         for (l in 0 until currentLives) {
-            canvas.drawLines(shipShape, Ship.shipBrush)
+            canvas.drawLines(shipShape, shipBrush)
             canvas.translate(0f, -105f)
         } // for
         canvas.restore()

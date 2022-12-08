@@ -17,6 +17,7 @@ import kotlin.math.abs
 class Ship(
     private val player: Player,
     shape: FloatArray,
+    private val shipBrush: Paint,
     private val origin: Point,
     private val initialRotation: Rotation)
 {
@@ -120,7 +121,9 @@ class Ship(
             50f, 0f, -50f, -18f,
         )
 
-        val shipBrush = Paint()
+        val GreenBrush = Brush(Color.GREEN)
+        val PinkBrush = Brush(Color.rgb(255, 20, 147))
+
         private val shipFillBrush = Paint()
         private val thrustBrush = Paint()
         private val explodeBrush = Paint()
@@ -135,16 +138,19 @@ class Ship(
 
         val Radius: Float get() = 30f
 
-        init {
-            shipBrush.color = Color.GREEN
-            shipBrush.alpha = 175
-            shipBrush.strokeWidth = 10f
-            shipBrush.strokeCap = Paint.Cap.ROUND
-            shipBrush.style = Paint.Style.STROKE
+        fun Brush(color: Int): Paint {
+            val brush = Paint()
+            brush.color = color
+            brush.alpha = 175
+            brush.strokeWidth = 10f
+            brush.strokeCap = Paint.Cap.ROUND
+            brush.style = Paint.Style.STROKE
+            return brush
+        }
 
+        init {
             shipFillBrush.color = Color.BLACK
             shipFillBrush.alpha = 255
-            shipBrush.strokeWidth = 10f
             shipFillBrush.style = Paint.Style.FILL_AND_STROKE
 
             explodeBrush.color = Color.YELLOW
@@ -209,7 +215,7 @@ class Ship(
 
         override fun draw(canvas: Canvas) {
             canvas.drawPath(ship.shipFill, shipFillBrush)
-            canvas.drawLines(ship.shipOutline, shipBrush)
+            canvas.drawLines(ship.shipOutline, ship.shipBrush)
 
             if (thrustFrames.running)
                 canvas.drawLines(thruster, thrustBrush)
@@ -264,13 +270,13 @@ class Ship(
             if (pause.running) return
 
             val r = (radius / 100).toInt()
-            val brush = if ((r/2f) == (r/2).toFloat()) shipBrush else redBrush
+            val brush = if ((r/2f) == (r/2).toFloat()) ship.shipBrush else redBrush
 
             canvas.drawCircle(0f, 0f, radius, brush)
         } // draw
     } // RezIn
 
-    private class RezOut(ship: Ship): ShipState {
+    private class RezOut(private val ship: Ship): ShipState {
         private val rezOutShape = ship.shipOutline.copyOf()
         private var r = 0
 
@@ -290,7 +296,7 @@ class Ship(
         } // update
 
         override fun draw(canvas: Canvas) {
-            val brush = if ((r/2f) == (r/2).toFloat()) shipBrush else redBrush
+            val brush = if ((r/2f) == (r/2).toFloat()) ship.shipBrush else redBrush
             canvas.drawLines(rezOutShape, brush)
         } // draw
     } // RezOut
