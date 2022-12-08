@@ -28,7 +28,7 @@ class LevelTransition(
         projectiles?.update(frameRateScale)
 
         when (transition.tick(frameRateScale)) {
-            120 -> players.forEach { it.rezOut() }
+            120 -> players.forEach { if (it.alive) it.rezOut() }
             40, 60, 100 -> currentStarField = newStarField
             50, 75 -> currentStarField = starField
         }

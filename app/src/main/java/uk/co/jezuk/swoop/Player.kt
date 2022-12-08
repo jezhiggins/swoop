@@ -49,7 +49,6 @@ class Player(
     val lives get() = lives_.lives
     val alive get() = lives_.alive
 
-
     fun start(startLives: Int, startScore: Int, tracker: HighScore.Tracker) {
         lives_.start(startLives)
         score_.start(startScore, tracker)
