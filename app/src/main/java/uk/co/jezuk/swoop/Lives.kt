@@ -7,7 +7,8 @@ import kotlin.math.min
 
 class Lives(
     private val shipShape: FloatArray,
-    private val shipBrush: Paint
+    private val shipBrush: Paint,
+    private val positionDisplay: (Canvas) -> Unit
 ) {
     private var currentLives = 0
 
@@ -29,13 +30,30 @@ class Lives(
 
     fun draw(canvas: Canvas) {
         canvas.save()
-        canvas.translate(Game.extent.canvasOffsetX - 50, Game.extent.canvasOffsetY - 90)
-        canvas.rotate(-90f)
-        canvas.scale(0.75f, 0.75f)
+        positionDisplay(canvas)
         for (l in 0 until currentLives) {
             canvas.drawLines(shipShape, shipBrush)
             canvas.translate(0f, -105f)
         } // for
         canvas.restore()
     } // drawLives
+
+    companion object {
+        fun SinglePlayer(canvas: Canvas) {
+            canvas.translate(Game.extent.canvasOffsetX - 50, Game.extent.canvasOffsetY - 90)
+            canvas.rotate(-90f)
+            canvas.scale(0.75f, 0.75f)
+        }
+
+        fun PlayerOne(canvas: Canvas) {
+            canvas.translate(Game.extent.canvasOffsetX - 50, -Game.extent.canvasOffsetY + 90)
+            canvas.rotate(180f)
+            canvas.scale(0.5f, 0.5f)
+        }
+
+        fun PlayerTwo(canvas: Canvas) {
+            canvas.translate(-Game.extent.canvasOffsetX + 50, Game.extent.canvasOffsetY - 90)
+            canvas.scale(0.5f, 0.5f)
+        }
+    }
 }

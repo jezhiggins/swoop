@@ -18,7 +18,7 @@ class Player(
         mode.initialRotation
     )
     private val gun = Gun(this, mode.bulletColor)
-    private val lives_ = Lives(mode.shipShape, mode.shipColor)
+    private val lives_ = Lives(mode.shipShape, mode.shipColor, mode.livesDisplayPosition)
     private val score_ = Score()
 
     override val position get() = ship.position
