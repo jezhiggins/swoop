@@ -19,7 +19,7 @@ class Player(
     )
     private val gun = Gun(this, mode.bulletColor)
     private val lives_ = Lives(mode.shipShape, mode.shipColor, mode.livesDisplayPosition)
-    private val score_ = Score()
+    private val score_ = Score(mode.scoreDisplayPosition)
 
     override val position get() = ship.position
     override val killDist get() = ship.killDist

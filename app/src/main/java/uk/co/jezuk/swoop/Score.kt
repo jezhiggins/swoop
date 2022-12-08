@@ -4,7 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 
-class Score {
+class Score(
+    private val positionDisplay: (Canvas) -> Unit
+) {
     private var currentScore = -1
     private var targetScore = -1
     private var tracker: HighScore.Tracker? = null
@@ -40,10 +42,12 @@ class Score {
         if (targetScore != currentScore)
             updateScore(10)
 
+        positionDisplay(canvas)
+
         canvas.drawText(
             "$currentScore".padStart(6, '0'),
-            -Game.extent.canvasOffsetX + 50,
-            Game.extent.canvasOffsetY - 50,
+            0f,
+            0f,
             scorePen
         )
         if (tracker?.isHighScore(targetScore) != true) return
@@ -51,8 +55,8 @@ class Score {
         scorePen.textSize = 32f
         canvas.drawText(
             "High Score",
-            -Game.extent.canvasOffsetX + 60,
-            Game.extent.canvasOffsetY - 160,
+            10f,
+            -110f,
             scorePen
         )
         scorePen.textSize = 128f
@@ -66,6 +70,22 @@ class Score {
             scorePen.alpha = 255
             scorePen.textSize = 128f
             scorePen.textAlign = Paint.Align.LEFT
+        }
+
+        fun SinglePlayer(canvas: Canvas) {
+            canvas.translate(-Game.extent.canvasOffsetX + 50, Game.extent.canvasOffsetY - 50)
+        }
+
+        fun PlayerOne(canvas: Canvas) {
+            canvas.translate(Game.extent.canvasOffsetX - 100, -Game.extent.canvasOffsetY + 270)
+            canvas.rotate(270f)
+            canvas.scale(0.5f, 0.5f)
+        }
+
+        fun PlayerTwo(canvas: Canvas) {
+            canvas.translate(-Game.extent.canvasOffsetX + 100, Game.extent.canvasOffsetY - 270)
+            canvas.rotate(90f)
+            canvas.scale(0.5f, 0.5f)
         }
     }
 }
