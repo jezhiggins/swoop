@@ -99,16 +99,23 @@ class Game(private val context: Context) {
 
     /////
     fun onSingleTapUp(ev: MotionEvent) {
-        ev.transform(touchMatrix)
-        wave.onSingleTapUp(ev.x, ev.y)
+        val (x, y) = scaleTouch(ev)
+        wave.onSingleTapUp(x, y)
     }
     fun onScroll(ev: MotionEvent, offsetX: Float, offsetY: Float) {
-        ev.transform(touchMatrix)
-        wave.onScroll(ev.x, ev.y, offsetX, offsetY)
+        val (x, y) = scaleTouch(ev)
+        wave.onScroll(x, y, offsetX, offsetY)
     }
     fun onLongPress(ev: MotionEvent) {
+        val (x, y) = scaleTouch(ev)
+        wave.onLongPress(x, y)
+    }
+
+    private fun scaleTouch(ev: MotionEvent): Pair<Float, Float> {
         ev.transform(touchMatrix)
-        wave.onLongPress(ev.x, ev.y)
+        val x = ev.getX(ev.actionIndex)
+        val y = ev.getY(ev.actionIndex)
+        return Pair(x, y)
     }
 
     /////
