@@ -6,7 +6,7 @@ import uk.co.jezuk.swoop.craft.Gun
 import uk.co.jezuk.swoop.craft.Ship
 import uk.co.jezuk.swoop.wave.Wave
 
-class Player(val game: Game): Craft {
+class Player(private val game: Game): Craft {
     private val ship = Ship(this)
     private val gun = Gun(this)
     private val lives_ = Lives()
