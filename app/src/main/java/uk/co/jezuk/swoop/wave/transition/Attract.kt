@@ -42,7 +42,7 @@ class Attract(
         ) { Game.extent.randomPoint() }
     }
 
-    override fun onSingleTapUp(x: Float, y: Float) {
+    override fun onTap(x: Float, y: Float) {
         mode = mode.onSingleTapUp(x, y, this)
     } // onDown
 

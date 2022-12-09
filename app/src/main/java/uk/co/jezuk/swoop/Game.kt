@@ -6,12 +6,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
-import android.view.MotionEvent
 import androidx.core.content.edit
 import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.geometry.Extent
 import uk.co.jezuk.swoop.geometry.Point
-import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.wave.*
 import uk.co.jezuk.swoop.wave.transition.Attract
 import uk.co.jezuk.swoop.wave.transition.Emptiness
@@ -22,8 +20,8 @@ import kotlin.math.min
 class Game(private val context: Context) {
     enum class NextShip { Continue, End }
     private var wave: Wave = Emptiness()
-    private var scaleMatrix = Matrix()
-    private var touchMatrix = Matrix()
+    var scaleMatrix = Matrix()
+    var touchMatrix = Matrix()
 
     private val highscorer = HighScore(context)
 
@@ -98,24 +96,11 @@ class Game(private val context: Context) {
     private fun gameOver() = nextWave(GameOver(this, wave))
 
     /////
-    fun onSingleTapUp(ev: MotionEvent) {
-        val (x, y) = scaleTouch(ev)
-        wave.onSingleTapUp(x, y)
+    fun onTap(x: Float, y: Float) {
+        wave.onTap(x, y)
     }
-    fun onScroll(ev: MotionEvent, offsetX: Float, offsetY: Float) {
-        val (x, y) = scaleTouch(ev)
-        wave.onScroll(x, y, offsetX, offsetY)
-    }
-    fun onLongPress(ev: MotionEvent) {
-        val (x, y) = scaleTouch(ev)
-        wave.onLongPress(x, y)
-    }
-
-    private fun scaleTouch(ev: MotionEvent): Pair<Float, Float> {
-        ev.transform(touchMatrix)
-        val x = ev.getX(ev.actionIndex)
-        val y = ev.getY(ev.actionIndex)
-        return Pair(x, y)
+    fun onMove(x: Float, y: Float, offsetX: Float, offsetY: Float) {
+        wave.onMove(x, y, offsetX, offsetY)
     }
 
     /////

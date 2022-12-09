@@ -25,7 +25,7 @@ class GameOver(
         game.attract()
     } // goToAttract
 
-    override fun onSingleTapUp(x: Float, y: Float) {
+    override fun onTap(x: Float, y: Float) {
         if (pen.alpha > 60) goToAttract()
     } // onSingleTapUp
 

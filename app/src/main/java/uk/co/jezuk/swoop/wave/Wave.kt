@@ -1,7 +1,6 @@
 package uk.co.jezuk.swoop.wave
 
 import android.graphics.Canvas
-import android.view.MotionEvent
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.craft.Projectile
 import uk.co.jezuk.swoop.craft.Target
@@ -9,9 +8,8 @@ import uk.co.jezuk.swoop.craft.Target
 interface Wave {
     val players: List<Player> get() = emptyList()
 
-    fun onSingleTapUp(x: Float, y: Float) = Unit
-    fun onScroll(x: Float, y: Float, offsetX: Float, offsetY: Float) = Unit
-    fun onLongPress(x: Float, y: Float) = Unit
+    fun onTap(x: Float, y: Float) = Unit
+    fun onMove(x: Float, y: Float, offsetX: Float, offsetY: Float) = Unit
 
     /////
     fun update(frameRateScale: Float)
