@@ -2,8 +2,6 @@ package uk.co.jezuk.swoop
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.SparseArray
 import android.view.MotionEvent
@@ -23,8 +21,6 @@ class GameView(
         val x: Float,
         val y: Float,
         var hasMoved: Boolean = false,
-        var ex: Float = x,
-        var ey: Float = y
     ) {
         fun moved() { hasMoved = true }
     }
@@ -52,19 +48,18 @@ class GameView(
         val pointerIndex = event.actionIndex
         val pointerId = event.getPointerId(pointerIndex)
 
-        val touch = scaleTouch(event, pointerIndex)
+        event.transform(game.touchMatrix)
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
-                touches.put(pointerId, touch)
+                touches.put(pointerId, toTouch(event, pointerIndex))
             }
             MotionEvent.ACTION_MOVE -> {
                 for (i in 0..(event.pointerCount-1)) {
                     val start = touches.get(event.getPointerId(i))
                     if (start != null) {
+                        val touch = toTouch(event, i)
                         start.moved()
-                        start.ex = touch.x
-                        start.ey = touch.y
                         onMove(start, touch)
                     }
                 }
@@ -80,8 +75,7 @@ class GameView(
         return true
     } // onTouchEvent
 
-    private fun scaleTouch(ev: MotionEvent, actionIndex: Int): Touch {
-        ev.transform(game.touchMatrix)
+    private fun toTouch(ev: MotionEvent, actionIndex: Int): Touch {
         val x = ev.getX(actionIndex)
         val y = ev.getY(actionIndex)
         return Touch(x, y)
@@ -102,23 +96,6 @@ class GameView(
         super.draw(canvas)
 
         game.draw(canvas)
-
-        canvas.save()
-        canvas.setMatrix(game.scaleMatrix)
-        canvas.clipRect(Game.extent.bounds)
-
-        val paint = Paint()
-        paint.color = Color.YELLOW
-        paint.style = Paint.Style.FILL_AND_STROKE
-        for (i in 0..(touches.size()-1)) {
-            val touch = touches.valueAt(i)
-            canvas.drawCircle(touch.x, touch.y, 100f, paint)
-            if (touch.hasMoved)
-                canvas.drawLine(touch.x, touch.y, touch.ex, touch.ey, paint)
-        }
-
-        canvas.restore()
-        canvas.drawText("Total Pointers " + touches.size(), 10f, 40f, paint)
     } // draw
 
     fun pause() {
