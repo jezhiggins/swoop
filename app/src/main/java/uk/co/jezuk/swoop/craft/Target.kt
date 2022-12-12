@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.craft
 
 import uk.co.jezuk.swoop.Player
+import uk.co.jezuk.swoop.Players
 
 interface Target: Craft {
     enum class Impact { HARD, SOFT, NONE }
@@ -10,8 +11,8 @@ interface Target: Craft {
     fun shot(): Effect
     fun explode()
 
-    fun checkPlayerCollision(players: List<Player>) {
-        players.forEach {
+    fun checkPlayerCollision(players: Players) {
+        players.forAlive {
             if (Craft.collision(this, it))
                 playerCollision(it)
         }

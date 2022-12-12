@@ -25,7 +25,7 @@ class Game(private val context: Context) {
 
     private val highscorer = HighScore(context)
 
-    val players = mutableListOf<Player>()
+    val players = Players()
 
     init {
         loadSounds(context)
@@ -63,9 +63,9 @@ class Game(private val context: Context) {
     fun start(startWave: Int, mode: GameMode = TwoPlayer) {
         players.clear()
         mode.forEach {
-            players.add(Player({ this.onPlayerDied() }, it))
+            players.add({ this.onPlayerDied() }, it)
         }
-        players.forEach {
+        players.forAll {
             it.start(
                 startLives(startWave),
                 startScore(startWave),
@@ -75,7 +75,7 @@ class Game(private val context: Context) {
     } // start
 
     fun end() {
-        players.forEach { it.end() }
+        players.forAll { it.end() }
     } // end
 
     fun endOfWave(starField: StarField, projectiles: Projectiles? = null) {
@@ -85,12 +85,12 @@ class Game(private val context: Context) {
         if (waveIndex >= 0)
             checkpointScore(waveIndex)
 
-        players.forEach { if (it.alive) it.newWave(w) }
+        players.forAlive { it.newWave(w) }
         wave = w
     }
 
     private fun onPlayerDied() {
-        if (players.none { it.alive })
+        if (players.allDead())
             gameOver()
     }
     private fun gameOver() = nextWave(GameOver(this, wave))
@@ -120,7 +120,7 @@ class Game(private val context: Context) {
         get() = context.getSharedPreferences("swoop", Context.MODE_PRIVATE)
 
     private fun checkpointScore(waveIndex: Int) =
-        players.forEach { checkpointScore(waveIndex, it) }
+        players.forAlive { checkpointScore(waveIndex, it) }
     private fun checkpointScore(waveIndex: Int, player: Player) {
         if (player.score < startScore(waveIndex))
             return

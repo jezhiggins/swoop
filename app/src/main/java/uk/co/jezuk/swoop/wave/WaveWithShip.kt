@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.view.MotionEvent
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
+import uk.co.jezuk.swoop.Players
 import uk.co.jezuk.swoop.craft.*
 import uk.co.jezuk.swoop.geometry.angleFromOffsets
 
@@ -12,29 +13,27 @@ abstract class WaveWithShip(
     private val starField: StarField,
     gunReset: Boolean = false
 ): WaveWithTargets() {
-    final override val players: List<Player> = game.players
+    final override val players: Players = game.players
     private val projectiles: Projectiles = Projectiles()
 
     init {
         if (gunReset)
-            players.forEach { it.gunReset() }
+            players.forAll { it.gunReset() }
     }
 
     /////
     override fun onTap(x: Float, y: Float) {
-        players.filter { it.touchArea.contains(x.toInt(), y.toInt()) }
-            .forEach { it.thrust() }
+        players.forTouched(x,y) { it.thrust() }
     }
     override fun onMove(x: Float, y: Float, offsetX: Float, offsetY: Float) {
-        players.filter { it.touchArea.contains(x.toInt(), y.toInt()) }
-            .forEach { it.rotateTowards(
-                angleFromOffsets(offsetX, offsetY)
-            ) }
+        players.forTouched(x, y) { it.rotateTowards(
+            angleFromOffsets(offsetX, offsetY)
+        ) }
     } // onMove
 
     /////
     override fun update(frameRateScale: Float) {
-        players.forEach { it.update(frameRateScale) }
+        players.forAll { it.update(frameRateScale) }
 
         updateTargets(frameRateScale)
         updateProjectiles(frameRateScale)
@@ -48,7 +47,7 @@ abstract class WaveWithShip(
         drawTargets(canvas)
         drawProjectiles(canvas)
 
-        players.forEach { it.draw(canvas) }
+        players.forAll { it.draw(canvas) }
     } // draw
 
     /////
@@ -60,7 +59,7 @@ abstract class WaveWithShip(
         projectiles.update(frameRateScale)
     } // updateProjectiles
 
-    private fun checkCollisions(players: List<Player>) {
+    private fun checkCollisions(players: Players) {
         targets.iterator().forEach {
             it.checkProjectileCollision(projectiles)
         }

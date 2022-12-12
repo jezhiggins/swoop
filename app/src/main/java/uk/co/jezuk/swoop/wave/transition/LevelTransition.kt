@@ -20,15 +20,15 @@ class LevelTransition(
     private var currentStarField = starField
 
     init {
-        players.forEach { it.gunOff() }
+        players.forAll { it.gunOff() }
     }
 
     override fun update(frameRateScale: Float) {
-        players.forEach { it.update(frameRateScale) }
+        players.forAll { it.update(frameRateScale) }
         projectiles?.update(frameRateScale)
 
         when (transition.tick(frameRateScale)) {
-            120 -> players.forEach { if (it.alive) it.rezOut() }
+            120 -> players.forAlive { it.rezOut() }
             40, 60, 100 -> currentStarField = newStarField
             50, 75 -> currentStarField = starField
         }
@@ -39,14 +39,14 @@ class LevelTransition(
         if (currentStarField == starField)
           projectiles?.draw(canvas)
 
-        players.forEach { it.draw(canvas) }
+        players.forAll { it.draw(canvas) }
     } // draw
 
     private fun startNextWave() {
-        players.forEach { if (it.alive) {
+        players.forAlive {
             it.lifeGained()
             it.gunOn()
-        } }
+        }
 
         game.nextWave(nextWave, waveIndex)
     } // startNextWave
