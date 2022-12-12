@@ -18,7 +18,7 @@ import kotlin.random.Random
 
 class Attract(
     private val game: Game,
-    private val highscore: HighScore
+    highscore: HighScore
 ) : WaveWithTargets() {
     private val extent = Game.extent
     private val pureHighScore = highscore.pure()
@@ -56,6 +56,7 @@ class Attract(
     override fun draw(canvas: Canvas) {
         starField.draw(canvas)
         drawTargets(canvas)
+        titleDressing(canvas)
 
         mode.draw(canvas, this)
     } // draw
@@ -71,43 +72,35 @@ class Attract(
         fun draw(canvas: Canvas, attract: Attract)
     } // AttractMode
 
-    private abstract class TitleDressing: AttractMode {
-        override fun draw(canvas: Canvas, attract: Attract) {
-            val margin = 40.0
-            val almostLeft = attract.extent.left + margin
-            val almostRight = attract.extent.right - margin
-            val justOffBottom = attract.extent.bottom - margin
-            val justOffTop = attract.extent.top + margin*2
-            drawText("Forest Road Game Krew", canvas, 0.0, justOffBottom, smallPen)
-            tinyPen.textAlign = Paint.Align.LEFT
-            drawText("Alright Bab!", canvas, almostLeft, justOffBottom, tinyPen)
-            tinyPen.textAlign = Paint.Align.RIGHT
-            drawText("Made in Birmingham", canvas, almostRight, justOffBottom, tinyPen)
+    private fun titleDressing(canvas: Canvas) {
+        val margin = 40.0
+        val almostLeft = (extent.left + margin).toFloat()
+        val almostRight = (extent.right - margin).toFloat()
+        val justOffBottom = (extent.bottom - margin).toFloat()
+        val justOffTop = (extent.top + margin*2).toFloat()
+        canvas.drawText("Forest Road Game Krew", 0.0f, justOffBottom, smallPen)
+        tinyPen.textAlign = Paint.Align.LEFT
+        canvas.drawText("Alright Bab!", almostLeft, justOffBottom, tinyPen)
+        tinyPen.textAlign = Paint.Align.RIGHT
+        canvas.drawText("Made in Birmingham", almostRight, justOffBottom, tinyPen)
 
-            if (attract.pureHighScore != 0)
-                drawText(
-                        "High Score " + "${attract.pureHighScore}".padStart(6, '0'),
-                        canvas,
-                        0.0,
-                        justOffTop,
-                        scorePen
-                )
-            if (attract.restartHighScore != 0)
-                drawText(
-                    "Jumpstart High Score " + "${attract.restartHighScore}".padStart(6, '0'),
-                    canvas,
-                    0.0,
-                    justOffTop + 50,
-                    scorePen
-                )
-        } // draw
+        if (pureHighScore != 0)
+            canvas.drawText(
+                "High Score " + "$pureHighScore".padStart(6, '0'),
+                0.0f,
+                justOffTop,
+                scorePen
+            )
+        if (restartHighScore != 0)
+            canvas.drawText(
+                "Jumpstart High Score " + "$restartHighScore".padStart(6, '0'),
+                0.0f,
+                justOffTop + 50,
+                scorePen
+            )
+    } // draw
 
-        protected fun drawText(text: String, canvas: Canvas, x: Double, y: Double, pen: Paint) {
-            canvas.drawText(text, x.toFloat(), y.toFloat(), pen)
-        } // drawText
-    } // class TitleScreen
-
-    private class TitleScreen: TitleDressing() {
+    private class TitleScreen: AttractMode {
         override fun onSingleTapUp(x: Float, y: Float, attract: Attract): AttractMode {
             if (tappedOnInfo(x, y, attract))
                 return InfoScreen()
@@ -115,9 +108,7 @@ class Attract(
         } // onDown
 
         override fun draw(canvas: Canvas, attract: Attract) {
-            super.draw(canvas, attract)
-
-            drawText("SWOOP", canvas,0.0, 0.0, pen)
+            canvas.drawText("SWOOP", 0.0f, 0.0f, pen)
 
             val infoX = (attract.extent.right - 120).toFloat()
             val infoY = (attract.extent.top + 120).toFloat()
@@ -141,20 +132,20 @@ class Attract(
         } // tappedOnInfo
     } // class TitleScreen
 
-    private class WaveStartScreen(attract: Attract): TitleDressing() {
+    private class WaveStartScreen(attract: Attract): AttractMode {
         private val waveStride = 4
         private val maxWave = attract.highWave
-        private val pads = mutableMapOf<Int, Double>()
+        private val pads = mutableMapOf<Int, Float>()
         init {
             if(maxWave <= waveStride)
                 attract.newGame(0)
 
             val steps = (maxWave-1)/waveStride
 
-            var x = (if (steps%2 != 0) -100.0 else 0.0) - (200.0 * (steps/2))
+            var x = (if (steps%2 != 0) -100.0f else 0.0f) - (200.0f * (steps/2))
             for (i in 0 until maxWave step waveStride) {
                 pads[i] = x
-                x += 200.0
+                x += 200.0f
             }
         }
 
@@ -170,21 +161,19 @@ class Attract(
         }
 
         override fun draw(canvas: Canvas, attract: Attract) {
-            super.draw(canvas, attract)
-
-            drawText("Start from Wave", canvas,0.0, -100.0, infoPen)
+            canvas.drawText("Start from Wave",0.0f, -100.0f, infoPen)
 
             for (i in 0 until maxWave step waveStride) {
                 val x = pads[i]!!
-                drawText("${i+1}", canvas, x, 270.0, infoPen)
-                drawText("${attract.startScore(i)}", canvas, x, 165.0, scorePen)
+                canvas.drawText("${i+1}", x, 270.0f, infoPen)
+                canvas.drawText("${attract.startScore(i)}", x, 165.0f, scorePen)
                 drawTinyLives(attract.startLives(i), canvas, x)
             }
         } // draw
 
-        private fun drawTinyLives(lives: Int, canvas: Canvas, x: Double) {
+        private fun drawTinyLives(lives: Int, canvas: Canvas, x: Float) {
             canvas.save()
-            canvas.translate(x.toFloat(), 0f)
+            canvas.translate(x, 0f)
 
             val xoffset = 35f
             val yoffset = 45f
