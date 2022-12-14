@@ -3,7 +3,6 @@ package uk.co.jezuk.swoop
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.SparseArray
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -20,11 +19,12 @@ class GameView(
     private data class Touch(
         val x: Float,
         val y: Float,
-        var hasMoved: Boolean = false,
+        var hasMoved: Boolean = false
     ) {
+        val stationary get() = !hasMoved
         fun moved() { hasMoved = true }
     }
-    private val touches = SparseArray<Touch>()
+    private val touches = mutableMapOf<Int, Touch>()
 
     init {
         holder.addCallback(this)
@@ -52,21 +52,20 @@ class GameView(
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
-                touches.put(pointerId, toTouch(event, pointerIndex))
+                touches[pointerId] = toTouch(event, pointerIndex)
             }
             MotionEvent.ACTION_MOVE -> {
-                for (i in 0..(event.pointerCount-1)) {
-                    val start = touches.get(event.getPointerId(i))
+                (0..event.pointerCount-1).forEach {
+                    val start = touches[event.getPointerId(it)]
                     if (start != null) {
-                        val touch = toTouch(event, i)
                         start.moved()
-                        onMove(start, touch)
+                        onMove(start, toTouch(event, it))
                     }
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP, MotionEvent.ACTION_CANCEL -> {
-                val start = touches.get(pointerId)
-                if (!start.hasMoved)
+                val start = touches[pointerId]
+                if (start?.stationary == true)
                     onTap(start)
                 touches.remove(pointerId)
             }
