@@ -142,7 +142,7 @@ class Ship(
         fun Brush(color: Int): Paint {
             val brush = Paint()
             brush.color = color
-            brush.alpha = 175
+            brush.alpha = 200
             brush.strokeWidth = 10f
             brush.strokeCap = Paint.Cap.ROUND
             brush.style = Paint.Style.STROKE

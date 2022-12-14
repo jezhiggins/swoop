@@ -4,8 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
-import uk.co.jezuk.swoop.Game
-import uk.co.jezuk.swoop.HighScore
+import uk.co.jezuk.swoop.*
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.craft.Comet
 import uk.co.jezuk.swoop.craft.Saucer
@@ -61,9 +60,9 @@ class Attract(
         mode.draw(canvas, this)
     } // draw
 
-    private fun newGame(fromWave: Int) {
+    private fun newGame(fromWave: Int, mode: GameMode) {
         game.nextWave(
-            EndAttract(game, starField, targets, fromWave)
+            EndAttract(game, starField, targets, fromWave, mode)
         )
     } // newGame
 
@@ -104,7 +103,7 @@ class Attract(
         override fun onSingleTapUp(x: Float, y: Float, attract: Attract): AttractMode {
             if (tappedOnInfo(x, y, attract))
                 return InfoScreen()
-            return WaveStartScreen(attract)
+            return PlayerSelectScreen(attract)
         } // onDown
 
         override fun draw(canvas: Canvas, attract: Attract) {
@@ -132,13 +131,40 @@ class Attract(
         } // tappedOnInfo
     } // class TitleScreen
 
-    private class WaveStartScreen(attract: Attract): AttractMode {
+    private class PlayerSelectScreen(attract: Attract): AttractMode {
+        override fun onSingleTapUp(x: Float, y: Float, attract: Attract): AttractMode {
+            val mode = if (x < 0) OnePlayer else TwoPlayer
+            return WaveStartScreen(attract, mode)
+        }
+
+        override fun draw(canvas: Canvas, attract: Attract) {
+            canvas.drawText("Player Select",0.0f, -100.0f, infoPen)
+
+            drawShip(Ship.Dart, Ship.GreenBrush, canvas, -325.0f, 90.0f)
+
+            drawShip(Ship.Dart, Ship.GreenBrush, canvas, 280.0f, 90.0f)
+            drawShip(Ship.Speeder, Ship.PinkBrush, canvas, 370.0f, 90.0f)
+        } // draw
+
+        private fun drawShip(ship: FloatArray, brush: Paint, canvas: Canvas, x: Float, y: Float) {
+            canvas.save()
+
+            canvas.translate(x, y)
+            canvas.scale(1.25f, 1.25f)
+            canvas.rotate(-90f)
+            canvas.drawLines(ship, brush)
+
+            canvas.restore()
+        }
+    }
+
+    private class WaveStartScreen(attract: Attract, private val gameMode: GameMode): AttractMode {
         private val waveStride = 4
         private val maxWave = attract.highWave
         private val pads = mutableMapOf<Int, Float>()
         init {
             if(maxWave <= waveStride)
-                attract.newGame(0)
+                attract.newGame(0, gameMode)
 
             val steps = (maxWave-1)/waveStride
 
@@ -153,7 +179,7 @@ class Attract(
             if (y > 0 && y < 300) {
                 pads.forEach { (i, padX) ->
                     if ((padX > x-75) && (padX < x+75))
-                        attract.newGame(i)
+                        attract.newGame(i, gameMode)
                 }
             }
 

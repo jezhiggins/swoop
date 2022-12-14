@@ -60,9 +60,9 @@ class Game(private val context: Context) {
         wave = Attract(this, highscorer)
     } // attract
 
-    fun start(startWave: Int, mode: GameMode = TwoPlayer) {
+    fun start(startWave: Int, gameMode: GameMode) {
         players.clear()
-        mode.forEach {
+        gameMode.forEach {
             players.add({ this.onPlayerDied() }, it)
         }
         players.forAll {
