@@ -75,22 +75,8 @@ class IronAsteroid(
     } // split
 
     companion object {
-        val brush = Paint()
-        val outline = Paint()
-
-        init {
-            brush.setARGB(255, 204, 85, 0)
-            brush.strokeWidth = 3f
-            brush.strokeCap = Paint.Cap.ROUND
-            brush.strokeJoin = Paint.Join.ROUND
-            brush.style = Paint.Style.FILL
-
-            outline.color = Color.BLACK
-            outline.strokeWidth = 3f
-            outline.strokeCap = Paint.Cap.ROUND
-            outline.strokeJoin = Paint.Join.ROUND
-            outline.style = Paint.Style.FILL
-        }
+        val brush = fillBrush(Color.argb(255, 204, 85, 0))
+        val outline = outlineBrush(Color.BLACK)
 
         fun field(
             game: Game,

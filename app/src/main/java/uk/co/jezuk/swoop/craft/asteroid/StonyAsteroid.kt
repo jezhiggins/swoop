@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.craft.asteroid
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
@@ -17,10 +18,8 @@ class StonyAsteroid(
     scale: Float = Big
 ): Asteroid(game, wave, pos, scale) {
    override fun drawAsteroid(canvas: Canvas) {
-       canvas.drawLines(
-           shape,
-           brush
-       )
+       canvas.drawPath(path, brush)
+       canvas.drawLines(shape, outline)
    } // drawAsteroid
 
     override fun shot(): Target.Effect {
@@ -53,15 +52,8 @@ class StonyAsteroid(
     } // split
 
     companion object {
-        val brush = Paint()
-
-        init {
-            brush.setARGB(255, 160, 160, 160)
-            brush.strokeWidth = 3f
-            brush.strokeCap = Paint.Cap.ROUND
-            brush.strokeJoin = Paint.Join.ROUND
-            brush.style = Paint.Style.STROKE
-        }
+        val brush = fillBrush(Color.BLACK)
+        val outline = outlineBrush(Color.argb(255, 160, 160, 160))
 
         fun field(
             game: Game,

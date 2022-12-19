@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.craft.asteroid
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
@@ -67,22 +68,8 @@ class MagneticAsteroid(
     } // split
 
     companion object {
-        val brush = Paint()
-        val outline = Paint()
-
-        init {
-            brush.setARGB(255, 153, 204, 255)
-            brush.strokeWidth = 3f
-            brush.strokeCap = Paint.Cap.ROUND
-            brush.strokeJoin = Paint.Join.ROUND
-            brush.style = Paint.Style.FILL
-
-            outline.setARGB(255, 51, 153, 255)
-            outline.strokeWidth = 3f
-            outline.strokeCap = Paint.Cap.ROUND
-            outline.strokeJoin = Paint.Join.ROUND
-            outline.style = Paint.Style.FILL
-        }
+        val brush = fillBrush(Color.argb(255, 153, 204, 255))
+        val outline = outlineBrush(Color.argb(255, 51, 153, 255))
 
         fun field(
             game: Game,

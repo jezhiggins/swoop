@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.craft.asteroid
 
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.Path
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.R
@@ -69,6 +70,26 @@ abstract class Asteroid(
     } // bang
 
     companion object {
+        fun outlineBrush(color: Int): Paint {
+            val brush = Paint()
+            brush.color = color
+            brush.strokeWidth = 3f
+            brush.strokeCap = Paint.Cap.ROUND
+            brush.strokeJoin = Paint.Join.ROUND
+            brush.style = Paint.Style.STROKE
+            return brush
+        }
+
+        fun fillBrush(color: Int): Paint {
+            val brush = Paint()
+            brush.color = color
+            brush.strokeWidth = 3f
+            brush.strokeCap = Paint.Cap.ROUND
+            brush.strokeJoin = Paint.Join.ROUND
+            brush.style = Paint.Style.FILL
+            return brush
+        }
+
         const val Big: Float = 4f
         const val Medium: Float = 2f
         const val Small: Float = 1f
