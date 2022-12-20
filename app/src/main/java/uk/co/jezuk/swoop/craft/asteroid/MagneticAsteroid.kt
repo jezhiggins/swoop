@@ -19,6 +19,9 @@ class MagneticAsteroid(
     pos: Point,
     scale: Float = Big
 ): Asteroid(game, wave, pos, scale) {
+    override val fillBrush = brush
+    override val outlineBrush = outline
+
     override fun update(frameRateScale: Float) {
         wave.players.forAlive {
             val shipDistance = position.distance(it.position)
@@ -31,11 +34,6 @@ class MagneticAsteroid(
         }
         super.update(frameRateScale)
     } // update
-
-    override fun drawAsteroid(canvas: Canvas) {
-        canvas.drawPath(path, brush)
-        canvas.drawLines(shape, outline)
-    } // drawAsteroid
 
     override fun shot(): Target.Effect {
         split()

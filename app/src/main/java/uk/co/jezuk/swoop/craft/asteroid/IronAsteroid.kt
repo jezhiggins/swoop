@@ -19,6 +19,9 @@ class IronAsteroid(
     pos: Point,
     scale: Float = Big
 ): Asteroid(game, wave, pos, scale) {
+    override val fillBrush = brush
+    override val outlineBrush = outline
+
     private val ting = { Game.sound(R.raw.ting, position) }
 
     private var spang = 0
@@ -29,11 +32,6 @@ class IronAsteroid(
     init {
         resetSpang()
     } // init
-
-    override fun drawAsteroid(canvas: Canvas) {
-        canvas.drawPath(path, brush)
-        canvas.drawLines(shape, outline)
-    } // drawAsteroid
 
     override fun shot(): Target.Effect {
         ting()

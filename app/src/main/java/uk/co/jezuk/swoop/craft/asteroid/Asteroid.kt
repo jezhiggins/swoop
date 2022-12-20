@@ -27,8 +27,11 @@ abstract class Asteroid(
     override val killDist get() = scale * killRadius
     protected val size get() = scale
     private val outline = Random.nextInt(4)
-    protected val shape = shapes[outline]
-    protected val path = paths[outline]
+    private val shape = shapes[outline]
+    private val path = paths[outline]
+
+    protected abstract val fillBrush: Paint
+    protected abstract val outlineBrush: Paint
 
     private val smallBang = { Game.sound(R.raw.bangsmall, position) }
     private val midBang = { Game.sound(R.raw.bangmedium, position) }
@@ -52,12 +55,11 @@ abstract class Asteroid(
         // canvas.drawCircle(0f, 0f, killRadius, brush)
         orientation.rotate(canvas)
 
-        drawAsteroid(canvas)
+        canvas.drawPath(path, fillBrush)
+        canvas.drawLines(shape, outlineBrush)
 
         canvas.restore()
     } // draw
-
-    abstract fun drawAsteroid(canvas: Canvas)
 
     override fun explode() {
         Puff(wave, position)
