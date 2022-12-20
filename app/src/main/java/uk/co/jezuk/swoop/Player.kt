@@ -8,7 +8,7 @@ import uk.co.jezuk.swoop.wave.Wave
 
 class Player(
     private val onDied: () -> Unit,
-    mode: Mode
+    mode: Setup
 ): Craft {
     private val ship = Ship(
         this,

@@ -103,7 +103,7 @@ class Attract(
         override fun onSingleTapUp(x: Float, y: Float, attract: Attract): AttractMode {
             if (tappedOnInfo(x, y, attract))
                 return InfoScreen()
-            return PlayerSelectScreen(attract)
+            return PlayerSelectScreen()
         } // onDown
 
         override fun draw(canvas: Canvas, attract: Attract) {
@@ -131,9 +131,9 @@ class Attract(
         } // tappedOnInfo
     } // class TitleScreen
 
-    private class PlayerSelectScreen(attract: Attract): AttractMode {
+    private class PlayerSelectScreen(): AttractMode {
         override fun onSingleTapUp(x: Float, y: Float, attract: Attract): AttractMode {
-            val mode = if (x < 0) OnePlayer else TwoPlayer
+            val mode = if (x < 0) Setup.OnePlayer else Setup.TwoPlayer
             return WaveStartScreen(attract, mode)
         }
 

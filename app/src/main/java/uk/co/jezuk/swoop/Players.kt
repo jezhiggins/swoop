@@ -3,7 +3,7 @@ package uk.co.jezuk.swoop
 class Players {
     private val players = mutableListOf<Player>()
 
-    fun add(onDied: () -> Unit, mode: Mode) = players.add(Player(onDied, mode))
+    fun add(onDied: () -> Unit, mode: Setup) = players.add(Player(onDied, mode))
     fun clear() = players.clear()
 
     fun forAll(fn: (Player) -> Unit) = players.forEach(fn)
