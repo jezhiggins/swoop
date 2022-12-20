@@ -2,7 +2,6 @@ package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import uk.co.jezuk.swoop.craft.Ship
 import kotlin.math.min
 
 class Lives(

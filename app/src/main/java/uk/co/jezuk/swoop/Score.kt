@@ -76,8 +76,8 @@ class Score(
             canvas.translate(-Game.extent.canvasOffsetX + 50, Game.extent.canvasOffsetY - 50)
         }
 
-        private val twoPlayerXOffset = 100f;
-        private val twoPlayerYOffset = 270f;
+        private const val twoPlayerXOffset = 100f
+        private const val twoPlayerYOffset = 270f
         fun PlayerOne(canvas: Canvas) {
             canvas.translate(
                 Game.extent.canvasOffsetX - twoPlayerXOffset,

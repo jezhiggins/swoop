@@ -139,7 +139,7 @@ class Ship(
 
         val Radius: Float get() = 30f
 
-        fun Brush(color: Int): Paint {
+        private fun Brush(color: Int): Paint {
             val brush = Paint()
             brush.color = color
             brush.alpha = 200

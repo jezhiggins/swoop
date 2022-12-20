@@ -70,7 +70,7 @@ class Player(
         if (lives_.alive)
             return Game.NextShip.Continue
 
-        onDied();
+        onDied()
 
         return Game.NextShip.End
     } // lifeLost

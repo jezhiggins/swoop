@@ -53,7 +53,7 @@ class Bullet(
         val GreenBrush = Brush(Color.rgb(173, 255, 47))
         val MagentaBrush = Brush(Color.MAGENTA)
 
-        fun Brush(color: Int): Paint {
+        private fun Brush(color: Int): Paint {
             val brush = Paint()
             brush.color = color
             brush.alpha = 255

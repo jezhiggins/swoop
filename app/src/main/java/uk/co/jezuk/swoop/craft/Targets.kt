@@ -1,8 +1,6 @@
 package uk.co.jezuk.swoop.craft
 
 import android.graphics.Canvas
-import uk.co.jezuk.swoop.Player
-import uk.co.jezuk.swoop.Players
 
 class Targets {
     private val targets = ArrayList<Target>()
@@ -18,10 +16,6 @@ class Targets {
     fun update(frameRateScale: Float) {
         iterator().forEach { t -> t.update(frameRateScale) }
     } // updateTargets
-
-    fun checkPlayerCollision(players: Players) {
-        iterator().forEach { t -> t.checkPlayerCollision(players) }
-    } // checkPlayerCollision
 
     fun draw(canvas: Canvas) {
         targets.forEach { t -> t.draw(canvas) }

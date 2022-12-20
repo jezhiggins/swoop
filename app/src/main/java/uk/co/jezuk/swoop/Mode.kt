@@ -1,7 +1,6 @@
 package uk.co.jezuk.swoop
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import uk.co.jezuk.swoop.craft.Bullet

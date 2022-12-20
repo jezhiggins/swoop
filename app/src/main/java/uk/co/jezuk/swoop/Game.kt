@@ -20,7 +20,7 @@ import kotlin.math.min
 class Game(private val context: Context) {
     enum class NextShip { Continue, End }
     private var wave: Wave = Emptiness()
-    var scaleMatrix = Matrix()
+    private var scaleMatrix = Matrix()
     var touchMatrix = Matrix()
 
     private val highscorer = HighScore(context)
