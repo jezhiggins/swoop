@@ -6,6 +6,7 @@ import android.graphics.Path
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.R
+import uk.co.jezuk.swoop.craft.asteroid.Asteroid
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
@@ -22,6 +23,7 @@ class Comet(
     private val orientation = Rotation.random()
     private val rotation = Random.nextDouble(-5.0, 5.0)
     private val slap = { Game.sound(R.raw.cometslap, position) }
+    private val cometPath = Asteroid.paths[Random.nextInt(4)]
 
     init {
         wave.addTarget(this)
@@ -41,9 +43,11 @@ class Comet(
         position.translate(canvas)
 
         // canvas.drawCircle(0f, 0f, killRadius, brush)
+        canvas.save()
         orientation.rotate(canvas)
+        canvas.scale(2f, 2f)
         canvas.drawPath(cometPath, brush)
-        orientation.unrotate(canvas)
+        canvas.restore()
 
         // comet tail
         canvas.rotate(velocity.angle.toFloat())
@@ -72,19 +76,6 @@ class Comet(
             Vector(Random.nextDouble(4.0, 7.0), angleFromOffsets(position.x, position.y))
 
         val brush = Paint()
-        private val shape = floatArrayOf(
-            0f, 25f, 25f, 50f,
-            25f, 50f, 50f, 25f,
-            50f, 25f, 37.5f, 0f,
-            37.5f, 0f, 50f, -25f,
-            50f, -25f, 12.5f, -50f,
-            12.5f, -50f, -25f, -50f,
-            -25f, -50f, -50f, -25f,
-            -50f, -25f, -50f, 25f,
-            -50f, 25f, -25f, 50f,
-            -25f, 50f, 0f, 25f
-        )
-        val cometPath = Path()
 
         init {
             brush.setARGB(255, 160, 160, 225)
@@ -92,11 +83,6 @@ class Comet(
             brush.strokeCap = Paint.Cap.ROUND
             brush.strokeJoin = Paint.Join.ROUND
             brush.style = Paint.Style.FILL_AND_STROKE
-
-            cometPath.moveTo(shape[0], shape[1])
-            for (i in shape.indices step 2)
-                cometPath.lineTo(shape[i], shape[i+1])
-            cometPath.close()
         } // init
     } // companion object
 } // Comet
