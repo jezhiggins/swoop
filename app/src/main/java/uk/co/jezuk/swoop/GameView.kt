@@ -55,11 +55,11 @@ class GameView(
                 touches[pointerId] = toTouch(event, pointerIndex)
             }
             MotionEvent.ACTION_MOVE -> {
-                (0..event.pointerCount-1).forEach {
-                    val start = touches[event.getPointerId(it)]
+                for (i in 0 until event.pointerCount) {
+                    val start = touches[event.getPointerId(i)]
                     if (start != null) {
                         start.moved()
-                        onMove(start, toTouch(event, it))
+                        onMove(start, toTouch(event, i))
                     }
                 }
             }
