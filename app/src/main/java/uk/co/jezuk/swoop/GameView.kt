@@ -3,11 +3,9 @@ package uk.co.jezuk.swoop
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import androidx.core.view.MotionEventCompat
 
 class GameView(
     context: Context,
@@ -61,11 +59,9 @@ class GameView(
 
         when (action) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
-                Log.d("Swoop", "Down")
                 touches[pointerId] = toTouch(event, pointerIndex)
             }
             MotionEvent.ACTION_MOVE -> {
-                Log.d("Swoop", "Move")
                 for (i in 0 until event.pointerCount) {
                     val start = touches[event.getPointerId(i)]
                     if (start != null) {
@@ -75,7 +71,6 @@ class GameView(
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP, MotionEvent.ACTION_CANCEL -> {
-                Log.d("Swoop", "Up")
                 val start = touches[pointerId]
                 if (start?.stationary == true)
                     onTap(start)
