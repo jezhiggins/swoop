@@ -3,9 +3,11 @@ package uk.co.jezuk.swoop
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import androidx.core.view.MotionEventCompat
 
 class GameView(
     context: Context,
@@ -19,10 +21,16 @@ class GameView(
     private data class Touch(
         val x: Float,
         val y: Float,
+        var offsetX: Float = 0f,
+        var offsetY: Float = 0f,
         var hasMoved: Boolean = false
     ) {
         val stationary get() = !hasMoved
-        fun moved() { hasMoved = true }
+        fun move(delta: Touch) {
+            offsetX = x - delta.x
+            offsetY = y - delta.y
+            hasMoved = (Math.abs(offsetX) + Math.abs(offsetY)) > 2
+        }
     }
     private val touches = mutableMapOf<Int, Touch>()
 
@@ -47,23 +55,27 @@ class GameView(
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointerIndex = event.actionIndex
         val pointerId = event.getPointerId(pointerIndex)
+        val action = event.actionMasked
 
         event.transform(game.touchMatrix)
 
-        when (event.actionMasked) {
+        when (action) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
+                Log.d("Swoop", "Down")
                 touches[pointerId] = toTouch(event, pointerIndex)
             }
             MotionEvent.ACTION_MOVE -> {
+                Log.d("Swoop", "Move")
                 for (i in 0 until event.pointerCount) {
                     val start = touches[event.getPointerId(i)]
                     if (start != null) {
-                        start.moved()
-                        onMove(start, toTouch(event, i))
+                        start.move(toTouch(event, i))
+                        onMove(start)
                     }
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP, MotionEvent.ACTION_CANCEL -> {
+                Log.d("Swoop", "Up")
                 val start = touches[pointerId]
                 if (start?.stationary == true)
                     onTap(start)
@@ -83,8 +95,8 @@ class GameView(
     private fun onTap(start: Touch) {
         game.onTap(start.x, start.y)
     } // onTap
-    private fun onMove(start: Touch, to: Touch) {
-        game.onMove(start.x, start.y, start.x-to.x, start.y-to.y)
+    private fun onMove(start: Touch) {
+        game.onMove(start.x, start.y, start.offsetX, start.offsetY)
     } // onMove
 
     fun update(frameRateScale: Float) {
