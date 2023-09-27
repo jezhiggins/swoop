@@ -1,6 +1,7 @@
 package uk.co.jezuk.swoop.craft
 
 import android.graphics.Paint
+import uk.co.jezuk.swoop.Frames
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.utils.Repeat
 import kotlin.math.max
@@ -11,7 +12,7 @@ class Gun(
     private val brush: Paint
 ) {
     private var repeatDelay: Int = initialRepeatDelay
-    private var bulletMaxAge:Int = initialBulletMaxAge
+    private var bulletMaxAge = initialBulletMaxAge
     private var trigger = Repeat(repeatDelay) { fire() }
 
     private fun fire() {
@@ -30,7 +31,7 @@ class Gun(
     fun upgrade() {
         reset(
             max(repeatDelay-1, shortestRepeatDelay),
-            min(bulletMaxAge+10, highestBulletMaxAge)
+            min(bulletMaxAge+Frames.InSeconds(0.2f), highestBulletMaxAge)
         )
     } // upgrade
 
@@ -38,7 +39,7 @@ class Gun(
         reset(initialRepeatDelay, initialBulletMaxAge)
     } // reset
 
-    private fun reset(newRepeat: Int, newMaxAge: Int) {
+    private fun reset(newRepeat: Int, newMaxAge: Float) {
         repeatDelay = newRepeat
         bulletMaxAge = newMaxAge
         trigger.reset(repeatDelay)
@@ -46,9 +47,9 @@ class Gun(
 
     companion object {
         private const val initialRepeatDelay: Int = 12
-        private const val initialBulletMaxAge: Int = 75
+        private val initialBulletMaxAge = Frames.InSeconds(1.5f)
 
         private const val shortestRepeatDelay: Int = 7
-        private const val highestBulletMaxAge: Int = 140
+        private val highestBulletMaxAge = Frames.InSeconds(3)
     }
 } // Gun

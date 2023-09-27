@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import uk.co.jezuk.swoop.Frames
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.geometry.Vector
@@ -13,13 +14,13 @@ class Bullet(
     private val player: Player,
     private val brush: Paint,
     private val wave: Wave,
-    private val maxAge: Int
+    private val maxAge: Float
 ): Projectile {
     override val position = player.position.copy()
     override val killDist = 1f
 
     private val velocity = player.velocity.copy()
-    private var age = 0
+    private var age = 0f
 
     init {
         velocity.maximum = 30.0
@@ -33,7 +34,8 @@ class Bullet(
 
     override fun update(frameRateScale: Float) {
         position.move(velocity, frameRateScale, Game.extent, Ship.Radius)
-        if (++age > maxAge) wave.removeProjectile(this)
+        age += frameRateScale
+        if (age > maxAge) wave.removeProjectile(this)
     } // update
 
     override fun draw(canvas: Canvas) {
@@ -43,8 +45,8 @@ class Bullet(
     override fun hit(effect: Target.Effect) {
         player.scored(effect.score)
         when (effect.impact) {
-            Target.Impact.HARD -> age = 100
-            Target.Impact.SOFT -> age += 20
+            Target.Impact.HARD -> age = Frames.InSeconds(4)
+            Target.Impact.SOFT -> age += Frames.InSeconds(0.4f)
             Target.Impact.NONE -> Unit
         }
     } // hit

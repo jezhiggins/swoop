@@ -21,6 +21,9 @@ class Frames {
 
     companion object {
         const val TargetFPS = 50f;
+
+        fun InSeconds(seconds: Float) = (TargetFPS * seconds)
+        fun InSeconds(seconds: Int) = InSeconds(seconds.toFloat())
     }
 
     class Timer(
