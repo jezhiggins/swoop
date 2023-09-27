@@ -15,26 +15,19 @@ class GameThread(
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun run() {
-        val targetFps = 50f
-        var fps: Long = 50
+        val frameTimer = Frames()
 
         while(!surfaceHolder.surface.isValid) {
             sleep(100)
         }
 
         while (running) {
-            val startTime = System.nanoTime() / 1000000
+            frameTimer.time().use {
+                this.gameView.update(frameTimer.scaling)
 
-            val scaling = targetFps / fps
-            this.gameView.update(scaling)
-
-            val canvas = this.surfaceHolder.lockHardwareCanvas()
-            this.gameView.draw(canvas)
-            surfaceHolder.unlockCanvasAndPost(canvas)
-
-            val timeThisFrame = (System.nanoTime() / 1000000) - startTime
-            if (timeThisFrame > 1) {
-                fps = 1000 / timeThisFrame
+                val canvas = this.surfaceHolder.lockHardwareCanvas()
+                this.gameView.draw(canvas)
+                surfaceHolder.unlockCanvasAndPost(canvas)
             }
         } // while ...
     } // run
