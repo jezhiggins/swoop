@@ -8,6 +8,7 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 //////////////////////
@@ -15,8 +16,9 @@ class Bullet(
     private val player: Player,
     private val brush: Paint,
     private val wave: Wave,
-    private val maxAge: Float
+    duration: Duration
 ): Projectile {
+    private val maxAge = Frames.In(duration)
     override val position = player.position.copy()
     override val killDist = 1f
 

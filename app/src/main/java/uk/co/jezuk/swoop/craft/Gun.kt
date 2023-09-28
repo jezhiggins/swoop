@@ -33,7 +33,7 @@ class Gun(
     fun upgrade() {
         reset(
             max(repeatDelay-0.02.seconds, shortestRepeatDelay),
-            min(bulletMaxAge+Frames.In(0.2.seconds), highestBulletMaxAge)
+            min(bulletMaxAge+0.2.seconds, highestBulletMaxAge)
         )
     } // upgrade
 
@@ -41,7 +41,7 @@ class Gun(
         reset(initialRepeatDelay, initialBulletMaxAge)
     } // reset
 
-    private fun reset(newRepeat: Duration, newMaxAge: Float) {
+    private fun reset(newRepeat: Duration, newMaxAge: Duration) {
         repeatDelay = newRepeat
         bulletMaxAge = newMaxAge
         trigger.reset(repeatDelay)
@@ -49,13 +49,15 @@ class Gun(
 
     companion object {
         private val initialRepeatDelay = 0.24.seconds
-        private val initialBulletMaxAge = Frames.In(1.5.seconds)
+        private val initialBulletMaxAge = 1.5.seconds
 
         private val shortestRepeatDelay= 0.14.seconds
-        private val highestBulletMaxAge = Frames.In(3.seconds)
+        private val highestBulletMaxAge = 3.seconds
 
-        private fun max(lhs: Duration, rhs: Duration): Duration {
-            return if (lhs > rhs) lhs else rhs
-        }
+        private fun max(lhs: Duration, rhs: Duration) =
+            if (lhs > rhs) lhs else rhs
+
+        private fun min(lhs: Duration, rhs: Duration) =
+            if (lhs < rhs) lhs else rhs
     }
 } // Gun
