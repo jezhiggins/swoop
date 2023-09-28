@@ -1,9 +1,11 @@
 package uk.co.jezuk.swoop.utils
 
+import uk.co.jezuk.swoop.Frames
 import kotlin.math.max
+import kotlin.time.Duration
 
 class RestartableLatch(
-    private val start: Int,
+    private val startAfter: Duration,
     private val action: () -> Unit = { }
 ) {
     private var count = 0f
@@ -19,6 +21,6 @@ class RestartableLatch(
     } // tick
 
     fun start() {
-        count = start.toFloat()
+        count = Frames.In(startAfter)
     }
 } // class RestartableLatch

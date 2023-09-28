@@ -196,7 +196,7 @@ class Ship(
     } // ShipState
 
     private class Flying(private val ship: Ship): ShipState {
-        private val thrustFrames = RestartableLatch(10)
+        private val thrustFrames = RestartableLatch(0.2.seconds)
 
         override val position get() = ship.pos
         override val armed get() = true

@@ -10,6 +10,7 @@ import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.RestartableLatch
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.seconds
 
 class Minelayer(
     private val wave: Wave,
@@ -23,7 +24,7 @@ class Minelayer(
     private val shieldBrush = Paint()
     private var shieldRadius = 75f
     private var dropAt = Point(position)
-    private var trigger = RestartableLatch(25, ::dropMine)
+    private var trigger = RestartableLatch(0.5.seconds, ::dropMine)
     private val minefield = Game.extent.inflated(-30f)
     private var dropping = Random.nextBoolean()
 

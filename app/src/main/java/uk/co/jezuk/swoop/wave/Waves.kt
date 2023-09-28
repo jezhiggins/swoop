@@ -3,6 +3,8 @@ package uk.co.jezuk.swoop.wave
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.wave.transition.LevelTransition
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 typealias WaveMaker = (Game, StarField) -> Wave
 
@@ -22,7 +24,7 @@ fun IronAsteroidsMaker(stonyAsteroids: Int, ironAsteroids: Int, gunReset: Boolea
     }
 } // IronAsteroidsMaker
 
-fun MinefieldMaker(minelayerDelay: Int, minelayerCount: Int, gunReset: Boolean = false): WaveMaker {
+fun MinefieldMaker(minelayerDelay: Duration, minelayerCount: Int, gunReset: Boolean = false): WaveMaker {
     return { game: Game, starField: StarField ->
         Minefield(game, starField, minelayerDelay, minelayerCount, gunReset)
     }
@@ -61,9 +63,9 @@ class Waves {
             IronAsteroidsMaker(6, 2),
             IronAsteroidsMaker(6, 4),
             IronAsteroidsMaker(0,8),
-            MinefieldMaker(400, 5, true),
-            MinefieldMaker(300, 5),
-            MinefieldMaker(250, 7),
+            MinefieldMaker(8.seconds, 5, true),
+            MinefieldMaker(6.seconds, 5),
+            MinefieldMaker(5.seconds, 7),
             ::TholianWebMaker,
             TumblersAttackMaker(5, true),
             TumblersAttackMaker(6),

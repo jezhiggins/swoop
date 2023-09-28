@@ -4,11 +4,12 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Minelayer
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.utils.RestartableLatch
+import kotlin.time.Duration
 
 class Minefield(
     game: Game,
     starField: StarField,
-    minelayerDelay: Int,
+    minelayerDelay: Duration,
     private val minelayerCount: Int,
     gunReset: Boolean = false
 ): WaveWithShip(game, starField, gunReset) {
