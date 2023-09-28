@@ -26,8 +26,6 @@ class Frames {
         const val TargetFPS = 50f;
 
         fun In(time: Duration) = (TargetFPS * time.toDouble(DurationUnit.SECONDS).toFloat())
-        fun InSeconds(seconds: Float) = (TargetFPS * seconds)
-        fun InSeconds(seconds: Int) = InSeconds(seconds.toFloat())
     }
 
     class Timer(

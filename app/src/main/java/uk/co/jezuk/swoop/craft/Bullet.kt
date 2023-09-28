@@ -8,6 +8,7 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.Player
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.time.Duration.Companion.seconds
 
 //////////////////////
 class Bullet(
@@ -45,8 +46,8 @@ class Bullet(
     override fun hit(effect: Target.Effect) {
         player.scored(effect.score)
         when (effect.impact) {
-            Target.Impact.HARD -> age = Frames.InSeconds(4)
-            Target.Impact.SOFT -> age += Frames.InSeconds(0.4f)
+            Target.Impact.HARD -> age = Frames.In(4.seconds)
+            Target.Impact.SOFT -> age += Frames.In(0.4.seconds)
             Target.Impact.NONE -> Unit
         }
     } // hit
