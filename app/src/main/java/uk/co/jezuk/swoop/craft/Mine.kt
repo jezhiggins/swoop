@@ -9,13 +9,14 @@ import uk.co.jezuk.swoop.R
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.time.Duration.Companion.seconds
 
 class Mine(
     private val wave: Wave,
     override val position: Point
 ): Target {
     private val brush = Paint()
-    private val throbber = Repeat(11, ::throb)
+    private val throbber = Repeat(0.22.seconds, ::throb)
     private var radius = 4f
 
     init {

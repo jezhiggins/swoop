@@ -21,7 +21,7 @@ class Tumbler(
     private val velocity = Vector(Random.nextDouble(2.0, 5.0), position.angleTo(traverse[1]))
     private val orientation = Rotation.random()
     private val rotation = initialRotation()
-    private val shooter = Repeat(Random.nextInt(120, 180)) { fire() }
+    private val shooter = Repeat(Random.nextDouble(2.4, 3.6).seconds) { fire() }
 
     init {
         Game.sound(R.raw.sauceralarm, position)

@@ -9,6 +9,7 @@ import uk.co.jezuk.swoop.wave.StarField
 import uk.co.jezuk.swoop.wave.WaveWithTargets
 import uk.co.jezuk.swoop.wave.Waves
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.seconds
 
 class EndAttract(
     private val game: Game,
@@ -17,7 +18,7 @@ class EndAttract(
     fromWave: Int,
     gameMode: GameMode
 ): WaveWithTargets(targets) {
-    private val exploders = Repeat(120 / targets.size) { explodeOneTarget() }
+    private val exploders = Repeat(2.4.seconds / targets.size) { explodeOneTarget() }
 
     init {
         game.start(fromWave, gameMode)

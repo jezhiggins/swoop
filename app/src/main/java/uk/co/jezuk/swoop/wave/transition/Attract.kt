@@ -14,6 +14,7 @@ import uk.co.jezuk.swoop.wave.StarField
 import uk.co.jezuk.swoop.wave.WaveWithTargets
 import kotlin.math.min
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.seconds
 
 class Attract(
     private val game: Game,
@@ -27,8 +28,8 @@ class Attract(
     private fun startLives(waveIndex: Int): Int = game.startLives(waveIndex)
 
     private var starField = StarField(Game.extent)
-    private val cometGun = Repeat(750) { Comet(this) }
-    private val saucerGun = Repeat(2000) { Saucer(this, Random.nextInt(1, 4)) }
+    private val cometGun = Repeat(15.seconds) { Comet(this) }
+    private val saucerGun = Repeat(40.seconds) { Saucer(this, Random.nextInt(1, 4)) }
     private var mode: AttractMode = TitleScreen()
 
     init {

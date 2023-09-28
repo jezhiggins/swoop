@@ -8,12 +8,13 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.Nothing
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.time.Duration.Companion.seconds
 
 class GameOver(
     private val game: Game,
     private val wave: Wave
 ) : Wave {
-    private var brightener = Repeat(5) { brighten() }
+    private var brightener = Repeat(0.1.seconds) { brighten() }
 
     init {
         pen.alpha = 0
