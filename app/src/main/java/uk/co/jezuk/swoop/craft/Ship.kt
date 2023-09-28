@@ -280,14 +280,14 @@ class Ship(
 
     private class RezOut(private val ship: Ship): ShipState {
         private val rezOutShape = ship.shipOutline.copyOf()
-        private var r = 0
+        private var r = 0f
 
         init {
             ship.rezOutSound()
         }
 
         override fun update(frameRateScale: Float) {
-            ++r
+            r += frameRateScale
 
             for (i in rezOutShape.indices) {
                 var v = rezOutShape[i]
@@ -298,7 +298,8 @@ class Ship(
         } // update
 
         override fun draw(canvas: Canvas) {
-            val brush = if ((r/2f) == (r/2).toFloat()) ship.shipBrush else redBrush
+            val ir = r.toInt()
+            val brush = if ((ir/2f) == (ir/2).toFloat()) ship.shipBrush else redBrush
             canvas.drawLines(rezOutShape, brush)
         } // draw
     } // RezOut
