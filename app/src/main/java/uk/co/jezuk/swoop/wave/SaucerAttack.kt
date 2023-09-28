@@ -5,6 +5,7 @@ import uk.co.jezuk.swoop.craft.Saucer
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.utils.RepeatN
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.seconds
 
 class SaucerAttack(
     game: Game,
@@ -13,7 +14,7 @@ class SaucerAttack(
     saucerAggressiveness: Int,
     gunReset: Boolean = false
 ) : WaveWithShip(game, starField, gunReset) {
-    private val saucerLaunch = RepeatN(500, saucerAggressiveness + 3, launchSaucer(saucerAggressiveness))
+    private val saucerLaunch = RepeatN(10.seconds, saucerAggressiveness + 3, launchSaucer(saucerAggressiveness))
 
     init {
         StonyAsteroid.field(game, this, initialAsteroids)
@@ -30,7 +31,8 @@ class SaucerAttack(
     private fun launchSaucer(saucerAggressiveness: Int): () -> Unit {
         return {
             Saucer(this, saucerAggressiveness)
-            saucerLaunch.reset(Random.nextInt(300, 700))
+            val nextSaucerDelay = Random.nextDouble(6.0, 14.0).seconds
+            saucerLaunch.reset(nextSaucerDelay)
         }
     } // launcherSaucer
 } // class SaucerAttack

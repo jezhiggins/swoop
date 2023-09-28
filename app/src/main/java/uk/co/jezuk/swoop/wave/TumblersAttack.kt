@@ -4,6 +4,7 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.*
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.utils.RepeatN
+import kotlin.time.Duration.Companion.seconds
 
 class TumblersAttack(
     game: Game,
@@ -12,7 +13,7 @@ class TumblersAttack(
     gunReset: Boolean = false
 ) : WaveWithShip(game, starField, gunReset) {
     private val tumblerLauncher = RepeatN(
-        700 - (initialAsteroids * 50),
+        (14 - initialAsteroids).seconds,
         initialAsteroids - 1
     ) { Tumbler(this) }
 

@@ -1,13 +1,15 @@
 package uk.co.jezuk.swoop.utils
 
+import uk.co.jezuk.swoop.Frames
 import kotlin.math.max
+import kotlin.time.Duration
 
 class RepeatN(
-    private var start: Int,
+    private var startAfter: Duration,
     private var times: Int,
     private val action: () -> Unit
 ) {
-    private var count = start.toFloat()
+    private var count = Frames.In(startAfter)
 
     fun tick(frameRateScale: Float): Int {
         if (times == 0) return 0
@@ -16,13 +18,13 @@ class RepeatN(
         val dec = max(count.toInt(), 0)
         if (dec == 0) {
             action()
-            count = start.toFloat()
+            count = Frames.In(startAfter)
             --times
         }
         return dec
     } // tick
 
-    fun reset(newStart: Int) {
-        start = newStart
+    fun reset(newStart: Duration) {
+        startAfter = newStart
     } // reset
 } // class RepeatN
