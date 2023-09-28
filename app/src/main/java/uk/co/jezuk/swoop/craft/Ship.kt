@@ -14,6 +14,8 @@ import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.utils.RestartableLatch
 import kotlin.math.abs
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 class Ship(
     private val player: Player,
@@ -229,7 +231,7 @@ class Ship(
     } // Flying
 
     private class Exploding(private val ship: Ship): ShipState {
-        private val exploder = Exploder({ whatsNext() }, ship.shipOutline, explodeBrush, 50, false)
+        private val exploder = Exploder({ whatsNext() }, ship.shipOutline, explodeBrush, 1.seconds, false)
 
         init {
             ship.explosionSound()
@@ -253,7 +255,8 @@ class Ship(
     } // Exploding
 
     private class RezIn(private val ship: Ship): ShipState {
-        private val pause = Latch(60) { ship.rezInSound() }
+        private val t = 1.2.seconds
+        private val pause = Latch(t) { ship.rezInSound() }
         private var radius = 600f
 
         override fun rotateTowards(angle: Double) {

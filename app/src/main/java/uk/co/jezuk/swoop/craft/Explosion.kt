@@ -7,6 +7,7 @@ import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.geometry.Rotation
 import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.time.Duration
 
 class Explosion(
     private val wave: Wave,
@@ -16,7 +17,7 @@ class Explosion(
     private val rotation: Double,
     shape: FloatArray,
     brush: Paint,
-    length: Int,
+    time: Duration,
     useMid: Boolean = true,
     expansion: Float = 5f
 ) : Target {
@@ -24,7 +25,7 @@ class Explosion(
         { wave.removeTarget(this) },
         shape,
         brush,
-        length,
+        time,
         useMid,
         expansion
     )

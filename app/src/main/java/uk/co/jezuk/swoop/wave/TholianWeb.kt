@@ -6,6 +6,7 @@ import uk.co.jezuk.swoop.craft.asteroid.IronAsteroid
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.geometry.Point
 import uk.co.jezuk.swoop.utils.Latch
+import kotlin.time.Duration.Companion.seconds
 
 class TholianWeb(
     game: Game,
@@ -14,11 +15,11 @@ class TholianWeb(
     private val nothing = { }
 
     private val latches = arrayListOf(
-        Latch(50, ::verticalTraverse),
-        Latch(250, ::horizontalTraverse),
-        Latch(500, ::cornerTraverse),
-        Latch(750, ::hereComeTheAsteroids),
-        Latch(2000, ::letsGoIron)
+        Latch(1.seconds, ::verticalTraverse),
+        Latch(5.seconds, ::horizontalTraverse),
+        Latch(10.seconds, ::cornerTraverse),
+        Latch(15.seconds, ::hereComeTheAsteroids),
+        Latch(40.seconds, ::letsGoIron)
     )
 
     private fun verticalTraverse() {

@@ -12,6 +12,7 @@ import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.math.sin
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.seconds
 
 class Saucer(
     private val wave: Wave,
@@ -81,7 +82,7 @@ class Saucer(
         BigPuff(wave, position)
         Explosion(
             wave, position, velocity, Rotation.none(), 0.0,
-            shape, shipBrush, 70
+            shape, shipBrush, 1.5.seconds
         )
         destroyed()
     } // explode

@@ -6,6 +6,7 @@ import uk.co.jezuk.swoop.craft.Projectiles
 import uk.co.jezuk.swoop.utils.Latch
 import uk.co.jezuk.swoop.wave.StarField
 import uk.co.jezuk.swoop.wave.Wave
+import kotlin.time.Duration.Companion.seconds
 
 class LevelTransition(
     private val game: Game,
@@ -16,7 +17,7 @@ class LevelTransition(
     private val waveIndex: Int
 ): Wave {
     override val players = game.players
-    private var transition = Latch(180) { startNextWave() }
+    private var transition = Latch(3.5.seconds) { startNextWave() }
     private var currentStarField = starField
 
     init {

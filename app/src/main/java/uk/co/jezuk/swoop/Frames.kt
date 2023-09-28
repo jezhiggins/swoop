@@ -1,5 +1,8 @@
 package uk.co.jezuk.swoop
 
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+
 class Frames {
     private var fps: Long = 50
     private var startTime: Long = 0
@@ -22,6 +25,7 @@ class Frames {
     companion object {
         const val TargetFPS = 50f;
 
+        fun In(time: Duration) = (TargetFPS * time.toDouble(DurationUnit.SECONDS).toFloat())
         fun InSeconds(seconds: Float) = (TargetFPS * seconds)
         fun InSeconds(seconds: Int) = InSeconds(seconds.toFloat())
     }

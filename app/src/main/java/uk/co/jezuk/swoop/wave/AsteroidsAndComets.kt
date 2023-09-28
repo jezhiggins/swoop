@@ -4,6 +4,7 @@ import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.*
 import uk.co.jezuk.swoop.craft.asteroid.StonyAsteroid
 import uk.co.jezuk.swoop.utils.Latch
+import kotlin.time.Duration.Companion.seconds
 
 class AsteroidsAndComets(
     game: Game,
@@ -15,8 +16,10 @@ class AsteroidsAndComets(
     init {
         StonyAsteroid.field(game, this, initialAsteroids)
 
-        if (initialAsteroids > 5)
-            cometGun = Latch(500 + (100 * (11-initialAsteroids))) { Comet(this) }
+        if (initialAsteroids > 5) {
+            val cometDelay = 10.seconds + (0.2.seconds * (11 - initialAsteroids))
+            cometGun = Latch(cometDelay) { Comet(this) }
+        }
 
         targets.onEliminated { endOfLevel() }
     } // init

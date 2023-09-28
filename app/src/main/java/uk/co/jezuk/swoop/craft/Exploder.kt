@@ -3,12 +3,13 @@ package uk.co.jezuk.swoop.craft
 import android.graphics.Canvas
 import android.graphics.Paint
 import uk.co.jezuk.swoop.utils.Latch
+import kotlin.time.Duration
 
 class Exploder(
     action: () -> Unit,
     shape: FloatArray,
     private val brush: Paint,
-    length: Int,
+    length: Duration,
     useMid: Boolean = true,
     private val expansion: Float = 5f
 ) {

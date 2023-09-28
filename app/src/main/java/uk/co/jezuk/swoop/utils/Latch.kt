@@ -1,12 +1,14 @@
 package uk.co.jezuk.swoop.utils
 
+import uk.co.jezuk.swoop.Frames
 import kotlin.math.max
+import kotlin.time.Duration
 
 class Latch(
-    startFrom: Int,
+    startAfter: Duration,
     private val action: () -> Unit
 ) {
-    private var count: Float = startFrom.toFloat()
+    private var count: Float = Frames.In(startAfter)
     private val done get() = count <= 0f
     val running get() = !done
 

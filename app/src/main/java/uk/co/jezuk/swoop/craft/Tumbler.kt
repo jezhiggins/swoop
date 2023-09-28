@@ -11,6 +11,7 @@ import uk.co.jezuk.swoop.geometry.Vector
 import uk.co.jezuk.swoop.utils.Repeat
 import uk.co.jezuk.swoop.wave.Wave
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.seconds
 
 class Tumbler(
     private val wave: Wave,
@@ -56,11 +57,11 @@ class Tumbler(
         BigPuff(wave, position)
         Explosion(
             wave, position, velocity, orientation, rotation,
-            outerShape, shipBrush, 70
+            outerShape, shipBrush, 1.5.seconds
         )
         Explosion(
             wave, position, velocity, orientation, rotation,
-            cutOuts, shipBrush, 50, expansion = 3f
+            cutOuts, shipBrush, 1.seconds, expansion = 3f
         )
         wave.removeTarget(this)
     } // explode

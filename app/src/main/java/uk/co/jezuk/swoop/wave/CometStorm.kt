@@ -3,6 +3,7 @@ package uk.co.jezuk.swoop.wave
 import uk.co.jezuk.swoop.Game
 import uk.co.jezuk.swoop.craft.*
 import uk.co.jezuk.swoop.utils.Latch
+import kotlin.time.Duration.Companion.seconds
 
 class CometStorm(
     game: Game,
@@ -11,7 +12,7 @@ class CometStorm(
     private var comets = 0
     private var survivalBonus = true
 
-    private var cometGun: Latch = Latch(150) { launchComet() }
+    private var cometGun: Latch = Latch(3.seconds) { launchComet() }
 
     init {
         players.forAlive { it.onLifeLost { survivalBonus = false } }
@@ -21,7 +22,7 @@ class CometStorm(
         Comet(this)
         ++comets
         if (comets != 15)
-            cometGun = Latch(70) { launchComet() }
+            cometGun = Latch(1.5.seconds) { launchComet() }
         else
             targets.onEliminated { endOfLevel() }
     } // launchComet
