@@ -78,11 +78,11 @@ class Attract(
         val almostRight = (extent.right - margin).toFloat()
         val justOffBottom = (extent.bottom - margin).toFloat()
         val justOffTop = (extent.top + margin*2).toFloat()
-        canvas.drawText("Forest Road Game Krew", 0.0f, justOffBottom, smallPen)
+        //canvas.drawText("Forest Road Game Krew", 0.0f, justOffBottom, smallPen)
         tinyPen.textAlign = Paint.Align.LEFT
         canvas.drawText("Alright Bab!", almostLeft, justOffBottom, tinyPen)
         tinyPen.textAlign = Paint.Align.RIGHT
-        canvas.drawText("Made in Birmingham", almostRight, justOffBottom, tinyPen)
+        canvas.drawText("Made in Birmingham and Wales", almostRight, justOffBottom, tinyPen)
 
         if (pureHighScore != 0)
             canvas.drawText(
