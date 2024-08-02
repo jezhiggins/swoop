@@ -14,10 +14,10 @@ android {
 
     defaultConfig {
         applicationId "uk.co.jezuk.swoop"
-        minSdkVersion 29
+        minSdkVersion 31
         targetSdkVersion 34
-        versionCode 29
-        versionName "1.29"
+        versionCode 31
+        versionName "1.31"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
