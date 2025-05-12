@@ -10,7 +10,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "uk.co.jezuk.swoop"
